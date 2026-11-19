@@ -10,7 +10,9 @@ Desarrollada por **DL COMPANY -TECHNOLOGY-**.
 - Copiar los ingresos y gastos fijos del mes anterior.
 - Tema claro y oscuro.
 - Exportar a Excel (.csv), respaldo y restauración (.json).
-- Instalable en Android/iPhone y funciona sin conexión.
+- Instalable en Android/iPhone (botón “Descargar app”) y funciona sin conexión.
+- Guía interactiva con voz (primer ingreso y desde el menú).
+- Soporte por WhatsApp desde la app y la pantalla de ingreso.
 
 ## Modos de almacenamiento
 | Modo | Cuándo | Dónde quedan los datos |
@@ -32,4 +34,6 @@ Al pasar a modo nube, la app ofrece subir automáticamente los datos que el usua
 - `legal.html` – Términos y condiciones y Política de privacidad.
 - `firebase-config.js` – configuración de la nube.
 - `firestore.rules` – reglas de seguridad de la base de datos.
-- `sw.js`, `manifest.webmanifest`, íconos – instalación y uso sin conexión.
+- `logo.svg`, `icon-*.png`, `apple-touch-icon.png` – logo de la app.
+- `dl-company.png` – logo oficial de DL COMPANY -TECHNOLOGY-.
+- `sw.js`, `manifest.webmanifest` – instalación y uso sin conexión.

@@ -12,8 +12,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#070a10" id="meta-theme-color">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" type="image/svg+xml" href="icon.svg">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <!-- Aplica el tema antes de pintar para evitar parpadeo -->
   <script>
@@ -116,14 +116,8 @@
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     /* ================= LOGO ================= */
-    .logo {
-      width: 40px; height: 40px; border-radius: 12px; padding: 2px; flex-shrink: 0;
-      background: linear-gradient(145deg, #2a3447, #0b0f19);
-      border: 1px solid #475569; box-shadow: 0 4px 12px rgba(0,0,0,.35);
-      display: flex; align-items: center; justify-content: center; overflow: hidden;
-    }
-    .logo svg { width: 100%; height: 100%; }
-    .logo.lg { width: 64px; height: 64px; border-radius: 18px; }
+    .logo { width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0; display: block; box-shadow: 0 0 16px rgba(16,185,129,.25); }
+    [data-theme="light"] .logo { box-shadow: 0 4px 12px rgba(15,23,42,.18); }
 
     /* ================= BOTONES ================= */
     .btn {
@@ -147,13 +141,42 @@
     .icon-btn.sm { width: 34px; height: 34px; border-radius: 10px; }
 
     /* ================= AUTH ================= */
-    #auth-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; position: relative; }
+    #auth-screen {
+      min-height: 100vh; padding: calc(28px + env(safe-area-inset-top)) 16px 100px; position: relative;
+      background: radial-gradient(90% 55% at 50% 0%, rgba(16,185,129,.16) 0%, transparent 70%), radial-gradient(60% 40% at 100% 100%, rgba(168,85,247,.14), transparent 70%);
+    }
+    #auth-screen .auth-card { margin: 14px auto 0; }
     .auth-card {
       width: 100%; max-width: 420px; background: var(--surface); border: 1px solid var(--border);
       border-radius: 28px; padding: 32px 24px; box-shadow: var(--shadow);
     }
-    .auth-brand { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px; gap: 10px; }
-    .auth-brand h1 { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+    .auth-brand { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 22px; }
+    .llogo { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 0 34px rgba(16,185,129,.32); }
+    [data-theme="light"] .llogo { box-shadow: 0 10px 26px rgba(15,23,42,.22); }
+    .auth-brand h1 { font-size: 30px; font-weight: 800; letter-spacing: .5px; margin: 14px 0 2px; }
+    .auth-brand h1 em { font-style: normal; background: linear-gradient(135deg, #34d399, #22d3ee 60%, #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    [data-theme="light"] .auth-brand h1 em { background: linear-gradient(135deg, #059669, #0891b2 60%, #7c3aed); -webkit-background-clip: text; background-clip: text; }
+    .lsub { font-weight: 800; letter-spacing: 3px; font-size: 12px; color: var(--accent-text); text-transform: uppercase; }
+    .lslogan { margin: 8px 0 12px; color: var(--text-2); font-weight: 600; font-size: 14px; line-height: 1.5; }
+    .lslogan b { color: var(--text); }
+    .lbadge { display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px; padding: 6px 13px; border-radius: 99px; border: 1px solid var(--border-strong); color: var(--accent-text); background: var(--accent-soft); }
+    .lhelp { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-weight: 700; font-size: 12.5px; padding: 8px 14px; border-radius: 99px; }
+    .ldl { max-width: 420px; margin: 16px auto 0; }
+    .dlbtn { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 18px; border-radius: 16px; font-weight: 800; font-size: 15px; color: #05070d; border: none; width: 100%; background: linear-gradient(135deg, #f6dc85, #c9a227 55%, #9c7410); box-shadow: 0 8px 24px rgba(201,162,39,.35); }
+    .dlbtn:active { transform: scale(.98); }
+    .lcredit { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 26px auto 0; max-width: 420px; text-align: left; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); font-weight: 700; }
+    .lcredit img { width: 54px; height: 54px; border-radius: 14px; border: 1px solid var(--border); }
+    .lcredit b { display: block; color: var(--text); letter-spacing: 1.2px; font-size: 13px; }
+    .wafab { position: fixed; left: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); width: 52px; height: 52px; border-radius: 50%; background: #25d366; display: grid; place-items: center; box-shadow: 0 8px 24px rgba(37,211,102,.45); z-index: 44; opacity: .95; }
+    .wafab svg { width: 32px; height: 32px; }
+    body.standalone .dl-only { display: none !important; }
+    .menu a.menu-link { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--text-2); text-decoration: none; }
+    .menu a.menu-link:hover { background: var(--surface-3); color: var(--text); }
+    .dlsteps { counter-reset: s; margin: 6px 0 14px; padding: 0; list-style: none; }
+    .dlsteps li { counter-increment: s; display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border); font-weight: 600; font-size: 13.5px; line-height: 1.45; color: var(--text-2); }
+    .dlsteps li:first-child { border-top: 0; }
+    .dlsteps li::before { content: counter(s); flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: var(--accent-soft); color: var(--accent-text); }
+    .dlsteps b { color: var(--text); }
     .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-3); }
     .tabs { display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 4px; margin-bottom: 20px; }
     .tabs button { flex: 1; padding: 9px; border: none; background: transparent; border-radius: 10px; font-weight: 700; font-size: 13px; color: var(--text-2); }
@@ -377,29 +400,54 @@
     .toast.error { background: var(--danger); color: #fff; }
     @media (min-width: 720px) { .toast-wrap { bottom: 24px; } }
 
-    .footer { text-align: center; font-size: 11px; color: var(--text-3); padding: 8px 0 0; }
+    .dev-footer { text-align: center; padding: 30px 18px 10px; margin-top: 8px; border-top: 1px solid var(--border); position: relative; }
+    .dev-footer::before { content: ''; position: absolute; left: 10%; right: 10%; top: -1px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: .7; }
+    .dev-footer .dev-logo { width: 104px; height: 104px; border-radius: 22px; border: 1px solid var(--border); }
+    .dev-footer .dev-by { margin: 14px 0 0; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); font-weight: 700; }
+    .dev-footer .dev-by strong { display: block; color: var(--text); font-size: 14px; letter-spacing: 1.5px; margin-top: 4px; }
+    .dev-footer .dev-desc { max-width: 560px; margin: 12px auto 0; font-size: 13px; line-height: 1.6; color: var(--text-2); }
+    .dev-footer .dev-desc b { color: var(--text); }
+    .dev-footer .dev-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; margin-top: 16px; }
+    .dev-footer .dev-links a { color: var(--accent-text); font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+    .dev-footer .dev-links.legal-links a { color: var(--text-2); }
+    .dev-footer .dev-copy { margin: 20px 0 0; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); }
+
+    /* Guía interactiva */
+    .tour { position: fixed; inset: 0; z-index: 95; display: none; }
+    .tour.on { display: block; }
+    .tblock { position: absolute; inset: 0; }
+    .tspot { position: fixed; border-radius: 16px; border: 2px solid var(--accent); box-shadow: 0 0 0 9999px rgba(2,4,10,.74), 0 0 26px rgba(16,185,129,.5); transition: all .28s ease; pointer-events: none; }
+    .tspot.none { left: 50% !important; top: 45% !important; width: 0 !important; height: 0 !important; border: 0; box-shadow: 0 0 0 9999px rgba(2,4,10,.78); }
+    .tspot::after { content: ''; position: absolute; inset: -7px; border-radius: 20px; border: 2px solid var(--accent); opacity: 0; animation: tpulse 1.6s ease-out infinite; }
+    .tspot.none::after { display: none; }
+    @keyframes tpulse { 0% { opacity: .7; transform: scale(.97); } 100% { opacity: 0; transform: scale(1.08); } }
+    .ttip { position: fixed; width: min(340px, calc(100vw - 24px)); background: var(--surface); border: 1px solid var(--accent); border-radius: 18px; padding: 15px 16px 13px; color: var(--text); box-shadow: 0 18px 50px rgba(0,0,0,.45); transition: top .28s ease, left .28s ease; }
+    .ttip .tstep { font: 800 11px/1 'JetBrains Mono', monospace; letter-spacing: .12em; color: var(--accent-text); text-transform: uppercase; margin: 0 0 7px; }
+    .ttip h4 { margin: 0 0 6px; font-size: 17px; font-weight: 800; line-height: 1.25; padding-right: 36px; }
+    .ttip p { margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.45; font-weight: 600; }
+    .ttip p b { color: var(--text); }
+    .ttip .tacts { display: flex; align-items: center; gap: 8px; margin-top: 13px; }
+    .ttip .tskip { background: none; border: 0; color: var(--text-3); font-weight: 700; font-size: 13px; padding: 8px 4px; margin-right: auto; }
+    .ttip .tb { border: 1px solid var(--border-strong); background: transparent; color: var(--text); font-weight: 800; font-size: 14px; padding: 9px 14px; border-radius: 12px; }
+    .ttip .tn { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: 0; color: var(--accent-ink); }
+    .ttip .tdots { display: flex; gap: 4px; margin-top: 11px; justify-content: center; }
+    .ttip .tdots i { width: 6px; height: 6px; border-radius: 9px; background: var(--border-strong); }
+    .ttip .tdots i.on { width: 16px; background: var(--accent); }
+    .ttip.center { left: 50% !important; top: 50% !important; transform: translate(-50%, -50%); text-align: center; }
+    .ttip.center h4 { padding: 0 30px; }
+    .ttip.center .tacts { justify-content: center; }
+    .ttip.center .tskip { margin-right: 0; }
+    .ttip .tbig { font-size: 40px; line-height: 1; margin: 2px 0 8px; }
+    .ttip .tvoz { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 11px; border: 1px solid var(--border-strong); background: transparent; color: var(--text); font-size: 16px; display: grid; place-items: center; }
+    .ttip .tvoz.hab { border-color: var(--accent); box-shadow: 0 0 12px rgba(16,185,129,.45); animation: tvz 1.2s ease-in-out infinite; }
+    @keyframes tvz { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+    .ttip .tbar { height: 3px; border-radius: 9px; background: var(--border); margin-top: 10px; overflow: hidden; }
+    .ttip .tbar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), #22d3ee); }
+    [data-theme="light"] .tspot { box-shadow: 0 0 0 9999px rgba(15,23,42,.62), 0 0 22px rgba(5,150,105,.45); }
   </style>
 </head>
 <body>
 
-  <!-- Sprite del logo DL (se reutiliza en toda la app) -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-      <radialGradient id="dlMetalBg" cx="40%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#cbd5e1"/>
-        <stop offset="70%" stop-color="#64748b"/><stop offset="100%" stop-color="#1e293b"/>
-      </radialGradient>
-      <linearGradient id="dlMetalBevel" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#334155"/>
-      </linearGradient>
-      <symbol id="dl-logo" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="41" fill="none" stroke="url(#dlMetalBevel)" stroke-width="7"/>
-        <circle cx="50" cy="50" r="35" fill="none" stroke="#0b0f19" stroke-width="2"/>
-        <path d="M 27 25 C 48 18 70 28 67 48 C 64 64 45 74 27 75 C 33 62 38 43 27 25 Z" fill="url(#dlMetalBg)"/>
-        <path d="M 77 19 L 45 61 L 82 52 L 87 56 L 43 69 L 40 64 L 70 24 Z" fill="url(#dlMetalBevel)"/>
-      </symbol>
-    </defs>
-  </svg>
 
   <div id="boot" class="boot"><div class="spinner"></div></div>
 
@@ -408,11 +456,11 @@
     <button class="icon-btn auth-theme js-theme-toggle" type="button" aria-label="Cambiar tema"></button>
     <div class="auth-card">
       <div class="auth-brand">
-        <div class="logo lg"><svg><use href="#dl-logo"/></svg></div>
-        <div>
-          <h1>DL FINANZAS</h1>
-          <p class="eyebrow">DL COMPANY -TECHNOLOGY-</p>
-        </div>
+        <img class="llogo" src="logo.svg" alt="Logo DL FINANZAS">
+        <h1>DL <em>FINANZAS</em></h1>
+        <div class="lsub">Control de gastos</div>
+        <p class="lslogan">Organiza tu dinero, mes a mes.<br><b>Ingresos − gastos = ahorro.</b></p>
+        <span class="lbadge">BY DL COMPANY -TECHNOLOGY-</span>
       </div>
 
       <div class="tabs" role="tablist">
@@ -472,10 +520,14 @@
         Tus datos se guardan de forma privada en este dispositivo.<br>
         Descarga un respaldo desde el menú para no perderlos si cambias de equipo.
       </p>
+      <p style="text-align:center;margin:14px 0 0"><button type="button" class="lhelp" id="btn-auth-help">❔ ¿Cómo ingreso?</button></p>
       <p class="auth-note" style="margin-top:10px">
         <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a> · <a href="legal.html#privacidad" target="_blank" rel="noopener">Privacidad</a>
       </p>
     </div>
+    <div class="ldl dl-only"><button class="dlbtn" type="button" data-install><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Descargar app DL FINANZAS</button></div>
+    <div class="lcredit"><img src="dl-company.png" alt="DL COMPANY -TECHNOLOGY-"><div>Desarrollado por<b>DL COMPANY -TECHNOLOGY-</b>© 2026</div></div>
+    <a class="wafab" href="https://wa.me/573218641539?text=Hola%20DL%20Company,%20necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" aria-label="Soporte por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg></a>
   </section>
 
   <!-- ================= APLICACIÓN ================= -->
@@ -483,7 +535,7 @@
     <header class="header">
       <div class="header-inner">
         <div class="brand">
-          <div class="logo"><svg><use href="#dl-logo"/></svg></div>
+          <img class="logo" src="logo.svg" alt="DL FINANZAS">
           <div style="min-width:0">
             <div style="display:flex;align-items:center;gap:6px">
               <span class="brand-name">DL FINANZAS</span>
@@ -501,7 +553,7 @@
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
             Nuevo movimiento
           </button>
-          <button class="icon-btn js-theme-toggle" type="button" aria-label="Cambiar tema"></button>
+          <button class="icon-btn js-theme-toggle" id="btn-theme-app" type="button" aria-label="Cambiar tema"></button>
           <div class="menu-wrap">
             <button id="btn-menu" class="icon-btn" type="button" aria-label="Menú" aria-haspopup="true">
               <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="4" r="1.8"/><circle cx="10" cy="10" r="1.8"/><circle cx="10" cy="16" r="1.8"/></svg>
@@ -529,7 +581,15 @@
                 Restaurar respaldo
                 <input type="file" id="input-import" accept=".json,application/json" class="hidden">
               </label>
-              <button type="button" id="btn-install">
+              <button type="button" data-guide>
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
+                Ver guía de la app
+              </button>
+              <a href="https://wa.me/573218641539?text=Hola%20DL%20Company,%20necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" class="menu-link">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a8.5 8.5 0 01-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1121 12z"/></svg>
+                Soporte por WhatsApp
+              </a>
+              <button type="button" id="btn-install" class="dl-only" data-install>
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                 Instalar app
               </button>
@@ -550,7 +610,7 @@
 
     <main class="main">
       <!-- Navegación por mes -->
-      <section class="card" style="padding:12px 14px">
+      <section class="card" id="card-month" style="padding:12px 14px">
         <div class="month-nav">
           <button class="icon-btn sm" id="btn-prev-month" type="button" aria-label="Mes anterior">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 18l-6-6 6-6"/></svg>
@@ -568,7 +628,7 @@
       </div>
 
       <!-- Resumen -->
-      <section class="card hero">
+      <section class="card hero" id="card-hero">
         <p class="balance-label">Balance disponible del mes</p>
         <p class="balance mono" id="kpi-balance">$ 0</p>
         <span class="pill neutral" id="kpi-rate">Tasa de ahorro 0%</span>
@@ -599,7 +659,7 @@
 
       <div class="grid-2">
         <!-- Distribución -->
-        <section class="card">
+        <section class="card" id="card-donut">
           <div class="card-head">
             <div>
               <h3 class="card-title">¿En qué se va el dinero?</h3>
@@ -610,7 +670,7 @@
         </section>
 
         <!-- Semáforo -->
-        <section class="card">
+        <section class="card" id="card-budget">
           <div class="card-head">
             <div>
               <h3 class="card-title">Semáforo de presupuesto</h3>
@@ -623,7 +683,7 @@
       </div>
 
       <!-- Tendencia -->
-      <section class="card">
+      <section class="card" id="card-trend">
         <div class="card-head">
           <div>
             <h3 class="card-title">Tendencia de 6 meses</h3>
@@ -638,7 +698,7 @@
       </section>
 
       <!-- Movimientos -->
-      <section class="card">
+      <section class="card" id="card-tx">
         <div class="card-head" style="margin-bottom:12px">
           <div>
             <h3 class="card-title">Movimientos</h3>
@@ -660,9 +720,24 @@
         <div id="tx-list"></div>
       </section>
 
-      <p class="footer">DL FINANZAS · DL COMPANY -TECHNOLOGY-</p>
+      <footer class="dev-footer">
+        <img class="dev-logo" src="dl-company.png" alt="DL COMPANY -TECHNOLOGY-">
+        <p class="dev-by">Desarrollado por<strong>DL COMPANY -TECHNOLOGY-</strong></p>
+        <p class="dev-desc">Creamos apps para que personas y negocios tengan el control de su dinero, sus ventas y su inventario. <b>Tecnología simple que da resultados.</b></p>
+        <div class="dev-links">
+          <a href="https://wa.me/573218641539?text=Hola%20DL%20Company,%20necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener">Soporte</a>
+          <a href="#" data-guide>Guía de la app</a>
+          <a href="#" class="dl-only" data-install>Descargar app</a>
+        </div>
+        <div class="dev-links legal-links">
+          <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a>
+          <a href="legal.html#privacidad" target="_blank" rel="noopener">Privacidad</a>
+        </div>
+        <p class="dev-copy">DL FINANZAS v2.0 · © 2026</p>
+      </footer>
     </main>
 
+    <a class="wafab" href="https://wa.me/573218641539?text=Hola%20DL%20Company,%20necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" aria-label="Soporte por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg></a>
     <button class="fab" id="btn-add-fab" type="button" aria-label="Nuevo movimiento">
       <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
     </button>
@@ -783,13 +858,10 @@
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </div>
-      <div style="font-size:13px;color:var(--text-2);line-height:1.6">
-        <p style="margin-bottom:10px"><strong style="color:var(--text)">Android (Chrome):</strong> toca el menú ⋮ y elige <em>“Instalar app”</em> o <em>“Agregar a pantalla principal”</em>.</p>
-        <p><strong style="color:var(--text)">iPhone (Safari):</strong> toca <em>Compartir</em> y luego <em>“Agregar a inicio”</em>.</p>
-      </div>
-      <div class="sheet-actions" style="margin-top:18px">
-        <button type="button" class="btn btn-ghost btn-block js-close">Entendido</button>
-      </div>
+      <p class="card-sub" style="margin-bottom:6px">Queda como una app en tu celular: se abre en pantalla completa, sin barra del navegador, y se actualiza sola.</p>
+      <ol class="dlsteps" id="install-steps"></ol>
+      <button type="button" class="btn btn-ghost btn-block" id="btn-copy-link" style="margin-bottom:8px">Copiar enlace de la app</button>
+      <button type="button" class="btn btn-ghost btn-block js-close">Cerrar</button>
     </div>
   </div>
 
@@ -804,6 +876,8 @@
       </div>
     </div>
   </div>
+
+  <div class="tour" id="tour"><div class="tblock"></div><div class="tspot"></div><div class="ttip" role="dialog" aria-live="polite"></div></div>
 
   <div class="toast-wrap" id="toasts" aria-live="polite"></div>
 
@@ -1153,7 +1227,7 @@
     async function offerUpload(email) {
       const local = localDataFor(email);
       if (!local) return;
-      const ok = await confirmDialog('¿Subir tus datos a la nube?', 'Encontramos ' + local.tx.length + (local.tx.length === 1 ? ' movimiento guardado' : ' movimientos guardados') + ' en este dispositivo. Súbelos a tu cuenta para verlos en todos tus equipos.', 'Subir datos');
+      const ok = await confirmDialog('¿Subir tus datos a la nube?', 'Encontramos ' + local.tx.length + (local.tx.length === 1 ? ' movimiento guardado' : ' movimientos guardados') + ' en este dispositivo. ' + (local.tx.length === 1 ? 'Súbelo' : 'Súbelos') + ' a tu cuenta para verlos en todos tus equipos.', 'Subir datos');
       if (!ok) return;
       const list = local.tx.map(normalizeTx);
       state.transactions = list;
@@ -1334,6 +1408,7 @@
       state.month = ymOf(todayISO());
       updateSyncStatus();
       render();
+      maybeAppTour();
     }
 
     function showAuth() {
@@ -1345,6 +1420,7 @@
         ? 'Tus datos se guardan cifrados en la nube y se sincronizan entre tus dispositivos.'
         : 'Tus datos se guardan de forma privada en este dispositivo.<br>Descarga un respaldo desde el menú para no perderlos si cambias de equipo.';
       if (cloud.loadError) showAuthError('No se pudo conectar con el servidor. Revisa tu conexión a internet y recarga la página.');
+      maybeLoginTour();
     }
 
     function checkAuth() {
@@ -1779,18 +1855,199 @@
       reader.readAsText(file);
     }
 
-    // ================= INSTALACIÓN (PWA) =================
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+    // ================= DESCARGAR / INSTALAR LA APP (PWA) =================
+    let installEvt = null;
+    const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+    const UA = navigator.userAgent || '';
+    const isIOS = /iphone|ipad|ipod/i.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const inAppBrowser = /FBAN|FBAV|Instagram|Line\/|WhatsApp|TikTok|musical_ly|; wv\)/i.test(UA);
+    const appUrl = () => location.origin + location.pathname.replace(/[^/]*$/, '');
+    function markStandalone() { document.body.classList.toggle('standalone', isStandalone()); }
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; });
+    window.addEventListener('appinstalled', () => { installEvt = null; markStandalone(); closeModal('modal-install'); toast('App instalada. Búscala en tu pantalla de inicio'); });
+
     async function installApp() {
       $('#menu').classList.add('hidden');
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        try { await deferredPrompt.userChoice; } catch (e) {}
-        deferredPrompt = null;
-      } else {
-        openModal('modal-install');
+      if (isStandalone()) { toast('Ya estás usando la app instalada ✓'); return; }
+      if (installEvt) {
+        const e = installEvt; installEvt = null;
+        try { await e.prompt(); const r = await e.userChoice; if (r && r.outcome === 'accepted') toast('Instalando DL FINANZAS…'); }
+        catch (err) { installHelp(); }
+        return;
       }
+      installHelp();
+    }
+    function installHelp() {
+      let steps;
+      if (inAppBrowser) {
+        steps = '<li><span>Estás dentro de otra app (WhatsApp, Instagram…). Toca los <b>⋮</b> o <b>···</b> y elige <b>Abrir en el navegador</b> (Chrome o Safari).</span></li><li><span>Ya en el navegador, toca otra vez <b>Descargar app</b>.</span></li>';
+      } else if (isIOS) {
+        steps = '<li><span>Abre esta página en <b>Safari</b>.</span></li><li><span>Toca el botón <b>Compartir</b> <span style="font-size:16px">⬆️</span> (abajo en el centro).</span></li><li><span>Baja y toca <b>Agregar a inicio</b>.</span></li><li><span>Toca <b>Agregar</b>. El ícono de DL FINANZAS aparecerá en tu pantalla de inicio.</span></li>';
+      } else {
+        steps = '<li><span>Abre esta página en <b>Google Chrome</b>.</span></li><li><span>Toca los <b>⋮</b> (arriba a la derecha).</span></li><li><span>Toca <b>Instalar app</b> o <b>Agregar a la pantalla principal</b>.</span></li><li><span>Confirma con <b>Instalar</b>. La app aparecerá con su ícono, como cualquier otra.</span></li>';
+      }
+      $('#install-steps').innerHTML = steps;
+      openModal('modal-install');
+    }
+    async function copyAppLink() {
+      const url = appUrl();
+      try { await navigator.clipboard.writeText(url); toast('Enlace copiado'); } catch (e) { toast(url); }
+    }
+
+    // ================= GUÍA INTERACTIVA (con voz) =================
+    const VOZ = { ok: 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window, on: true, voz: null, tok: 0, t: null, bar: null };
+    try { VOZ.on = localStorage.getItem('dl_finanzas_tour_voz') !== '0'; } catch (e) {}
+    function elegirVoz() {
+      if (!VOZ.ok) return;
+      const L = speechSynthesis.getVoices() || [];
+      for (const p of ['es-CO', 'es-US', 'es-419', 'es-MX', 'es-ES', 'es']) {
+        const v = L.find((x) => (x.lang || '').replace('_', '-').toLowerCase().startsWith(p.toLowerCase()));
+        if (v) { VOZ.voz = v; return; }
+      }
+    }
+    if (VOZ.ok) { elegirVoz(); try { speechSynthesis.addEventListener('voiceschanged', elegirVoz); } catch (e) { speechSynthesis.onvoiceschanged = elegirVoz; } }
+    const limpioVoz = (s) => String(s || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').replace(/[›‹·•−]/g, ', ').replace(/\s+/g, ' ').replace(/\s+([,.;:])/g, '$1').trim();
+    function callar() {
+      VOZ.tok++; clearTimeout(VOZ.t);
+      if (VOZ.bar) VOZ.bar.style.transition = 'none';
+      if (VOZ.ok) try { speechSynthesis.cancel(); } catch (e) {}
+      const b = document.querySelector('#tour .tvoz'); if (b) b.classList.remove('hab');
+    }
+    function leer(st, i, last) {
+      if (!VOZ.ok || !VOZ.on || !TOUR) return;
+      callar(); const tok = VOZ.tok;
+      const tt = limpioVoz(st.t), texto = tt + (/[.!?¡¿:]$/.test(tt) ? ' ' : '. ') + limpioVoz(st.p);
+      const u = new SpeechSynthesisUtterance(texto);
+      u.lang = VOZ.voz ? VOZ.voz.lang : 'es-CO'; if (VOZ.voz) u.voice = VOZ.voz;
+      const est = Math.max(2500, texto.split(/\s+/).length * 400 + 1200);
+      const btn = document.querySelector('#tour .tvoz'), bar = VOZ.bar = document.querySelector('#tour .tbar i');
+      let empezo = false;
+      const avanzar = () => {
+        if (tok !== VOZ.tok || !TOUR || TOUR.i !== i) return;
+        if (btn) btn.classList.remove('hab');
+        if (!last) VOZ.t = setTimeout(() => { if (tok === VOZ.tok && TOUR && TOUR.i === i) showStep(i + 1, 1); }, 900);
+      };
+      u.onstart = () => {
+        if (tok !== VOZ.tok) return; empezo = true; if (btn) btn.classList.add('hab');
+        if (bar) { bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth; bar.style.transition = 'width ' + est + 'ms linear'; bar.style.width = '100%'; }
+        clearTimeout(VOZ.t); VOZ.t = setTimeout(() => { if (tok === VOZ.tok) { try { if (!speechSynthesis.speaking) avanzar(); } catch (e) {} } }, est + 4000);
+      };
+      u.onend = () => { if (empezo) avanzar(); };
+      u.onerror = (e) => { if (btn) btn.classList.remove('hab'); if (e && e.error === 'not-allowed' && bar) bar.parentNode.remove(); };
+      try { speechSynthesis.speak(u); } catch (e) { return; }
+      setTimeout(() => { if (tok === VOZ.tok && !empezo) { const b = document.querySelector('#tour .tbar'); if (b) b.remove(); } }, 1800);
+    }
+
+    let TOUR = null;
+    const tourKey = () => 'dl_finanzas_tour_' + ((state.session && (state.session.uid || state.session.email)) || 'local');
+    const isVisible = (el) => !!el && el.offsetParent !== null && el.getBoundingClientRect().width > 0;
+
+    function appSteps() {
+      const first = state.session && state.session.name ? state.session.name.split(' ')[0] : '';
+      const desktop = window.matchMedia('(min-width: 720px)').matches;
+      return [
+        { t: '¡Bienvenido' + (first ? ', ' + esc(first) : '') + ' a DL FINANZAS!', big: '👋', p: 'Te muestro en 1 minuto cómo se usa la app. La guía habla y avanza sola, o usa los botones. Toca el parlante 🔊 para silenciarla.' },
+        { el: desktop ? '#btn-add-desktop' : '#btn-add-fab', t: '➕ Registra tus movimientos', p: 'Toca aquí para agregar un <b>ingreso</b>, un <b>gasto fijo</b> (arriendo, servicios) o un <b>gasto variable</b> (mercado, gustos). Si cobras o pagas cada quince días, elige <b>Quincenal</b> y se cuenta doble en el mes.' },
+        { el: '#card-month', t: '📅 Mes a mes', p: 'Todo se calcula por mes. Usa las flechas para ver meses anteriores o planear el siguiente.' },
+        { el: '#card-hero', t: '💰 Tu resumen', p: 'Aquí ves tu <b>balance disponible</b>, cuánto estás ahorrando y cómo vas frente al mes anterior.' },
+        { el: '#card-donut', t: '🍩 ¿En qué se va el dinero?', p: 'El gráfico te muestra qué categorías se llevan la mayor parte de tus gastos.' },
+        { el: '#card-budget', t: '🚦 Semáforo de presupuesto', p: 'Ponle un <b>tope mensual</b> a cada categoría. Verde vas bien, amarillo te estás acercando y rojo ya te pasaste.' },
+        { el: '#card-trend', t: '📈 Tendencia', p: 'Compara tus ingresos y egresos de los últimos 6 meses. Toca un mes para abrirlo.' },
+        { el: '#card-tx', t: '🧾 Tus movimientos', p: 'Busca, filtra y <b>toca cualquier movimiento</b> para editarlo o eliminarlo.' },
+        { el: '#btn-currency', t: '💱 Moneda', p: 'Cambia la moneda en la que se muestran los valores: pesos, dólares, euros y más.' },
+        { el: '#btn-theme-app', t: '🌗 Modo día o noche', p: 'Cambia entre el tema claro y el oscuro cuando quieras.' },
+        { el: '#btn-menu', t: '☰ Tu menú', p: 'Desde aquí ajustas los topes, exportas a Excel, descargas tu respaldo, instalas la app, vuelves a ver esta guía o pides <b>soporte por WhatsApp</b>.' },
+        { t: '¡Listo para empezar! 🚀', big: '✅', p: 'Empieza registrando tu primer ingreso del mes. Si necesitas ayuda, escríbenos por WhatsApp con el botón verde.', fin: 'Registrar mi primer movimiento', finAct: () => openTxModal() }
+      ];
+    }
+    function loginSteps() {
+      const st = [
+        { el: '#tab-login', t: '🔑 Iniciar sesión', p: 'Si ya tienes cuenta, ingresa aquí con tu <b>correo y contraseña</b>.', tab: 'login' },
+        { el: '#tab-register', t: '✨ ¿Eres nuevo? Crea tu cuenta', p: 'Regístrate <b>gratis</b> con tu nombre, correo y una contraseña. Solo tarda un minuto.', tab: 'register' },
+        { el: '#reg-legal', t: '✅ Acepta los términos', p: 'Para crear la cuenta marca la casilla de aceptación. Puedes leer los términos y la política de privacidad cuando quieras.', tab: 'register' }
+      ];
+      if (cloud.enabled) st.push({ el: '#btn-google', t: 'Entra con Google', p: 'También puedes ingresar con un solo toque usando tu cuenta de <b>Google</b>.', tab: 'login' });
+      st.push({ el: '.wafab', t: '💬 ¿Necesitas ayuda?', p: 'Escríbenos por WhatsApp y te ayudamos a ingresar.', fin: 'Entendido', tab: 'login' });
+      return st;
+    }
+
+    function startTour(kind) {
+      if (TOUR) return;
+      $('#menu').classList.add('hidden');
+      const steps = kind === 'login' ? loginSteps() : appSteps();
+      TOUR = { steps, i: 0, kind };
+      if (kind === 'login') { try { localStorage.setItem('dl_finanzas_tour_login', '1'); } catch (e) {} }
+      else { try { localStorage.setItem(tourKey(), '1'); } catch (e) {} }
+      $('#tour').classList.add('on');
+      showStep(0, 1);
+    }
+    function endTour(skip) {
+      callar();
+      if (!TOUR) return;
+      const st = TOUR.steps[TOUR.i], t = TOUR; TOUR = null;
+      $('#tour').classList.remove('on');
+      if (t.kind === 'login') switchTab('login');
+      if (!skip && st && st.finAct) st.finAct();
+    }
+    async function showStep(i, dir) {
+      if (!TOUR) return;
+      const steps = TOUR.steps;
+      if (i < 0) i = 0;
+      if (i >= steps.length) { endTour(false); return; }
+      const st = steps[i]; TOUR.i = i;
+      if (st.tab) switchTab(st.tab);
+      await new Promise((r) => setTimeout(r, st.tab ? 120 : 20));
+      const el = st.el ? document.querySelector(st.el) : null;
+      if (st.el && !isVisible(el)) return showStep(i + (dir || 1), dir || 1);
+      if (el) { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); await new Promise((r) => setTimeout(r, 340)); }
+      if (!TOUR || TOUR.i !== i) return;
+      const tip = $('#tour .ttip');
+      const n = steps.length, last = i === n - 1;
+      tip.className = 'ttip' + (el ? '' : ' center'); tip.style.transform = '';
+      tip.innerHTML = (VOZ.ok ? '<button class="tvoz" type="button" data-tv aria-label="' + (VOZ.on ? 'Silenciar la guía' : 'Activar la voz') + '">' + (VOZ.on ? '🔊' : '🔇') + '</button>' : '') +
+        '<div class="tstep">Guía · ' + (i + 1) + ' de ' + n + '</div>' + (st.big ? '<div class="tbig">' + st.big + '</div>' : '') +
+        '<h4>' + st.t + '</h4><p>' + st.p + '</p>' +
+        '<div class="tacts">' + (last ? '' : '<button class="tskip" type="button" data-ts>Saltar guía</button>') +
+        (i > 0 ? '<button class="tb" type="button" data-tp>‹</button>' : '') +
+        '<button class="tb tn" type="button" data-tn>' + (last ? (st.fin || 'Terminar') : (i === 0 ? 'Empezar ›' : 'Siguiente ›')) + '</button></div>' +
+        '<div class="tdots">' + steps.map((_, j) => '<i class="' + (j === i ? 'on' : '') + '"></i>').join('') + '</div>' +
+        (VOZ.ok && VOZ.on && !last ? '<div class="tbar"><i></i></div>' : '');
+      tip.querySelector('[data-tn]').onclick = () => { callar(); last ? endTour(false) : showStep(i + 1, 1); };
+      const tp = tip.querySelector('[data-tp]'); if (tp) tp.onclick = () => { callar(); showStep(i - 1, -1); };
+      const ts = tip.querySelector('[data-ts]'); if (ts) ts.onclick = () => endTour(true);
+      const tv = tip.querySelector('[data-tv]');
+      if (tv) tv.onclick = () => { VOZ.on = !VOZ.on; try { localStorage.setItem('dl_finanzas_tour_voz', VOZ.on ? '1' : '0'); } catch (e) {} if (!VOZ.on) callar(); showStep(i, 1); };
+      placeTip(el);
+      leer(st, i, last);
+    }
+    function placeTip(el) {
+      const spot = $('#tour .tspot'), tip = $('#tour .ttip');
+      if (!el) { spot.classList.add('none'); tip.style.left = ''; tip.style.top = ''; return; }
+      spot.classList.remove('none');
+      const r = el.getBoundingClientRect(), pad = 6, vw = innerWidth, vh = innerHeight;
+      const top = Math.max(4, r.top - pad), h = Math.min(r.height + pad * 2, vh * 0.6);
+      spot.style.left = (r.left - pad) + 'px'; spot.style.top = top + 'px'; spot.style.width = (r.width + pad * 2) + 'px'; spot.style.height = h + 'px';
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      let tt = top + h + 12; if (tt + th > vh - 8) tt = top - th - 12; if (tt < 8) tt = Math.max(8, Math.min(vh - th - 8, top + h + 12));
+      let tl = r.left + r.width / 2 - tw / 2; tl = Math.max(12, Math.min(vw - tw - 12, tl));
+      tip.style.left = tl + 'px'; tip.style.top = tt + 'px';
+    }
+    addEventListener('resize', () => { if (TOUR) { const st = TOUR.steps[TOUR.i]; placeTip(st && st.el ? document.querySelector(st.el) : null); } });
+    addEventListener('scroll', () => { if (TOUR) { const st = TOUR.steps[TOUR.i]; if (st && st.el) placeTip(document.querySelector(st.el)); } }, { passive: true });
+
+    function maybeAppTour() {
+      let seen = null; try { seen = localStorage.getItem(tourKey()); } catch (e) {}
+      if (seen || TOUR) return;
+      setTimeout(() => {
+        if (TOUR || $('#app-screen').classList.contains('hidden')) return;
+        if ($$('.modal').some((m) => !m.classList.contains('hidden'))) { setTimeout(maybeAppTour, 3000); return; }
+        startTour('app');
+      }, 900);
+    }
+    function maybeLoginTour() {
+      let seen = null; try { seen = localStorage.getItem('dl_finanzas_tour_login'); } catch (e) {}
+      if (seen) return;
+      setTimeout(() => { if (!TOUR && !$('#auth-screen').classList.contains('hidden')) startTour('login'); }, 1400);
     }
 
     // ================= EVENTOS =================
@@ -1852,7 +2109,14 @@
       $('#btn-export').onclick = () => { menu.classList.add('hidden'); exportJSON(); };
       $('#btn-export-csv').onclick = () => { menu.classList.add('hidden'); exportCSV(); };
       $('#input-import').addEventListener('change', (e) => { menu.classList.add('hidden'); const f = e.target.files[0]; if (f) importJSON(f); e.target.value = ''; });
-      $('#btn-install').onclick = installApp;
+      document.addEventListener('click', (e) => {
+        const ins = e.target.closest('[data-install]');
+        if (ins) { e.preventDefault(); installApp(); return; }
+        const g = e.target.closest('[data-guide]');
+        if (g) { e.preventDefault(); $('#menu').classList.add('hidden'); startTour('app'); }
+      });
+      $('#btn-copy-link').onclick = copyAppLink;
+      $('#btn-auth-help').onclick = () => startTour('login');
       $('#btn-logout').onclick = async () => {
         menu.classList.add('hidden');
         if (!(await confirmDialog('¿Cerrar sesión?', cloud.enabled ? 'Tus datos quedan guardados en la nube.' : 'Tus datos quedan guardados en este dispositivo.', 'Cerrar sesión'))) return;
@@ -1870,6 +2134,7 @@
       });
       document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
+        if (TOUR) { endTour(true); return; }
         const open = $$('.modal').filter((m) => !m.classList.contains('hidden')).pop();
         if (open) { if (open.id === 'modal-confirm') $('#confirm-cancel').click(); else closeModal(open.id); }
         else menu.classList.add('hidden');
@@ -1885,6 +2150,7 @@
 
     async function init() {
       applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+      markStandalone();
       bind();
       const hasCloud = await initCloud();
       if (hasCloud) {
