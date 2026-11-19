@@ -251,6 +251,54 @@
     .month-label { font-size: 18px; font-weight: 800; letter-spacing: -.3px; text-align: center; }
     .month-label small { display: block; font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: none; letter-spacing: 0; }
 
+    /* Planes */
+    .plan-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--text-2); }
+    .plan-badge.pro { color: #38bdf8; border-color: rgba(56,189,248,.5); background: rgba(56,189,248,.1); }
+    .plan-badge.premium { color: #f5c451; border-color: rgba(245,196,81,.55); background: rgba(245,196,81,.12); }
+    .menu-plan { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+    .menu-plan small { font-size: 11px; color: var(--text-3); font-weight: 700; }
+    .menu button.menu-upgrade { color: #f5c451; font-weight: 800; }
+    .launch { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; margin-bottom: 14px; background: linear-gradient(135deg, rgba(245,196,81,.18), rgba(16,185,129,.14)); border: 1px solid rgba(245,196,81,.45); }
+    .launch b { display: block; font-size: 14px; font-weight: 800; }
+    .launch span.l-sub { font-size: 12px; color: var(--text-2); }
+    .launch .l-off { margin-left: auto; font-size: 18px; font-weight: 900; color: #f5c451; white-space: nowrap; }
+    .plans { display: grid; gap: 12px; }
+    @media (min-width: 760px) { .plans { grid-template-columns: repeat(3, 1fr); } }
+    .plan { position: relative; border: 1px solid var(--border-strong); border-radius: 18px; padding: 16px; background: var(--surface-2); display: flex; flex-direction: column; }
+    .plan.pro { border-color: rgba(56,189,248,.55); }
+    .plan.premium { border-color: rgba(245,196,81,.7); box-shadow: 0 0 0 1px rgba(245,196,81,.25), 0 10px 30px rgba(245,196,81,.12); }
+    .plan .ribbon { position: absolute; top: -10px; right: 14px; font-size: 10px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #38bdf8; color: #04121c; }
+    .plan.premium .ribbon { background: linear-gradient(135deg, #f5c451, #f59e0b); color: #1c1204; }
+    .plan h4 { font-size: 16px; font-weight: 800; }
+    .plan .p-desc { font-size: 12px; color: var(--text-2); margin: 2px 0 10px; }
+    .plan .p-old { font-size: 13px; color: var(--text-3); text-decoration: line-through; font-weight: 700; }
+    .plan .p-price { font-size: 26px; font-weight: 900; letter-spacing: -.5px; line-height: 1.1; }
+    .plan .p-price small { font-size: 12px; font-weight: 700; color: var(--text-2); }
+    .plan .p-save { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 800; color: var(--accent-text); }
+    .plan ul { list-style: none; padding: 0; margin: 12px 0 14px; display: grid; gap: 7px; font-size: 13px; }
+    .plan li { display: flex; gap: 8px; align-items: flex-start; }
+    .plan li::before { content: '✓'; color: var(--accent); font-weight: 900; }
+    .plan li.no { color: var(--text-3); }
+    .plan li.no::before { content: '✕'; color: var(--text-3); }
+    .plan .btn { margin-top: auto; }
+    .btn-gold { background: linear-gradient(135deg, #f5c451, #f59e0b); color: #1c1204; font-weight: 800; }
+    .plans-note { font-size: 12px; color: var(--text-3); text-align: center; margin-top: 12px; }
+    .locked { position: relative; }
+    .lock-over { position: absolute; inset: 0; border-radius: 22px; display: grid; place-items: center; text-align: center; padding: 20px; background: color-mix(in srgb, var(--surface) 70%, transparent); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 2; }
+    .lock-over p { font-size: 13px; color: var(--text-2); margin: 6px 0 12px; }
+    .usage { margin-top: 10px; }
+    .usage-bar { height: 6px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+    .usage-bar i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+    .usage-row { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-2); margin-bottom: 4px; }
+    .greet-up { display: inline-block; margin-top: 10px; background: none; border: 0; padding: 0; color: #f5c451; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
+    .admin-row { border: 1px solid var(--border); border-radius: 14px; padding: 12px; display: grid; gap: 8px; }
+    .admin-row .a-top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+    .admin-row .a-name { font-weight: 800; font-size: 14px; }
+    .admin-row .a-mail { font-size: 12px; color: var(--text-2); word-break: break-all; }
+    .admin-row .a-until { font-size: 11px; color: var(--text-3); font-weight: 700; }
+    .admin-row .a-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .admin-list { display: grid; gap: 10px; max-height: 55vh; overflow: auto; }
+
     /* Saludo personalizado */
     .greet { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--accent-soft), transparent 70%), var(--surface); }
     .greet-top { display: flex; align-items: center; gap: 12px; }
@@ -574,7 +622,16 @@
                 <strong id="user-name"></strong>
                 <span id="user-sub"></span>
                 <span id="sync-status" style="display:block;margin-top:6px;font-size:11px;font-weight:700"></span>
+                <div class="menu-plan"><span class="plan-badge" id="menu-plan-badge">Gratis</span><small id="menu-plan-info"></small></div>
               </div>
+              <button type="button" id="btn-plans" class="menu-upgrade">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 16l-2-9 5 4 4-7 4 7 5-4-2 9zM5 20h14"/></svg>
+                <span id="btn-plans-text">Mejorar mi plan</span>
+              </button>
+              <button type="button" id="btn-admin" class="hidden">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
+                Panel de administrador
+              </button>
               <button type="button" id="btn-edit-name">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 9a7 7 0 0114 0"/></svg>
                 Cambiar mi nombre
@@ -638,11 +695,16 @@
           </div>
         </div>
         <p class="greet-tip" id="greet-tip"></p>
+        <div class="usage hidden" id="greet-usage">
+          <div class="usage-row"><span>Plan Gratis · movimientos de este mes</span><span id="greet-usage-num">0/50</span></div>
+          <div class="usage-bar"><i id="greet-usage-bar" style="width:0%"></i></div>
+        </div>
         <div class="greet-actions">
           <button type="button" class="greet-chip" data-flow="ingreso"><span>💵</span>Ingreso</button>
           <button type="button" class="greet-chip" data-flow="fijo"><span>🏠</span>Gasto fijo</button>
           <button type="button" class="greet-chip" data-flow="variable"><span>🛒</span>Gasto variable</button>
         </div>
+        <button type="button" class="greet-up hidden" id="greet-up">👑 Oferta de lanzamiento: planes con 50% de descuento ›</button>
       </section>
 
       <!-- Navegación por mes -->
@@ -719,7 +781,8 @@
       </div>
 
       <!-- Tendencia -->
-      <section class="card" id="card-trend">
+      <section class="card locked" id="card-trend">
+        <div class="lock-over hidden" id="trend-lock"><div><div style="font-size:28px">👑</div><b>Tendencia de 6 meses</b><p>Compara tus ingresos y egresos mes a mes con el plan Premium.</p><button type="button" class="btn btn-gold btn-sm" data-upgrade="premium">Ver planes</button></div></div>
         <div class="card-head">
           <div>
             <h3 class="card-title">Tendencia de 6 meses</h3>
@@ -885,6 +948,95 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: PLANES ================= -->
+  <div id="modal-plans" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="sheet" style="max-width:980px">
+      <div class="sheet-head">
+        <h3>Planes DL FINANZAS</h3>
+        <button class="icon-btn sm js-close" type="button" aria-label="Cerrar"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="launch">
+        <span style="font-size:26px">🚀</span>
+        <div><b>Oferta de lanzamiento</b><span class="l-sub">Precio especial por ser de los primeros usuarios.</span></div>
+        <span class="l-off">-50%</span>
+      </div>
+      <p class="card-sub" id="plans-reason" style="margin-bottom:12px;display:none"></p>
+      <div class="plans">
+        <div class="plan" data-plan="free">
+          <h4>Gratis</h4>
+          <p class="p-desc">Para empezar a organizar tu dinero.</p>
+          <p class="p-price">$0 <small>/ siempre</small></p>
+          <ul>
+            <li>Hasta 50 movimientos al mes</li>
+            <li>Resumen, balance y tasa de ahorro</li>
+            <li>Gráfica por categorías y topes</li>
+            <li>Sincronización en la nube</li>
+            <li class="no">Exportar a Excel</li>
+            <li class="no">Respaldo y restauración</li>
+            <li class="no">Tendencia de 6 meses</li>
+            <li class="no">Soporte prioritario</li>
+          </ul>
+          <button type="button" class="btn btn-ghost btn-block" data-choose="free">Plan actual</button>
+        </div>
+        <div class="plan pro" data-plan="pro">
+          <span class="ribbon">Más popular</span>
+          <h4>Pro</h4>
+          <p class="p-desc">Sin límites para tu día a día.</p>
+          <p class="p-old">$20.000</p>
+          <p class="p-price">$10.000 <small>/ mes</small></p>
+          <span class="p-save">Ahorras $10.000 al mes</span>
+          <ul>
+            <li><b>Movimientos ilimitados</b></li>
+            <li>Todo lo del plan Gratis</li>
+            <li>Exportar a Excel (.csv)</li>
+            <li>Descargar y restaurar respaldos</li>
+            <li class="no">Tendencia de 6 meses</li>
+            <li class="no">Copiar fijos al mes nuevo</li>
+            <li class="no">Soporte prioritario</li>
+          </ul>
+          <button type="button" class="btn btn-primary btn-block" data-choose="pro">Quiero el Pro</button>
+        </div>
+        <div class="plan premium" data-plan="premium">
+          <span class="ribbon">Todo incluido</span>
+          <h4>Premium 👑</h4>
+          <p class="p-desc">Toda la app y tu asistente con soporte.</p>
+          <p class="p-old">$40.000</p>
+          <p class="p-price">$20.000 <small>/ mes</small></p>
+          <span class="p-save">Ahorras $20.000 al mes</span>
+          <ul>
+            <li><b>Toda la app al 100%</b></li>
+            <li>Todo lo del plan Pro</li>
+            <li>Tendencia de 6 meses</li>
+            <li>Copiar ingresos y gastos fijos al mes nuevo en un toque</li>
+            <li><b>Soporte prioritario por WhatsApp</b></li>
+            <li>Acceso anticipado a nuevas funciones</li>
+          </ul>
+          <button type="button" class="btn btn-gold btn-block" data-choose="premium">Quiero el Premium</button>
+        </div>
+      </div>
+      <p class="plans-note">Pagas por WhatsApp (te enviamos los datos de pago) y activamos tu plan el mismo día. Sin renovación automática.</p>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADMINISTRADOR ================= -->
+  <div id="modal-admin" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="sheet" style="max-width:640px">
+      <div class="sheet-head">
+        <h3>Panel de administrador</h3>
+        <button class="icon-btn sm js-close" type="button" aria-label="Cerrar"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <p class="card-sub" style="margin-bottom:10px">Busca al usuario que te pagó y actívale el plan. Si ya tiene el mismo plan vigente, el tiempo se suma.</p>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:12px">
+        <input type="search" id="admin-search" class="input" placeholder="Buscar por nombre o correo">
+        <select id="admin-months" class="input" style="width:auto">
+          <option value="1">1 mes</option><option value="3">3 meses</option><option value="6">6 meses</option><option value="12">12 meses</option>
+        </select>
+      </div>
+      <p class="card-sub" id="admin-stats" style="margin-bottom:10px"></p>
+      <div class="admin-list" id="admin-list"></div>
+    </div>
+  </div>
+
   <!-- ================= MODAL: NOMBRE ================= -->
   <div id="modal-name" class="modal hidden" role="dialog" aria-modal="true">
     <div class="sheet sm">
@@ -1038,6 +1190,7 @@
 
     // ================= ESTADO =================
     const state = {
+      plan: 'free', planUntil: null,
       session: null,
       transactions: [],
       limits: {},
@@ -1317,11 +1470,13 @@
       state.session = { name: profile.name, email: profile.email || user.email, idNumber: profile.idNumber || '', uid: user.uid };
       state.limits = profile.limits || { ...DEFAULT_LIMITS };
       state.currency = CURRENCIES[profile.currency] ? profile.currency : 'COP';
+      state.plan = profile.plan || 'free'; state.planUntil = profile.planUntil || null;
       state.transactions = [];
       showApp();
 
       cloud.unsubUser = userDoc().onSnapshot((d) => {
         const p = d.data() || {};
+        state.plan = p.plan || 'free'; state.planUntil = p.planUntil || null;
         if (p.limits) state.limits = p.limits;
         if (p.currency && CURRENCIES[p.currency]) state.currency = p.currency;
         if (p.name && state.session) {
@@ -1527,6 +1682,139 @@
       }
     }
 
+    // ================= PLANES =================
+    const FREE_TX_LIMIT = 50;
+    const ADMIN_EMAILS = ['d.l.company.2026@gmail.com'];
+    const WA_NUMBER = '573218641539';
+    const PLAN_INFO = {
+      free: { name: 'Gratis', price: '$0' },
+      pro: { name: 'Pro', price: '$10.000/mes (precio normal $20.000)' },
+      premium: { name: 'Premium', price: '$20.000/mes (precio normal $40.000)' }
+    };
+    const PLAN_FEATURES = {
+      free: [],
+      pro: ['unlimited', 'excel', 'backup'],
+      premium: ['unlimited', 'excel', 'backup', 'trend', 'recurring', 'support']
+    };
+    function isAdmin() { return !!(state.session && ADMIN_EMAILS.includes(String(state.session.email || '').toLowerCase())); }
+    function currentPlan() {
+      if (isAdmin()) return 'premium';
+      const p = state.plan;
+      if (p !== 'pro' && p !== 'premium') return 'free';
+      if (state.planUntil && new Date(state.planUntil) < new Date()) return 'free';
+      return p;
+    }
+    function planAllows(f) { return PLAN_FEATURES[currentPlan()].includes(f); }
+    function fmtDate(iso) { try { return new Date(iso).toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return ''; } }
+
+    function renderPlanUI() {
+      if (!state.session) return;
+      const p = currentPlan();
+      const badge = $('#menu-plan-badge');
+      badge.className = 'plan-badge ' + p;
+      badge.textContent = (p === 'premium' ? '👑 ' : '') + 'Plan ' + PLAN_INFO[p].name;
+      const used = state.transactions.filter((t) => ymOf(t.date) === ymOf(todayISO())).length;
+      $('#menu-plan-info').textContent = isAdmin() ? 'Administrador' : p === 'free' ? used + '/' + FREE_TX_LIMIT + ' este mes' : (state.planUntil ? 'Vence ' + fmtDate(state.planUntil) : '');
+      $('#btn-plans-text').textContent = p === 'premium' ? 'Ver planes' : 'Mejorar mi plan';
+      $('#btn-admin').classList.toggle('hidden', !isAdmin() || !cloud.uid);
+      const free = p === 'free';
+      $('#greet-usage').classList.toggle('hidden', !free);
+      $('#greet-up').classList.toggle('hidden', p === 'premium');
+      $('#greet-up').textContent = free ? '👑 Oferta de lanzamiento: planes con 50% de descuento ›' : '👑 Pásate a Premium con 50% de descuento ›';
+      if (free) {
+        $('#greet-usage-num').textContent = Math.min(used, FREE_TX_LIMIT) + '/' + FREE_TX_LIMIT;
+        const pct = Math.min(100, Math.round(used / FREE_TX_LIMIT * 100));
+        const bar = $('#greet-usage-bar');
+        bar.style.width = pct + '%';
+        bar.style.background = pct >= 90 ? 'var(--danger)' : pct >= 70 ? 'var(--warn)' : 'var(--accent)';
+      }
+      $$('.wafab').forEach((a) => {
+        const msg = p === 'premium' ? 'Hola DL Company, soy cliente PREMIUM de DL FINANZAS (' + (state.session.email || '') + ') y necesito soporte prioritario' : 'Hola DL Company, necesito ayuda con DL FINANZAS';
+        a.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+      });
+    }
+
+    function openPlans(reason) {
+      $('#menu').classList.add('hidden');
+      const r = $('#plans-reason');
+      r.style.display = reason ? 'block' : 'none';
+      r.textContent = reason ? '🔒 ' + reason : '';
+      const p = currentPlan();
+      const rank = { free: 0, pro: 1, premium: 2 };
+      $$('#modal-plans [data-choose]').forEach((b) => {
+        const k = b.dataset.choose;
+        if (k === p) { b.textContent = 'Tu plan actual'; b.disabled = true; }
+        else if (rank[k] < rank[p]) { b.textContent = 'Incluido en tu plan'; b.disabled = true; }
+        else { b.disabled = false; b.textContent = k === 'pro' ? 'Quiero el Pro' : k === 'premium' ? 'Quiero el Premium' : 'Plan Gratis'; }
+      });
+      openModal('modal-plans');
+    }
+
+    function choosePlan(k) {
+      if (k === 'free') return;
+      const s = state.session || {};
+      const msg = 'Hola DL Company 👋, quiero activar el plan ' + PLAN_INFO[k].name.toUpperCase() + ' de DL FINANZAS con la oferta de lanzamiento: ' + PLAN_INFO[k].price + '.\n\nMi nombre: ' + (s.name || '') + '\nMi correo en la app: ' + (s.email || '');
+      window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    }
+
+    // ---------- Administrador ----------
+    const admin = { users: [] };
+    async function openAdmin() {
+      $('#menu').classList.add('hidden');
+      if (!isAdmin() || !cloud.uid) return;
+      $('#admin-list').innerHTML = '<p class="card-sub">Cargando usuarios…</p>';
+      $('#admin-stats').textContent = '';
+      openModal('modal-admin');
+      try {
+        const snap = await cloud.db.collection('users').get();
+        admin.users = snap.docs.map((d) => ({ uid: d.id, ...d.data() }));
+        renderAdmin();
+      } catch (e) {
+        console.warn(e);
+        $('#admin-list').innerHTML = '<p class="card-sub" style="color:var(--danger)">No se pudieron cargar los usuarios. Revisa que publicaste las reglas nuevas de Firestore.</p>';
+      }
+    }
+    function effPlan(u) { return (u.plan === 'pro' || u.plan === 'premium') && (!u.planUntil || new Date(u.planUntil) >= new Date()) ? u.plan : 'free'; }
+    function renderAdmin() {
+      const q = $('#admin-search').value.trim().toLowerCase();
+      const list = admin.users.filter((u) => !q || String(u.name || '').toLowerCase().includes(q) || String(u.email || '').toLowerCase().includes(q))
+        .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+      const c = { free: 0, pro: 0, premium: 0 };
+      admin.users.forEach((u) => c[effPlan(u)]++);
+      $('#admin-stats').textContent = admin.users.length + ' usuarios · ' + c.free + ' Gratis · ' + c.pro + ' Pro · ' + c.premium + ' Premium';
+      $('#admin-list').innerHTML = list.length ? list.map((u) => {
+        const p = effPlan(u);
+        return '<div class="admin-row"><div class="a-top"><div><div class="a-name">' + esc(u.name || 'Sin nombre') + '</div><div class="a-mail">' + esc(u.email || '') + '</div>' +
+          (p !== 'free' && u.planUntil ? '<div class="a-until">Vence ' + esc(fmtDate(u.planUntil)) + '</div>' : (u.plan && u.plan !== 'free' && p === 'free' ? '<div class="a-until" style="color:var(--danger)">Plan vencido</div>' : '')) +
+          '</div><span class="plan-badge ' + p + '">' + PLAN_INFO[p].name + '</span></div>' +
+          '<div class="a-btns"><button type="button" class="btn btn-sm btn-ghost" data-set="free" data-uid="' + esc(u.uid) + '">Gratis</button>' +
+          '<button type="button" class="btn btn-sm btn-primary" data-set="pro" data-uid="' + esc(u.uid) + '">Activar Pro</button>' +
+          '<button type="button" class="btn btn-sm btn-gold" data-set="premium" data-uid="' + esc(u.uid) + '">Premium</button></div></div>';
+      }).join('') : '<p class="card-sub">No hay usuarios con ese nombre o correo.</p>';
+    }
+    async function adminSetPlan(uidv, plan) {
+      const u = admin.users.find((x) => x.uid === uidv);
+      if (!u) return;
+      const months = Number($('#admin-months').value) || 1;
+      let data;
+      if (plan === 'free') {
+        if (!(await confirmDialog('¿Pasar a Gratis?', (u.name || u.email) + ' perderá los beneficios de su plan.', 'Pasar a Gratis', true))) return;
+        data = { plan: 'free', planUntil: null };
+      } else {
+        const now = new Date();
+        const base = effPlan(u) === plan && u.planUntil && new Date(u.planUntil) > now ? new Date(u.planUntil) : now;
+        base.setMonth(base.getMonth() + months);
+        if (!(await confirmDialog('¿Activar ' + PLAN_INFO[plan].name + '?', (u.name || u.email) + ' · ' + months + (months === 1 ? ' mes' : ' meses') + '. Quedará activo hasta el ' + fmtDate(base.toISOString()) + '.', 'Activar'))) return;
+        data = { plan, planUntil: base.toISOString() };
+      }
+      try {
+        await cloud.db.collection('users').doc(uidv).update({ ...data, planUpdatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+        Object.assign(u, data);
+        renderAdmin();
+        toast(plan === 'free' ? 'Usuario pasado a Gratis' : 'Plan ' + PLAN_INFO[plan].name + ' activado');
+      } catch (e) { console.warn(e); toast('No se pudo guardar. Revisa las reglas de Firestore.', 'error'); }
+    }
+
     // ================= PERFIL =================
     function openNameModal() {
       $('#menu').classList.add('hidden');
@@ -1632,7 +1920,7 @@
 
     // ================= RENDER =================
     function render() {
-      try { renderGreeting(); } catch (e) {}
+      try { renderGreeting(); renderPlanUI(); } catch (e) { console.warn(e); }
       $('#label-currency').textContent = state.currency;
       $$('.js-currency').forEach((el) => { el.textContent = state.currency; });
       $('#tx-amount-prefix').textContent = (CURRENCIES[state.currency] || CURRENCIES.COP).symbol;
@@ -1691,6 +1979,7 @@
     }
 
     function copyRecurring() {
+      if (!planAllows('recurring')) return openPlans('Copiar tus ingresos y gastos fijos al mes nuevo en un toque es una función Premium.');
       const c = recurringCandidates();
       const dim = daysInMonth(state.month);
       const added = c.map((t) => {
@@ -1761,6 +2050,7 @@
     }
 
     function renderTrend() {
+      $('#trend-lock').classList.toggle('hidden', planAllows('trend'));
       const months = [];
       for (let i = 5; i >= 0; i--) months.push(ymShift(state.month, -i));
       const data = months.map((m) => { const st = monthStats(m); return { m, inc: st.income, exp: st.expenses }; });
@@ -1901,6 +2191,10 @@
         if (!category) return txError('Escribe el nombre de la nueva categoría.');
       }
       if (!date) return txError('Selecciona la fecha.');
+      if (!state.editingId && !planAllows('unlimited')) {
+        const used = state.transactions.filter((t) => ymOf(t.date) === ymOf(date)).length;
+        if (used >= FREE_TX_LIMIT) { closeModal('modal-tx'); openPlans('Llegaste a los ' + FREE_TX_LIMIT + ' movimientos del plan Gratis en este mes. Pásate a Pro para registrar sin límites.'); return; }
+      }
       const data = normalizeTx({
         id: state.editingId || uid(), flow: state.flow, frequency: state.freq,
         concept: concept || category, amount, category, date
@@ -1983,12 +2277,14 @@
     }
 
     function exportJSON() {
+      if (!planAllows('backup')) return openPlans('Los respaldos están disponibles desde el plan Pro.');
       const data = { app: 'DL FINANZAS', version: 2, exportedAt: new Date().toISOString(), currency: state.currency, limits: state.limits, transactions: state.transactions };
       download('DL_Finanzas_Respaldo_' + todayISO() + '.json', JSON.stringify(data, null, 2), 'application/json');
       toast('Respaldo descargado');
     }
 
     function exportCSV() {
+      if (!planAllows('excel')) return openPlans('Exportar a Excel está disponible desde el plan Pro.');
       const q = (v) => '"' + String(v).replace(/"/g, '""') + '"';
       const rows = [['Fecha', 'Tipo', 'Concepto', 'Categoría', 'Modalidad', 'Monto', 'Valor en el mes'].map(q).join(';')];
       state.transactions.slice().sort((a, b) => (a.date < b.date ? 1 : -1)).forEach((t) => {
@@ -2000,6 +2296,7 @@
     }
 
     function importJSON(file) {
+      if (!planAllows('backup')) return openPlans('Restaurar respaldos está disponible desde el plan Pro.');
       const reader = new FileReader();
       reader.onload = async (evt) => {
         let data;
@@ -2254,6 +2551,13 @@
       $('#btn-limits').onclick = openLimits;
       $('#btn-limits-menu').onclick = openLimits;
       $('#btn-edit-name').onclick = openNameModal;
+      $('#btn-plans').onclick = () => openPlans();
+      $('#greet-up').onclick = () => openPlans();
+      $('#btn-admin').onclick = openAdmin;
+      $('#modal-plans').addEventListener('click', (e) => { const b = e.target.closest('[data-choose]'); if (b && !b.disabled) choosePlan(b.dataset.choose); });
+      document.addEventListener('click', (e) => { const b = e.target.closest('[data-upgrade]'); if (b) openPlans(); });
+      $('#admin-search').addEventListener('input', renderAdmin);
+      $('#admin-list').addEventListener('click', (e) => { const b = e.target.closest('[data-set]'); if (b) adminSetPlan(b.dataset.uid, b.dataset.set); });
       $('#form-name').addEventListener('submit', saveName);
       $('#btn-delete-account').onclick = deleteAccount;
       $('#form-limits').addEventListener('submit', submitLimits);
