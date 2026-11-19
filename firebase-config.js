@@ -18,4 +18,11 @@
 // Estos datos no son secretos: la seguridad la dan las reglas de
 // firestore.rules y los dominios autorizados en Firebase.
 // ===================================================================
-window.DL_FIREBASE_CONFIG = null;
+window.DL_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyC4siXd2L7ZZLHTMnOj3eiUZDyEVExbDQQ",
+  authDomain: "dl-finanzas.firebaseapp.com",
+  projectId: "dl-finanzas",
+  storageBucket: "dl-finanzas.firebasestorage.app",
+  messagingSenderId: "318098087364",
+  appId: "1:318098087364:web:75ce64adc311abc053d891"
+};
