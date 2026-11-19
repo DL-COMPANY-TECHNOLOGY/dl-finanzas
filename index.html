@@ -575,6 +575,10 @@
                 <span id="user-sub"></span>
                 <span id="sync-status" style="display:block;margin-top:6px;font-size:11px;font-weight:700"></span>
               </div>
+              <button type="button" id="btn-edit-name">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 9a7 7 0 0114 0"/></svg>
+                Cambiar mi nombre
+              </button>
               <button type="button" id="btn-limits-menu">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h10M4 18h6"/></svg>
                 Topes de presupuesto
@@ -609,6 +613,10 @@
                 Términos y privacidad
               </button>
               <hr>
+              <button type="button" id="btn-delete-account" class="danger">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
+                Eliminar mi cuenta
+              </button>
               <button type="button" id="btn-logout" class="danger">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 Cerrar sesión
@@ -874,6 +882,24 @@
       </div>
       <p class="card-sub" style="margin-bottom:14px">Cambia cómo se muestran los valores. No convierte los montos.</p>
       <div class="option-list" id="currency-list"></div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: NOMBRE ================= -->
+  <div id="modal-name" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="sheet sm">
+      <div class="sheet-head">
+        <h3>¿Cómo quieres que te llame?</h3>
+        <button class="icon-btn sm js-close" type="button" aria-label="Cerrar"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <p class="card-sub" style="margin-bottom:14px">Este es el nombre con el que te saludo al entrar.</p>
+      <form id="form-name">
+        <div class="field">
+          <label for="name-input">Nombre de usuario</label>
+          <input type="text" id="name-input" required maxlength="40" class="input" autocomplete="nickname">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+      </form>
     </div>
   </div>
 
@@ -1499,6 +1525,76 @@
       } else {
         showAuth();
       }
+    }
+
+    // ================= PERFIL =================
+    function openNameModal() {
+      $('#menu').classList.add('hidden');
+      $('#name-input').value = (state.session && state.session.name) || '';
+      openModal('modal-name');
+      setTimeout(() => $('#name-input').focus(), 50);
+    }
+
+    async function saveName(e) {
+      e.preventDefault();
+      const name = $('#name-input').value.trim().slice(0, 40);
+      if (!name) return;
+      state.session.name = name;
+      if (cloud.uid) {
+        userDoc().set({ name }, { merge: true }).catch(cloudErr);
+        if (cloud.auth.currentUser) cloud.auth.currentUser.updateProfile({ displayName: name }).catch(() => {});
+      } else {
+        writeJSON(KEY_SESSION, state.session);
+        const users = readJSON(KEY_USERS, []);
+        const u = users.find((x) => x.email === state.session.email);
+        if (u) { u.name = name; writeJSON(KEY_USERS, users); }
+      }
+      $('#user-name').textContent = name;
+      renderGreeting();
+      closeModal('modal-name');
+      toast('Listo, ahora te llamo ' + name.split(' ')[0]);
+    }
+
+    async function deleteAccount() {
+      $('#menu').classList.add('hidden');
+      const ok = await confirmDialog('¿Eliminar tu cuenta?', 'Se borrarán para siempre tu cuenta y todos tus movimientos' + (cloud.uid ? ' de la nube' : ' de este dispositivo') + '. Te recomendamos descargar un respaldo antes. Esta acción no se puede deshacer.', 'Eliminar definitivamente', true);
+      if (!ok) return;
+      if (cloud.uid) {
+        const user = cloud.auth.currentUser;
+        try {
+          if (cloud.unsubTx) { cloud.unsubTx(); cloud.unsubTx = null; }
+          if (cloud.unsubUser) { cloud.unsubUser(); cloud.unsubUser = null; }
+          const snap = await txCol().get();
+          let batch = cloud.db.batch(), n = 0;
+          for (const d of snap.docs) {
+            batch.delete(d.ref);
+            if (++n % 400 === 0) { await batch.commit(); batch = cloud.db.batch(); }
+          }
+          await batch.commit();
+          await userDoc().delete();
+          await user.delete();
+          toast('Tu cuenta fue eliminada');
+        } catch (e) {
+          console.warn(e);
+          if (e && e.code === 'auth/requires-recent-login') {
+            await confirmDialog('Vuelve a iniciar sesión', 'Por seguridad, cierra sesión, ingresa de nuevo y repite “Eliminar mi cuenta”. Tus movimientos ya fueron borrados.', 'Entendido');
+            await cloud.auth.signOut().catch(() => {});
+          } else {
+            toast('No se pudo eliminar la cuenta. Revisa tu conexión e inténtalo de nuevo.', 'error');
+          }
+        }
+        return;
+      }
+      try {
+        const email = state.session.email;
+        ['tx', 'limits', 'currency'].forEach((k) => localStorage.removeItem(userKey(k)));
+        writeJSON(KEY_USERS, readJSON(KEY_USERS, []).filter((u) => u.email !== email));
+        localStorage.removeItem(KEY_SESSION);
+      } catch (e) {}
+      state.session = null;
+      state.transactions = [];
+      toast('Tu cuenta fue eliminada');
+      checkAuth();
     }
 
     async function logout() {
@@ -2157,6 +2253,9 @@
 
       $('#btn-limits').onclick = openLimits;
       $('#btn-limits-menu').onclick = openLimits;
+      $('#btn-edit-name').onclick = openNameModal;
+      $('#form-name').addEventListener('submit', saveName);
+      $('#btn-delete-account').onclick = deleteAccount;
       $('#form-limits').addEventListener('submit', submitLimits);
 
       $('#btn-currency').onclick = openCurrency;

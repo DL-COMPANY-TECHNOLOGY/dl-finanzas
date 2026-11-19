@@ -13,16 +13,19 @@ Desarrollada por **DL COMPANY -TECHNOLOGY-**.
 - Instalable en Android/iPhone (botón “Descargar app”) y funciona sin conexión.
 - Guía interactiva con voz (primer ingreso y desde el menú).
 - Soporte por WhatsApp desde la app y la pantalla de ingreso.
+- Registro con nombre de usuario, correo y contraseña (o Google).
+- Saludo personalizado según la hora (buenos días / tardes / noches) con accesos rápidos para registrar ingresos y gastos.
+- Cambiar el nombre y eliminar la cuenta con todos sus datos desde el menú.
 
 ## Modos de almacenamiento
 | Modo | Cuándo | Dónde quedan los datos |
 |---|---|---|
-| Local | `firebase-config.js` en `null` (actual) | En el navegador del dispositivo |
-| Nube | `firebase-config.js` con la configuración de Firebase | Firestore, sincronizado entre dispositivos, con login por correo o Google |
+| Local | `firebase-config.js` en `null` | En el navegador del dispositivo |
+| Nube (actual) | `firebase-config.js` con la configuración de Firebase | Firestore, sincronizado entre dispositivos, con login por correo o Google |
 
 Al pasar a modo nube, la app ofrece subir automáticamente los datos que el usuario tenía en el dispositivo.
 
-## Activar Firebase (pendiente)
+## Configuración de Firebase (proyecto `dl-finanzas`)
 1. Crear el proyecto `dl-finanzas` en la consola de Firebase y registrar una app web.
 2. Pegar el bloque `firebaseConfig` en `firebase-config.js`.
 3. Authentication → Método de acceso: activar **Correo/contraseña** y **Google**.
