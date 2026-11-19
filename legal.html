@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Términos y Privacidad | DL FINANZAS</title>
+  <meta name="theme-color" content="#070a10" id="meta-theme-color">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('dl_finanzas_theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      document.getElementById('meta-theme-color').setAttribute('content', t === 'light' ? '#f3f5f9' : '#070a10');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="dark"] {
+      --bg: #070a10; --card: #0e1524; --input: #0a101c; --border: #1b263a;
+      --high: #f1f5f9; --mid: #c3cede; --low: #8595ab; --accent: #10b981; --accent-text: #34d399; --accent-ink: #022c22; --header: rgba(7,10,16,.9);
+    }
+    [data-theme="light"] {
+      --bg: #f3f5f9; --card: #ffffff; --input: #f7f9fc; --border: #e3e8ef;
+      --high: #0f172a; --mid: #334155; --low: #64748b; --accent: #059669; --accent-text: #047857; --accent-ink: #ffffff; --header: rgba(243,245,249,.9);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+    body { margin: 0; background: var(--bg); color: var(--mid); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; line-height: 1.7; font-size: 15px; }
+    header { position: sticky; top: 0; z-index: 10; background: var(--header); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    .bar { max-width: 860px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand img { width: 38px; height: 38px; border-radius: 10px; }
+    .brand b { color: var(--high); font-weight: 800; font-size: 15px; display: block; line-height: 1.1; }
+    .brand small { color: var(--accent-text); font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .back { color: var(--accent-ink); background: var(--accent); text-decoration: none; font-weight: 800; font-size: 12px; padding: 8px 12px; border-radius: 12px; white-space: nowrap; }
+    nav.tabs { max-width: 860px; margin: 0 auto; padding: 0 16px 10px; display: flex; gap: 6px; overflow-x: auto; }
+    nav.tabs a { flex-shrink: 0; text-decoration: none; color: var(--mid); font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--input); }
+    nav.tabs a:hover { border-color: var(--accent); color: var(--accent-text); }
+    main { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+    section.doc { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 22px 20px; margin-bottom: 22px; }
+    h1 { color: var(--high); font-size: 24px; font-weight: 800; margin: 0 0 4px; line-height: 1.25; }
+    .meta { font-size: 12px; color: var(--low); margin-bottom: 14px; }
+    h2 { color: var(--high); font-size: 16px; font-weight: 800; margin: 22px 0 6px; }
+    p { margin: 6px 0; }
+    ul { margin: 6px 0; padding-left: 22px; }
+    li { margin: 3px 0; }
+    b, strong { color: var(--high); }
+    a { color: var(--accent-text); }
+    .box { background: var(--input); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; margin: 10px 0; }
+    footer { text-align: center; color: var(--low); font-size: 12px; padding: 20px 16px 40px; border-top: 1px solid var(--border); }
+    @media (max-width: 600px) { section.doc { padding: 18px 15px; } h1 { font-size: 21px; } body { font-size: 14.5px; } }
+    @media print { header, nav.tabs { display: none; } body { background: #fff; color: #111; } section.doc { border: none; } b, strong, h1, h2 { color: #000; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <a class="brand" href="./">
+        <img src="icon-192.png" alt="DL FINANZAS">
+        <span><b>DL FINANZAS</b><small>Documentos legales</small></span>
+      </a>
+      <a class="back" href="./">← Volver a la app</a>
+    </div>
+    <nav class="tabs">
+      <a href="#terminos">Términos y condiciones</a>
+      <a href="#privacidad">Política de privacidad</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===================== TÉRMINOS ===================== -->
+    <section class="doc" id="terminos">
+      <h1>Términos y Condiciones de Uso</h1>
+      <p class="meta">Versión 1.0 • Vigente desde el 18 de noviembre de 2026</p>
+      <p>Estos Términos y Condiciones regulan el uso de DL FINANZAS (en adelante, “la App”), aplicación web de control de ingresos, gastos y presupuesto personal o del hogar, desarrollada y administrada por DL COMPANY -TECHNOLOGY- (en adelante, “DL COMPANY”, “nosotros”). Al crear una cuenta o usar la App, declaras que leíste y aceptas estos términos. Si no estás de acuerdo, no uses la App.</p>
+
+      <h2>1. Identificación del prestador</h2>
+      <div class="box">
+        <b>DL COMPANY -TECHNOLOGY-</b><br>
+        Representante: Lenin Alexander Benjumea Niño, CEO de DL COMPANY -TECHNOLOGY-, identificado con C.C. 1.093.753.197<br>
+        Domicilio: Medellín, Antioquia — Colombia<br>
+        Correo de contacto: <a href="mailto:d.l.company.2026@gmail.com">d.l.company.2026@gmail.com</a><br>
+        WhatsApp de soporte: <a href="https://wa.me/573218641539" target="_blank" rel="noopener">+57 321 864 1539</a>
+      </div>
+
+      <h2>2. Qué es el servicio</h2>
+      <p>La App permite registrar ingresos y gastos (fijos y variables), clasificarlos por categoría, ver un resumen mensual con balance y tasa de ahorro, definir topes de presupuesto por categoría, consultar gráficos de distribución y tendencia, y exportar o respaldar la información. Cuando la cuenta funciona en la nube, la información se sincroniza entre los dispositivos del usuario.</p>
+      <p>La App es una herramienta de organización. <b>No es asesoría financiera, contable ni tributaria</b>, y no se conecta con tus cuentas bancarias: la información que muestra depende únicamente de los datos que ingresas.</p>
+
+      <h2>3. Cuenta de usuario</h2>
+      <ul>
+        <li>Para usar la App debes registrarte con un correo electrónico válido y una contraseña de al menos 6 caracteres, o iniciar sesión con tu cuenta de Google cuando esa opción esté disponible.</li>
+        <li>Debes ser mayor de edad y tener capacidad legal para aceptar estos términos.</li>
+        <li>Eres responsable de mantener la confidencialidad de tu contraseña y de toda actividad realizada con tu cuenta. Si sospechas un uso no autorizado, avísanos de inmediato.</li>
+        <li>La información que registras debe ser veraz y debes mantenerla actualizada.</li>
+      </ul>
+
+      <h2>4. Precio</h2>
+      <p>El uso de la App es <b>gratuito</b>. Si en el futuro se ofrecen funciones o planes de pago, se informarán con anticipación dentro de la App, junto con sus condiciones y su política de reembolsos, y nunca se cobrará nada sin tu aceptación expresa.</p>
+
+      <h2>5. Uso permitido</h2>
+      <p>Te comprometes a usar la App de forma lícita y a no:</p>
+      <ul>
+        <li>Intentar acceder a cuentas o datos de otros usuarios.</li>
+        <li>Vulnerar, desactivar o eludir las medidas de seguridad de la App o de sus proveedores.</li>
+        <li>Copiar, modificar, descompilar o redistribuir la App con fines comerciales sin autorización escrita de DL COMPANY.</li>
+        <li>Usar la App para registrar o encubrir actividades ilegales.</li>
+      </ul>
+
+      <h2>6. Tu información</h2>
+      <ul>
+        <li>Los movimientos, categorías, topes y demás datos que registras son tuyos. DL COMPANY solo los trata para prestarte el servicio, según la Política de Privacidad.</li>
+        <li>Si tu cuenta funciona solo en el dispositivo, la información se guarda en el navegador de ese equipo. Si borras los datos del navegador, desinstalas la App o pierdes el equipo, la información puede perderse. Te recomendamos descargar con frecuencia el respaldo desde el menú de la App.</li>
+        <li>Si tu cuenta funciona en la nube, la información se guarda además en servidores de nuestro proveedor tecnológico y se sincroniza entre tus dispositivos.</li>
+      </ul>
+
+      <h2>7. Disponibilidad y soporte</h2>
+      <p>Trabajamos para que la App esté disponible de forma continua, pero puede haber interrupciones por mantenimiento, fallas de internet o de proveedores tecnológicos. La App puede funcionar sin conexión y sincroniza los cambios cuando vuelve la conexión. El soporte se presta por WhatsApp y correo en horario hábil.</p>
+
+      <h2>8. Responsabilidad</h2>
+      <p>DL COMPANY responde por la prestación del servicio en los términos de la ley colombiana, en particular del Estatuto del Consumidor (Ley 1480 de 2011). Sin perjuicio de los derechos que la ley te reconoce:</p>
+      <ul>
+        <li>Las decisiones económicas que tomes con base en la información de la App (gastos, ahorro, pagos, inversiones, etc.) son de tu responsabilidad, ya que dependen de los datos que registras.</li>
+        <li>Los cálculos de la App (balances, porcentajes, topes, valores quincenales) son aproximaciones de apoyo; revisa tus extractos y facturas antes de tomar decisiones importantes.</li>
+        <li>No somos responsables por pérdidas de información causadas por borrado de datos del dispositivo, uso indebido de la cuenta por terceros a quienes hayas dado tu contraseña o fallas ajenas a nuestro control.</li>
+      </ul>
+
+      <h2>9. Propiedad intelectual</h2>
+      <p>El software, el diseño, los logotipos de DL FINANZAS y DL COMPANY -TECHNOLOGY- y los demás contenidos de la App son propiedad de DL COMPANY o se usan con autorización. El uso de la App no te transfiere ningún derecho sobre ellos.</p>
+
+      <h2>10. Suspensión y terminación</h2>
+      <p>Puedes dejar de usar la App y solicitar la eliminación de tu cuenta en cualquier momento escribiéndonos. Podemos suspender o cancelar cuentas que incumplan estos términos o que se usen de forma fraudulenta, informándote el motivo cuando sea posible.</p>
+
+      <h2>11. Cambios a estos términos</h2>
+      <p>Podemos actualizar estos términos. Cuando el cambio sea importante, te lo informaremos dentro de la App antes de que entre en vigencia y, si es necesario, te pediremos aceptarlo de nuevo.</p>
+
+      <h2>12. Ley aplicable y reclamaciones</h2>
+      <p>Estos términos se rigen por las leyes de la República de Colombia. Puedes presentar peticiones, quejas o reclamos por los canales de contacto indicados; los responderemos dentro de los 15 días hábiles siguientes a su recibo. También puedes acudir a la Superintendencia de Industria y Comercio (<a href="https://www.sic.gov.co" target="_blank" rel="noopener">www.sic.gov.co</a>).</p>
+    </section>
+
+    <!-- ===================== PRIVACIDAD ===================== -->
+    <section class="doc" id="privacidad">
+      <h1>Política de Tratamiento de Datos Personales</h1>
+      <p class="meta">Versión 1.0 • Vigente desde el 18 de noviembre de 2026</p>
+      <p>En cumplimiento de la Ley Estatutaria 1581 de 2012 y del Decreto 1074 de 2015 (que compila el Decreto 1377 de 2013), DL COMPANY -TECHNOLOGY- adopta la presente política para el tratamiento de los datos personales de los usuarios de DL FINANZAS.</p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <div class="box">
+        <b>DL COMPANY -TECHNOLOGY-</b><br>
+        Representante: Lenin Alexander Benjumea Niño, CEO de DL COMPANY -TECHNOLOGY-, identificado con C.C. 1.093.753.197<br>
+        Dirección: Medellín, Antioquia — Colombia<br>
+        Correo para asuntos de datos personales: <a href="mailto:d.l.company.2026@gmail.com">d.l.company.2026@gmail.com</a><br>
+        Teléfono / WhatsApp: +57 321 864 1539
+      </div>
+
+      <h2>2. Datos que tratamos</h2>
+      <ul>
+        <li><b>Datos de la cuenta:</b> nombre, correo electrónico y, si decides registrarlo, tu número de identificación. Si ingresas con Google, recibimos tu nombre y correo de esa cuenta. La contraseña se guarda cifrada; DL COMPANY no tiene acceso a ella.</li>
+        <li><b>Datos financieros que registras:</b> ingresos, gastos, conceptos, categorías, fechas, montos, topes de presupuesto y moneda preferida.</li>
+        <li><b>Datos de aceptación:</b> fecha y versión de estos documentos que aceptaste.</li>
+        <li><b>Datos de contacto con soporte:</b> la información que nos compartas al escribirnos por WhatsApp o correo.</li>
+      </ul>
+      <p>No solicitamos datos sensibles (salud, origen racial, creencias, datos biométricos, etc.) ni datos de niños, niñas o adolescentes. La App no está dirigida a menores de edad. Te pedimos no escribir datos sensibles de terceros en los conceptos de tus movimientos.</p>
+      <p>La App <b>no</b> solicita ni almacena números de tarjetas, claves bancarias ni accesos a tus cuentas financieras.</p>
+
+      <h2>3. Finalidades</h2>
+      <ul>
+        <li>Crear y administrar tu cuenta y permitirte iniciar sesión.</li>
+        <li>Prestar el servicio de control de gastos y presupuesto y, cuando la cuenta funciona en la nube, almacenar y sincronizar tu información entre dispositivos.</li>
+        <li>Brindarte soporte técnico y atender tus peticiones, quejas y reclamos.</li>
+        <li>Enviarte comunicaciones relacionadas con el servicio (por ejemplo, recuperación de contraseña o cambios en estos documentos).</li>
+        <li>Mantener la seguridad de la App y prevenir fraudes.</li>
+        <li>Cumplir obligaciones legales y requerimientos de autoridades competentes.</li>
+      </ul>
+      <p><b>No vendemos ni cedemos tus datos personales ni tu información financiera a terceros, y no la usamos para publicidad.</b></p>
+
+      <h2>4. Encargados y transmisión internacional</h2>
+      <p>Para prestar el servicio usamos proveedores tecnológicos que actúan como encargados del tratamiento:</p>
+      <ul>
+        <li><b>Google Firebase (Google LLC):</b> autenticación de usuarios y base de datos en la nube.</li>
+        <li><b>GitHub Pages (GitHub, Inc.):</b> alojamiento de la App.</li>
+      </ul>
+      <p>Estos proveedores pueden almacenar o procesar la información en servidores ubicados fuera de Colombia, incluidos los Estados Unidos. Al aceptar esta política autorizas dicha transmisión internacional, que se realiza únicamente para las finalidades aquí descritas y con proveedores que aplican medidas de seguridad reconocidas.</p>
+
+      <h2>5. Tus derechos como titular</h2>
+      <p>De acuerdo con el artículo 8 de la Ley 1581 de 2012, tienes derecho a:</p>
+      <ul>
+        <li>Conocer, actualizar y rectificar tus datos personales.</li>
+        <li>Solicitar prueba de la autorización que nos otorgaste.</li>
+        <li>Ser informado sobre el uso que les damos a tus datos.</li>
+        <li>Presentar quejas ante la Superintendencia de Industria y Comercio por infracciones a la ley, después de haber agotado el trámite de consulta o reclamo ante nosotros.</li>
+        <li>Revocar la autorización y/o solicitar la supresión de tus datos, cuando no exista un deber legal o contractual que exija conservarlos.</li>
+        <li>Acceder gratuitamente a tus datos personales. Además, puedes descargar en cualquier momento toda tu información desde el menú de la App (respaldo .json o archivo para Excel).</li>
+      </ul>
+
+      <h2>6. Cómo ejercer tus derechos</h2>
+      <p>Escríbenos al correo <a href="mailto:d.l.company.2026@gmail.com">d.l.company.2026@gmail.com</a> o al WhatsApp +57 321 864 1539 indicando tu nombre, el correo de tu cuenta, tu solicitud y la forma en que deseas recibir la respuesta.</p>
+      <ul>
+        <li><b>Consultas</b> (conocer qué datos tenemos): se responden en un máximo de 10 días hábiles desde su recibo. Si no es posible, te informaremos el motivo y la nueva fecha, que no superará 5 días hábiles adicionales.</li>
+        <li><b>Reclamos</b> (corregir, actualizar, suprimir o revocar): deben incluir tu identificación, la descripción de los hechos, tu dirección o correo y los documentos que quieras hacer valer. Se responden en un máximo de 15 días hábiles desde el día siguiente a su recibo, prorrogables hasta 8 días hábiles más, informándote el motivo. Si el reclamo está incompleto, te pediremos completarlo dentro de los 5 días siguientes; si pasan 2 meses sin respuesta, se entenderá que desististe.</li>
+      </ul>
+      <p>Para eliminar tu cuenta y tus datos de la nube, solicítalo por los mismos canales. Los datos guardados en tu dispositivo puedes borrarlos tú mismo eliminando tus movimientos o borrando los datos del navegador.</p>
+
+      <h2>7. Seguridad</h2>
+      <p>Aplicamos medidas técnicas y administrativas para proteger la información: conexión cifrada (HTTPS), contraseñas cifradas, autenticación segura y reglas de acceso que impiden que un usuario vea los datos de otro. Ningún sistema es completamente infalible; si ocurre un incidente que afecte tus datos, te lo informaremos y lo reportaremos a la autoridad cuando corresponda.</p>
+
+      <h2>8. Conservación</h2>
+      <p>Conservamos tus datos mientras tengas una cuenta activa y durante el tiempo adicional necesario para cumplir obligaciones legales o atender reclamaciones. Después, los suprimimos o anonimizamos.</p>
+
+      <h2>9. Autorización</h2>
+      <p>Al marcar la casilla de aceptación al crear tu cuenta, o al continuar con Google, otorgas tu autorización previa, expresa e informada para el tratamiento de tus datos conforme a esta política. Guardamos constancia de la fecha y versión aceptada.</p>
+
+      <h2>10. Vigencia y cambios</h2>
+      <p>Esta política rige desde el 18 de noviembre de 2026. Las bases de datos estarán vigentes mientras se preste el servicio. Cualquier cambio sustancial te será comunicado dentro de la App antes de su aplicación.</p>
+    </section>
+  </main>
+
+  <footer>
+    DL FINANZAS · DL COMPANY -TECHNOLOGY- · Medellín, Colombia
+  </footer>
+</body>
+</html>

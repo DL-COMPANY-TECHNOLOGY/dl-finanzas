@@ -160,6 +160,19 @@
     .tabs button.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
     .auth-note { font-size: 11px; color: var(--text-3); text-align: center; margin-top: 18px; line-height: 1.5; }
     .auth-theme { position: absolute; top: 16px; right: 16px; }
+    .auth-note a, .check a { color: var(--accent-text); font-weight: 700; text-decoration: none; }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; color: var(--text-2); margin: 2px 0 16px; line-height: 1.45; cursor: pointer; }
+    .check input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--accent); flex-shrink: 0; }
+    .link-btn { background: none; border: none; color: var(--accent-text); font-weight: 700; font-size: 12px; display: block; margin: 12px auto 0; }
+    .divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 12px; color: var(--text-3); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .btn-google { background: #ffffff; color: #1f2937; border-color: #d6dbe3; }
+    .btn-google:hover { background: #f8fafc; }
+    .sync-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+    .boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .spinner { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--border-strong); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn[disabled] { opacity: .6; pointer-events: none; }
 
     /* ================= FORMULARIOS ================= */
     .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
@@ -388,6 +401,8 @@
     </defs>
   </svg>
 
+  <div id="boot" class="boot"><div class="spinner"></div></div>
+
   <!-- ================= ACCESO ================= -->
   <section id="auth-screen" class="hidden">
     <button class="icon-btn auth-theme js-theme-toggle" type="button" aria-label="Cambiar tema"></button>
@@ -436,12 +451,29 @@
           <label for="reg-password">Contraseña</label>
           <input type="password" id="reg-password" required minlength="6" placeholder="Mínimo 6 caracteres" class="input" autocomplete="new-password">
         </div>
+        <label class="check">
+          <input type="checkbox" id="reg-legal">
+          <span>Acepto los <a href="legal.html#terminos" target="_blank" rel="noopener">Términos y condiciones</a> y autorizo el tratamiento de mis datos según la <a href="legal.html#privacidad" target="_blank" rel="noopener">Política de privacidad</a>.</span>
+        </label>
         <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
       </form>
 
-      <p class="auth-note">
+      <div id="cloud-auth-extra" class="hidden">
+        <button type="button" class="link-btn" id="btn-forgot">¿Olvidaste tu contraseña?</button>
+        <div class="divider"><span>o continúa con</span></div>
+        <button type="button" class="btn btn-google btn-block" id="btn-google">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          Google
+        </button>
+        <p class="auth-note" style="margin-top:8px">Al continuar con Google aceptas los <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a> y la <a href="legal.html#privacidad" target="_blank" rel="noopener">Política de privacidad</a>.</p>
+      </div>
+
+      <p class="auth-note" id="auth-storage-note">
         Tus datos se guardan de forma privada en este dispositivo.<br>
         Descarga un respaldo desde el menú para no perderlos si cambias de equipo.
+      </p>
+      <p class="auth-note" style="margin-top:10px">
+        <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a> · <a href="legal.html#privacidad" target="_blank" rel="noopener">Privacidad</a>
       </p>
     </div>
   </section>
@@ -478,6 +510,7 @@
               <div class="menu-user">
                 <strong id="user-name"></strong>
                 <span id="user-sub"></span>
+                <span id="sync-status" style="display:block;margin-top:6px;font-size:11px;font-weight:700"></span>
               </div>
               <button type="button" id="btn-limits-menu">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h10M4 18h6"/></svg>
@@ -499,6 +532,10 @@
               <button type="button" id="btn-install">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                 Instalar app
+              </button>
+              <button type="button" id="btn-legal" onclick="window.open('legal.html','_blank','noopener')">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 006 0zm10 0l-3 7a3 3 0 006 0z"/></svg>
+                Términos y privacidad
               </button>
               <hr>
               <button type="button" id="btn-logout" class="danger">
@@ -770,6 +807,8 @@
 
   <div class="toast-wrap" id="toasts" aria-live="polite"></div>
 
+  <script src="firebase-config.js"></script>
+
   <script>
   (function () {
     'use strict';
@@ -1011,27 +1050,257 @@
       showAuthError('');
     }
 
-    async function handleRegister(e) {
-      e.preventDefault();
+    // ================= NUBE (FIREBASE) =================
+    // Se activa solo si firebase-config.js trae una configuración. Si no, la app funciona 100% local.
+    const FB_VERSION = '9.23.0';
+    const LEGAL_VERSION = '1.0';
+    const cloud = { enabled: false, auth: null, db: null, uid: null, unsubTx: null, unsubUser: null, firstTxSnap: true, online: navigator.onLine };
+
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src; s.onload = resolve; s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    async function initCloud() {
+      const cfg = window.DL_FIREBASE_CONFIG;
+      if (!cfg || !cfg.apiKey || !cfg.projectId) return false;
+      try {
+        for (const m of ['app', 'auth', 'firestore']) await loadScript('https://www.gstatic.com/firebasejs/' + FB_VERSION + '/firebase-' + m + '-compat.js');
+        firebase.initializeApp(cfg);
+        cloud.auth = firebase.auth();
+        cloud.auth.languageCode = 'es';
+        cloud.db = firebase.firestore();
+        cloud.db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
+        cloud.enabled = true;
+        return true;
+      } catch (e) {
+        console.warn('Firebase no disponible', e);
+        cloud.loadError = true;
+        return false;
+      }
+    }
+
+    const userDoc = () => cloud.db.collection('users').doc(cloud.uid);
+    const txCol = () => userDoc().collection('transactions');
+
+    function cloudErr(e) {
+      console.warn(e);
+      toast(e && e.code === 'permission-denied' ? 'Sin permiso para guardar en la nube' : 'No se pudo sincronizar. Se reintentará al volver la conexión.', 'error');
+    }
+
+    // Persistencia: en modo nube escribe en Firestore (funciona sin internet y sincroniza después); en modo local usa el dispositivo
+    function persistTx(t) { if (cloud.uid) txCol().doc(t.id).set(t).catch(cloudErr); else save(); }
+    function persistDelete(id) { if (cloud.uid) txCol().doc(id).delete().catch(cloudErr); else save(); }
+    function persistSettings() {
+      if (cloud.uid) userDoc().set({ limits: state.limits, currency: state.currency, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(cloudErr);
+      else save();
+    }
+    async function persistMany(list) {
+      if (!cloud.uid) { save(); return; }
+      for (let i = 0; i < list.length; i += 400) {
+        const batch = cloud.db.batch();
+        list.slice(i, i + 400).forEach((t) => batch.set(txCol().doc(t.id), t));
+        await batch.commit().catch(cloudErr);
+      }
+    }
+    async function persistReplaceAll(list) {
+      if (!cloud.uid) { save(); return; }
+      const keep = new Set(list.map((t) => t.id));
+      const snap = await txCol().get();
+      const del = snap.docs.filter((d) => !keep.has(d.id));
+      for (let i = 0; i < del.length; i += 400) {
+        const batch = cloud.db.batch();
+        del.slice(i, i + 400).forEach((d) => batch.delete(d.ref));
+        await batch.commit().catch(cloudErr);
+      }
+      await persistMany(list);
+      persistSettings();
+    }
+
+    function authErrorText(e) {
+      const map = {
+        'auth/invalid-email': 'El correo no es válido.',
+        'auth/user-not-found': 'No encontramos una cuenta con ese correo. Pulsa “Crear cuenta”.',
+        'auth/wrong-password': 'Contraseña incorrecta.',
+        'auth/invalid-credential': 'Correo o contraseña incorrectos.',
+        'auth/invalid-login-credentials': 'Correo o contraseña incorrectos.',
+        'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Inicia sesión.',
+        'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
+        'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos e intenta de nuevo.',
+        'auth/network-request-failed': 'Sin conexión a internet. Revisa tu red.',
+        'auth/popup-closed-by-user': '',
+        'auth/cancelled-popup-request': '',
+        'auth/unauthorized-domain': 'Este dominio no está autorizado en Firebase.',
+        'auth/operation-not-allowed': 'Este método de acceso no está activado en Firebase.'
+      };
+      return e && e.code in map ? map[e.code] : 'No se pudo completar. Intenta de nuevo.';
+    }
+
+    // Datos de este dispositivo que se pueden subir a la cuenta en la nube
+    function localDataFor(email) {
+      const own = readJSON('dl_finanzas_u_' + email + '_tx', null);
+      if (Array.isArray(own) && own.length) return { tx: own, limits: readJSON('dl_finanzas_u_' + email + '_limits', null), key: 'dl_finanzas_u_' + email + '_tx' };
+      if (!localStorage.getItem(KEY_LEGACY_OWNER)) {
+        const legacy = recoverLegacyTransactions();
+        if (legacy.length) return { tx: legacy, limits: recoverLegacyLimits(), legacy: true };
+      }
+      return null;
+    }
+
+    async function offerUpload(email) {
+      const local = localDataFor(email);
+      if (!local) return;
+      const ok = await confirmDialog('¿Subir tus datos a la nube?', 'Encontramos ' + local.tx.length + (local.tx.length === 1 ? ' movimiento guardado' : ' movimientos guardados') + ' en este dispositivo. Súbelos a tu cuenta para verlos en todos tus equipos.', 'Subir datos');
+      if (!ok) return;
+      const list = local.tx.map(normalizeTx);
+      state.transactions = list;
+      if (local.limits && typeof local.limits === 'object') state.limits = local.limits;
+      render();
+      await persistMany(list);
+      persistSettings();
+      if (local.legacy) localStorage.setItem(KEY_LEGACY_OWNER, email);
+      toast(list.length + ' movimientos subidos a la nube');
+    }
+
+    async function onCloudUser(user) {
+      if (cloud.unsubTx) { cloud.unsubTx(); cloud.unsubTx = null; }
+      if (cloud.unsubUser) { cloud.unsubUser(); cloud.unsubUser = null; }
+      if (!user) { cloud.uid = null; state.session = null; showAuth(); return; }
+      cloud.uid = user.uid;
+      cloud.firstTxSnap = true;
+      let profile = {};
+      try { const d = await userDoc().get(); profile = d.exists ? d.data() : {}; } catch (e) {}
+      if (!profile.email) {
+        profile = {
+          name: profile.name || user.displayName || (user.email || '').split('@')[0],
+          email: (user.email || '').toLowerCase(),
+          idNumber: profile.idNumber || '',
+          limits: profile.limits || { ...DEFAULT_LIMITS },
+          currency: profile.currency || 'COP',
+          legalVersion: LEGAL_VERSION,
+          legalAcceptedAt: new Date().toISOString(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        userDoc().set(profile, { merge: true }).catch(cloudErr);
+      }
+      state.session = { name: profile.name, email: profile.email || user.email, idNumber: profile.idNumber || '', uid: user.uid };
+      state.limits = profile.limits || { ...DEFAULT_LIMITS };
+      state.currency = CURRENCIES[profile.currency] ? profile.currency : 'COP';
+      state.transactions = [];
+      showApp();
+
+      cloud.unsubUser = userDoc().onSnapshot((d) => {
+        const p = d.data() || {};
+        if (p.limits) state.limits = p.limits;
+        if (p.currency && CURRENCIES[p.currency]) state.currency = p.currency;
+        if (p.name && state.session) {
+          state.session.name = p.name; state.session.idNumber = p.idNumber || '';
+          $('#user-name').textContent = p.name;
+          $('#user-sub').textContent = p.idNumber ? 'ID ' + p.idNumber + ' · ' + state.session.email : state.session.email;
+        }
+        render();
+      }, () => {});
+      cloud.unsubTx = txCol().onSnapshot({ includeMetadataChanges: true }, (snap) => {
+        state.transactions = snap.docs.map((d) => normalizeTx({ ...d.data(), id: d.id }));
+        cloud.pending = snap.metadata.hasPendingWrites;
+        updateSyncStatus();
+        render();
+        if (cloud.firstTxSnap && !snap.metadata.fromCache) {
+          cloud.firstTxSnap = false;
+          if (snap.empty) offerUpload(state.session.email);
+        }
+      }, cloudErr);
+    }
+
+    function updateSyncStatus() {
+      const el = $('#sync-status');
+      if (!el) return;
+      if (!cloud.uid) { el.innerHTML = '<span class="sync-dot" style="background:var(--text-3)"></span><span style="color:var(--text-3)">Guardado solo en este dispositivo</span>'; return; }
+      if (!navigator.onLine) el.innerHTML = '<span class="sync-dot" style="background:var(--warn)"></span><span style="color:var(--warn)">Sin conexión · se sincroniza al volver</span>';
+      else if (cloud.pending) el.innerHTML = '<span class="sync-dot" style="background:var(--info)"></span><span style="color:var(--info)">Sincronizando…</span>';
+      else el.innerHTML = '<span class="sync-dot" style="background:var(--accent)"></span><span style="color:var(--accent-text)">Sincronizado en la nube</span>';
+    }
+
+    async function loginWithGoogle() {
+      showAuthError('');
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+      try {
+        if (standalone) await cloud.auth.signInWithRedirect(provider);
+        else await cloud.auth.signInWithPopup(provider);
+      } catch (e) {
+        if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') {
+          try { await cloud.auth.signInWithRedirect(provider); } catch (e2) { showAuthError(authErrorText(e2)); }
+        } else { const m = authErrorText(e); if (m) showAuthError(m); }
+      }
+    }
+
+    async function forgotPassword() {
+      const email = $('#login-email').value.trim();
+      if (!email) { showAuthError('Escribe tu correo arriba y vuelve a tocar “¿Olvidaste tu contraseña?”.'); $('#login-email').focus(); return; }
+      try {
+        await cloud.auth.sendPasswordResetEmail(email);
+        showAuthError('');
+        toast('Te enviamos un correo para restablecer tu contraseña');
+      } catch (e) { showAuthError(authErrorText(e)); }
+    }
+
+    // ================= AUTENTICACIÓN =================
+    function withBusy(form, fn) {
+      return async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try { await fn(); } finally { btn.disabled = false; }
+      };
+    }
+
+    async function handleRegister() {
       const name = $('#reg-name').value.trim();
       const idNumber = $('#reg-id').value.trim();
       const email = $('#reg-email').value.trim().toLowerCase();
       const pass = $('#reg-password').value;
       if (!name || !email) return showAuthError('Completa tu nombre y correo.');
       if (pass.length < 6) return showAuthError('La contraseña debe tener al menos 6 caracteres.');
+      if (!$('#reg-legal').checked) return showAuthError('Debes aceptar los términos y la política de privacidad.');
+
+      if (cloud.enabled) {
+        try {
+          const cred = await cloud.auth.createUserWithEmailAndPassword(email, pass);
+          await cred.user.updateProfile({ displayName: name }).catch(() => {});
+          await cloud.db.collection('users').doc(cred.user.uid).set({
+            name, idNumber, email, limits: { ...DEFAULT_LIMITS }, currency: 'COP',
+            legalVersion: LEGAL_VERSION, legalAcceptedAt: new Date().toISOString(),
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+          toast('¡Bienvenido, ' + name.split(' ')[0] + '!');
+        } catch (e) { showAuthError(authErrorText(e)); }
+        return;
+      }
+
       const users = readJSON(KEY_USERS, []);
       if (users.some((u) => u.email === email)) return showAuthError('Ya existe una cuenta con ese correo. Inicia sesión.');
-      const user = { name, idNumber, email, passHash: await hashPassword(email, pass), createdAt: new Date().toISOString() };
+      const user = { name, idNumber, email, passHash: await hashPassword(email, pass), createdAt: new Date().toISOString(), legalVersion: LEGAL_VERSION, legalAcceptedAt: new Date().toISOString() };
       users.push(user);
       writeJSON(KEY_USERS, users);
       startSession(user);
       toast('¡Bienvenido, ' + name.split(' ')[0] + '!');
     }
 
-    async function handleLogin(e) {
-      e.preventDefault();
+    async function handleLogin() {
       const email = $('#login-email').value.trim().toLowerCase();
       const pass = $('#login-password').value;
+
+      if (cloud.enabled) {
+        try { await cloud.auth.signInWithEmailAndPassword(email, pass); }
+        catch (e) { showAuthError(authErrorText(e)); }
+        return;
+      }
+
       const users = readJSON(KEY_USERS, []);
       const idx = users.findIndex((u) => u.email === email);
       if (idx === -1) return showAuthError('No encontramos una cuenta con ese correo. Pulsa “Crear cuenta”.');
@@ -1050,26 +1319,51 @@
     function startSession(u) {
       const session = { name: u.name || 'Usuario', idNumber: u.idNumber || '', email: u.email || '' };
       writeJSON(KEY_SESSION, session);
-      $('#form-login').reset();
-      $('#form-register').reset();
       checkAuth();
     }
 
+    function showApp() {
+      $('#boot').classList.add('hidden');
+      $('#auth-screen').classList.add('hidden');
+      $('#app-screen').classList.remove('hidden');
+      $('#form-login').reset();
+      $('#form-register').reset();
+      showAuthError('');
+      $('#user-name').textContent = state.session.name || 'Usuario';
+      $('#user-sub').textContent = state.session.idNumber ? 'ID ' + state.session.idNumber + ' · ' + state.session.email : state.session.email;
+      state.month = ymOf(todayISO());
+      updateSyncStatus();
+      render();
+    }
+
+    function showAuth() {
+      $('#boot').classList.add('hidden');
+      $('#app-screen').classList.add('hidden');
+      $('#auth-screen').classList.remove('hidden');
+      $('#cloud-auth-extra').classList.toggle('hidden', !cloud.enabled);
+      $('#auth-storage-note').innerHTML = cloud.enabled
+        ? 'Tus datos se guardan cifrados en la nube y se sincronizan entre tus dispositivos.'
+        : 'Tus datos se guardan de forma privada en este dispositivo.<br>Descarga un respaldo desde el menú para no perderlos si cambias de equipo.';
+      if (cloud.loadError) showAuthError('No se pudo conectar con el servidor. Revisa tu conexión a internet y recarga la página.');
+    }
+
     function checkAuth() {
+      if (cloud.enabled) return; // en modo nube manda onAuthStateChanged
       state.session = readJSON(KEY_SESSION, null);
       if (state.session && typeof state.session === 'object') {
         if (!state.session.email) state.session.email = 'local';
-        $('#auth-screen').classList.add('hidden');
-        $('#app-screen').classList.remove('hidden');
-        $('#user-name').textContent = state.session.name || 'Usuario';
-        $('#user-sub').textContent = state.session.idNumber ? 'ID ' + state.session.idNumber + ' · ' + state.session.email : state.session.email;
-        state.month = ymOf(todayISO());
         loadUserData();
-        render();
+        showApp();
       } else {
-        $('#app-screen').classList.add('hidden');
-        $('#auth-screen').classList.remove('hidden');
+        showAuth();
       }
+    }
+
+    async function logout() {
+      if (cloud.enabled) { await cloud.auth.signOut().catch(() => {}); return; }
+      try { localStorage.removeItem(KEY_SESSION); } catch (e) {}
+      state.session = null;
+      checkAuth();
     }
 
     // ================= CÁLCULOS =================
@@ -1160,11 +1454,12 @@
     function copyRecurring() {
       const c = recurringCandidates();
       const dim = daysInMonth(state.month);
-      c.forEach((t) => {
+      const added = c.map((t) => {
         const day = Math.min(Number(t.date.slice(8, 10)) || 1, dim);
-        state.transactions.unshift({ ...t, id: uid(), date: state.month + '-' + pad(day) });
+        return { ...t, id: uid(), date: state.month + '-' + pad(day) };
       });
-      save();
+      state.transactions = added.concat(state.transactions);
+      persistMany(added);
       render();
       toast(c.length + ' movimientos copiados. Revisa y ajusta los valores si cambiaron.');
     }
@@ -1380,7 +1675,7 @@
         toast('Movimiento guardado');
       }
       if (ymOf(date) !== state.month) state.month = ymOf(date);
-      save();
+      persistTx(data);
       closeModal('modal-tx');
       render();
     }
@@ -1391,7 +1686,7 @@
       const ok = await confirmDialog('¿Eliminar movimiento?', '“' + t.concept + '” por ' + fmt(t.amount) + '. Esta acción no se puede deshacer.', 'Eliminar', true);
       if (!ok) return;
       state.transactions = state.transactions.filter((x) => x.id !== t.id);
-      save();
+      persistDelete(t.id);
       closeModal('modal-tx');
       render();
       toast('Movimiento eliminado');
@@ -1423,7 +1718,7 @@
         if (v > 0) next[inp.dataset.cat] = v;
       });
       state.limits = next;
-      save();
+      persistSettings();
       closeModal('modal-limits');
       render();
       toast('Topes actualizados');
@@ -1477,7 +1772,7 @@
         state.transactions = list.map(normalizeTx);
         if (data.limits && typeof data.limits === 'object') state.limits = data.limits;
         if (data.currency && CURRENCIES[data.currency]) state.currency = data.currency;
-        save();
+        await persistReplaceAll(state.transactions);
         render();
         toast('Datos restaurados correctamente');
       };
@@ -1504,8 +1799,12 @@
 
       $('#tab-login').onclick = () => switchTab('login');
       $('#tab-register').onclick = () => switchTab('register');
-      $('#form-login').addEventListener('submit', handleLogin);
-      $('#form-register').addEventListener('submit', handleRegister);
+      $('#form-login').addEventListener('submit', withBusy($('#form-login'), handleLogin));
+      $('#form-register').addEventListener('submit', withBusy($('#form-register'), handleRegister));
+      $('#btn-google').onclick = loginWithGoogle;
+      $('#btn-forgot').onclick = forgotPassword;
+      window.addEventListener('online', updateSyncStatus);
+      window.addEventListener('offline', updateSyncStatus);
 
       $('#btn-prev-month').onclick = () => { state.month = ymShift(state.month, -1); render(); };
       $('#btn-next-month').onclick = () => { state.month = ymShift(state.month, 1); render(); };
@@ -1531,7 +1830,7 @@
         const b = e.target.closest('[data-code]');
         if (!b) return;
         state.currency = b.dataset.code;
-        save();
+        persistSettings();
         closeModal('modal-currency');
         render();
       });
@@ -1556,10 +1855,9 @@
       $('#btn-install').onclick = installApp;
       $('#btn-logout').onclick = async () => {
         menu.classList.add('hidden');
-        if (!(await confirmDialog('¿Cerrar sesión?', 'Tus datos quedan guardados en este dispositivo.', 'Cerrar sesión'))) return;
-        try { localStorage.removeItem(KEY_SESSION); } catch (e) {}
+        if (!(await confirmDialog('¿Cerrar sesión?', cloud.enabled ? 'Tus datos quedan guardados en la nube.' : 'Tus datos quedan guardados en este dispositivo.', 'Cerrar sesión'))) return;
         switchTab('login');
-        checkAuth();
+        logout();
       };
 
       // Cierre de modales: botón X, clic en el fondo, tecla Escape
@@ -1585,10 +1883,18 @@
       }
     }
 
-    function init() {
+    async function init() {
       applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
       bind();
-      checkAuth();
+      const hasCloud = await initCloud();
+      if (hasCloud) {
+        cloud.auth.getRedirectResult().catch((e) => { const m = authErrorText(e); if (m) showAuthError(m); });
+        cloud.auth.onAuthStateChanged(onCloudUser);
+      } else if (cloud.loadError) {
+        showAuth();
+      } else {
+        checkAuth();
+      }
       if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
         navigator.serviceWorker.register('sw.js').catch(() => {});
       }
