@@ -44,6 +44,11 @@ service cloud.firestore {
       return (!('plan' in d) || d.plan == 'free') && !('planUntil' in d) && !('planUpdatedAt' in d);
     }
 
+    // La sincronización en la nube es solo para los planes Pro y Premium
+    function isPaid(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data.get('plan', 'free') in ['pro', 'premium'];
+    }
+
     function adminOnlyChangesPlan() {
       return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['plan', 'planUntil', 'planUpdatedAt']);
     }
@@ -59,7 +64,7 @@ service cloud.firestore {
 
       match /transactions/{txId} {
         allow read, delete: if isOwner(uid);
-        allow create, update: if isOwner(uid) && validTx() && request.resource.data.id == txId;
+        allow create, update: if isOwner(uid) && validTx() && request.resource.data.id == txId && (isPaid(uid) || isAdmin());
       }
     }
   }

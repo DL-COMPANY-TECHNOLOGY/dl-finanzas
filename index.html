@@ -967,10 +967,11 @@
           <p class="p-desc">Para empezar a organizar tu dinero.</p>
           <p class="p-price">$0 <small>/ siempre</small></p>
           <ul>
-            <li>Hasta 50 movimientos al mes</li>
+            <li>Hasta 15 movimientos al mes</li>
             <li>Resumen, balance y tasa de ahorro</li>
             <li>Gráfica por categorías y topes</li>
-            <li>Sincronización en la nube</li>
+            <li>Datos guardados en este celular</li>
+            <li class="no">Sincronización en la nube</li>
             <li class="no">Exportar a Excel</li>
             <li class="no">Respaldo y restauración</li>
             <li class="no">Tendencia de 6 meses</li>
@@ -988,6 +989,7 @@
           <ul>
             <li><b>Movimientos ilimitados</b></li>
             <li>Todo lo del plan Gratis</li>
+            <li><b>Sincronización en la nube</b>: tus datos seguros y en todos tus equipos</li>
             <li>Exportar a Excel (.csv)</li>
             <li>Descargar y restaurar respaldos</li>
             <li class="no">Tendencia de 6 meses</li>
@@ -1373,13 +1375,74 @@
     }
 
     // Persistencia: en modo nube escribe en Firestore (funciona sin internet y sincroniza después); en modo local usa el dispositivo
-    function persistTx(t) { if (cloud.uid) txCol().doc(t.id).set(t).catch(cloudErr); else save(); }
-    function persistDelete(id) { if (cloud.uid) txCol().doc(id).delete().catch(cloudErr); else save(); }
+    // Plan Gratis con cuenta en la nube: los movimientos se guardan solo en este dispositivo
+    const deviceKey = () => 'dl_finanzas_c_' + cloud.uid + '_tx';
+    const syncOn = () => !!(cloud.uid && cloud.mode === 'cloud');
+    function saveDevice() { writeJSON(deviceKey(), state.transactions); }
+    function persistTx(t) { if (syncOn()) txCol().doc(t.id).set(t).catch(cloudErr); else if (cloud.uid) saveDevice(); else save(); }
+    function persistDelete(id) { if (syncOn()) txCol().doc(id).delete().catch(cloudErr); else if (cloud.uid) saveDevice(); else save(); }
+
+    // Elige dónde viven los movimientos según el plan: nube (Pro/Premium) o solo el dispositivo (Gratis)
+    async function applySyncMode() {
+      if (!cloud.uid || !state.session) return;
+      const want = planAllows('cloud') ? 'cloud' : 'local';
+      if (cloud.mode === want) return;
+      const prev = cloud.mode;
+      cloud.mode = want;
+      const uidNow = cloud.uid;
+      if (want === 'local') {
+        if (cloud.unsubTx) { cloud.unsubTx(); cloud.unsubTx = null; }
+        let list = readJSON(deviceKey(), null);
+        if (!Array.isArray(list)) {
+          if (prev === 'cloud') list = state.transactions.slice();
+          else {
+            try {
+              const snap = await txCol().get({ source: 'server' });
+              list = snap.docs.map((d) => normalizeTx({ ...d.data(), id: d.id }));
+            } catch (e) { list = null; }
+          }
+          if (uidNow !== cloud.uid) return;
+          if (Array.isArray(list)) writeJSON(deviceKey(), list);
+        }
+        state.transactions = (list || []).map(normalizeTx);
+        updateSyncStatus();
+        render();
+        return;
+      }
+      // Pasa a la nube: sube lo que tenía guardado en el dispositivo
+      const local = readJSON(deviceKey(), null);
+      if (Array.isArray(local)) {
+        try {
+          // Se suben sin borrar nada de la nube (nunca se pierden datos)
+          const list = local.map(normalizeTx);
+          for (let i = 0; i < list.length; i += 400) {
+            const batch = cloud.db.batch();
+            list.slice(i, i + 400).forEach((t) => batch.set(txCol().doc(t.id), t));
+            await batch.commit();
+          }
+          localStorage.removeItem(deviceKey());
+          if (local.length) toast('Tus ' + local.length + ' movimientos ya están en la nube ☁️');
+        } catch (e) { console.warn(e); }
+      }
+      if (uidNow !== cloud.uid || cloud.mode !== 'cloud') return;
+      cloud.firstTxSnap = true;
+      cloud.unsubTx = txCol().onSnapshot({ includeMetadataChanges: true }, (snap) => {
+        state.transactions = snap.docs.map((d) => normalizeTx({ ...d.data(), id: d.id }));
+        cloud.pending = snap.metadata.hasPendingWrites;
+        updateSyncStatus();
+        render();
+        if (cloud.firstTxSnap && !snap.metadata.fromCache) {
+          cloud.firstTxSnap = false;
+          if (snap.empty) offerUpload(state.session.email);
+        }
+      }, cloudErr);
+    }
     function persistSettings() {
       if (cloud.uid) userDoc().set({ limits: state.limits, currency: state.currency, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(cloudErr);
       else save();
     }
     async function persistMany(list) {
+      if (!syncOn() && cloud.uid && cloud.mode === 'local') { saveDevice(); return; }
       if (!cloud.uid) { save(); return; }
       for (let i = 0; i < list.length; i += 400) {
         const batch = cloud.db.batch();
@@ -1388,6 +1451,7 @@
       }
     }
     async function persistReplaceAll(list) {
+      if (cloud.uid && cloud.mode === 'local') { saveDevice(); persistSettings(); return; }
       if (!cloud.uid) { save(); return; }
       const keep = new Set(list.map((t) => t.id));
       const snap = await txCol().get();
@@ -1449,8 +1513,9 @@
     async function onCloudUser(user) {
       if (cloud.unsubTx) { cloud.unsubTx(); cloud.unsubTx = null; }
       if (cloud.unsubUser) { cloud.unsubUser(); cloud.unsubUser = null; }
-      if (!user) { cloud.uid = null; state.session = null; showAuth(); return; }
+      if (!user) { cloud.uid = null; cloud.mode = null; state.session = null; showAuth(); return; }
       cloud.uid = user.uid;
+      cloud.mode = null;
       cloud.firstTxSnap = true;
       let profile = {};
       try { const d = await userDoc().get(); profile = d.exists ? d.data() : {}; } catch (e) {}
@@ -1477,6 +1542,7 @@
       cloud.unsubUser = userDoc().onSnapshot((d) => {
         const p = d.data() || {};
         state.plan = p.plan || 'free'; state.planUntil = p.planUntil || null;
+        applySyncMode();
         if (p.limits) state.limits = p.limits;
         if (p.currency && CURRENCIES[p.currency]) state.currency = p.currency;
         if (p.name && state.session) {
@@ -1486,22 +1552,14 @@
         }
         render();
       }, () => {});
-      cloud.unsubTx = txCol().onSnapshot({ includeMetadataChanges: true }, (snap) => {
-        state.transactions = snap.docs.map((d) => normalizeTx({ ...d.data(), id: d.id }));
-        cloud.pending = snap.metadata.hasPendingWrites;
-        updateSyncStatus();
-        render();
-        if (cloud.firstTxSnap && !snap.metadata.fromCache) {
-          cloud.firstTxSnap = false;
-          if (snap.empty) offerUpload(state.session.email);
-        }
-      }, cloudErr);
+      applySyncMode();
     }
 
     function updateSyncStatus() {
       const el = $('#sync-status');
       if (!el) return;
       if (!cloud.uid) { el.innerHTML = '<span class="sync-dot" style="background:var(--text-3)"></span><span style="color:var(--text-3)">Guardado solo en este dispositivo</span>'; return; }
+      if (cloud.mode !== 'cloud') { el.innerHTML = '<span class="sync-dot" style="background:var(--text-3)"></span><span style="color:var(--text-3)">Solo en este celular · Nube desde el plan Pro</span>'; return; }
       if (!navigator.onLine) el.innerHTML = '<span class="sync-dot" style="background:var(--warn)"></span><span style="color:var(--warn)">Sin conexión · se sincroniza al volver</span>';
       else if (cloud.pending) el.innerHTML = '<span class="sync-dot" style="background:var(--info)"></span><span style="color:var(--info)">Sincronizando…</span>';
       else el.innerHTML = '<span class="sync-dot" style="background:var(--accent)"></span><span style="color:var(--accent-text)">Sincronizado en la nube</span>';
@@ -1664,7 +1722,7 @@
       $('#auth-screen').classList.remove('hidden');
       $('#cloud-auth-extra').classList.toggle('hidden', !cloud.enabled);
       $('#auth-storage-note').innerHTML = cloud.enabled
-        ? 'Tus datos se guardan cifrados en la nube y se sincronizan entre tus dispositivos.'
+        ? 'Con los planes Pro y Premium tus datos se guardan cifrados en la nube y se sincronizan entre tus dispositivos.'
         : 'Tus datos se guardan de forma privada en este dispositivo.<br>Descarga un respaldo desde el menú para no perderlos si cambias de equipo.';
       if (cloud.loadError) showAuthError('No se pudo conectar con el servidor. Revisa tu conexión a internet y recarga la página.');
       maybeLoginTour();
@@ -1683,7 +1741,7 @@
     }
 
     // ================= PLANES =================
-    const FREE_TX_LIMIT = 50;
+    const FREE_TX_LIMIT = 15;
     const ADMIN_EMAILS = ['d.l.company.2026@gmail.com'];
     const WA_NUMBER = '573218641539';
     const PLAN_INFO = {
@@ -1693,8 +1751,8 @@
     };
     const PLAN_FEATURES = {
       free: [],
-      pro: ['unlimited', 'excel', 'backup'],
-      premium: ['unlimited', 'excel', 'backup', 'trend', 'recurring', 'support']
+      pro: ['unlimited', 'cloud', 'excel', 'backup'],
+      premium: ['unlimited', 'cloud', 'excel', 'backup', 'trend', 'recurring', 'support']
     };
     function isAdmin() { return !!(state.session && ADMIN_EMAILS.includes(String(state.session.email || '').toLowerCase())); }
     function currentPlan() {
@@ -1860,6 +1918,7 @@
           }
           await batch.commit();
           await userDoc().delete();
+          try { localStorage.removeItem(deviceKey()); } catch (e) {}
           await user.delete();
           toast('Tu cuenta fue eliminada');
         } catch (e) {

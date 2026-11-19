@@ -16,7 +16,7 @@ Desarrollada por **DL COMPANY -TECHNOLOGY-**.
 - Registro con nombre de usuario, correo y contraseña (o Google).
 - Saludo personalizado según la hora (buenos días / tardes / noches) con accesos rápidos para registrar ingresos y gastos.
 - Cambiar el nombre y eliminar la cuenta con todos sus datos desde el menú.
-- Planes Gratis (50 movimientos/mes), Pro ($20.000, oferta $10.000) y Premium ($40.000, oferta $20.000). El pago se coordina por WhatsApp y el administrador (d.l.company.2026@gmail.com) activa el plan desde el **Panel de administrador** del menú.
+- Planes Gratis (15 movimientos/mes, datos solo en el dispositivo), Pro ($20.000, oferta $10.000, con nube) y Premium ($40.000, oferta $20.000). El pago se coordina por WhatsApp y el administrador (d.l.company.2026@gmail.com) activa el plan desde el **Panel de administrador** del menú.
 
 ## Modos de almacenamiento
 | Modo | Cuándo | Dónde quedan los datos |
