@@ -696,7 +696,7 @@
         </div>
         <p class="greet-tip" id="greet-tip"></p>
         <div class="usage hidden" id="greet-usage">
-          <div class="usage-row"><span>Plan Gratis · movimientos de este mes</span><span id="greet-usage-num">0/50</span></div>
+          <div class="usage-row"><span id="greet-usage-label">Plan Gratis · movimientos de este mes</span><span id="greet-usage-num">0/15</span></div>
           <div class="usage-bar"><i id="greet-usage-bar" style="width:0%"></i></div>
         </div>
         <div class="greet-actions">
@@ -982,12 +982,12 @@
         <div class="plan pro" data-plan="pro">
           <span class="ribbon">Más popular</span>
           <h4>Pro</h4>
-          <p class="p-desc">Sin límites para tu día a día.</p>
+          <p class="p-desc">Más capacidad y tus datos en la nube.</p>
           <p class="p-old">$20.000</p>
           <p class="p-price">$10.000 <small>/ mes</small></p>
           <span class="p-save">Ahorras $10.000 al mes</span>
           <ul>
-            <li><b>Movimientos ilimitados</b></li>
+            <li><b>Hasta 50 movimientos al mes</b></li>
             <li>Todo lo del plan Gratis</li>
             <li><b>Sincronización en la nube</b>: tus datos seguros y en todos tus equipos</li>
             <li>Exportar a Excel (.csv)</li>
@@ -1007,6 +1007,7 @@
           <span class="p-save">Ahorras $20.000 al mes</span>
           <ul>
             <li><b>Toda la app al 100%</b></li>
+            <li><b>Movimientos ilimitados</b></li>
             <li>Todo lo del plan Pro</li>
             <li>Tendencia de 6 meses</li>
             <li>Copiar ingresos y gastos fijos al mes nuevo en un toque</li>
@@ -1742,6 +1743,7 @@
 
     // ================= PLANES =================
     const FREE_TX_LIMIT = 15;
+    const PLAN_TX_LIMIT = { free: FREE_TX_LIMIT, pro: 50, premium: Infinity };
     const ADMIN_EMAILS = ['d.l.company.2026@gmail.com'];
     const WA_NUMBER = '573218641539';
     const PLAN_INFO = {
@@ -1751,7 +1753,7 @@
     };
     const PLAN_FEATURES = {
       free: [],
-      pro: ['unlimited', 'cloud', 'excel', 'backup'],
+      pro: ['cloud', 'excel', 'backup'],
       premium: ['unlimited', 'cloud', 'excel', 'backup', 'trend', 'recurring', 'support']
     };
     function isAdmin() { return !!(state.session && ADMIN_EMAILS.includes(String(state.session.email || '').toLowerCase())); }
@@ -1772,16 +1774,19 @@
       badge.className = 'plan-badge ' + p;
       badge.textContent = (p === 'premium' ? '👑 ' : '') + 'Plan ' + PLAN_INFO[p].name;
       const used = state.transactions.filter((t) => ymOf(t.date) === ymOf(todayISO())).length;
-      $('#menu-plan-info').textContent = isAdmin() ? 'Administrador' : p === 'free' ? used + '/' + FREE_TX_LIMIT + ' este mes' : (state.planUntil ? 'Vence ' + fmtDate(state.planUntil) : '');
+      const lim = PLAN_TX_LIMIT[p];
+      $('#menu-plan-info').textContent = isAdmin() ? 'Administrador' : p === 'free' ? used + '/' + lim + ' este mes' : p === 'pro' ? used + '/' + lim + ' este mes' + (state.planUntil ? ' · vence ' + fmtDate(state.planUntil) : '') : (state.planUntil ? 'Vence ' + fmtDate(state.planUntil) : '');
       $('#btn-plans-text').textContent = p === 'premium' ? 'Ver planes' : 'Mejorar mi plan';
       $('#btn-admin').classList.toggle('hidden', !isAdmin() || !cloud.uid);
       const free = p === 'free';
-      $('#greet-usage').classList.toggle('hidden', !free);
+      const limited = p !== 'premium';
+      $('#greet-usage').classList.toggle('hidden', !limited);
       $('#greet-up').classList.toggle('hidden', p === 'premium');
       $('#greet-up').textContent = free ? '👑 Oferta de lanzamiento: planes con 50% de descuento ›' : '👑 Pásate a Premium con 50% de descuento ›';
-      if (free) {
-        $('#greet-usage-num').textContent = Math.min(used, FREE_TX_LIMIT) + '/' + FREE_TX_LIMIT;
-        const pct = Math.min(100, Math.round(used / FREE_TX_LIMIT * 100));
+      if (limited) {
+        $('#greet-usage-label').textContent = 'Plan ' + PLAN_INFO[p].name + ' · movimientos de este mes';
+        $('#greet-usage-num').textContent = Math.min(used, lim) + '/' + lim;
+        const pct = Math.min(100, Math.round(used / lim * 100));
         const bar = $('#greet-usage-bar');
         bar.style.width = pct + '%';
         bar.style.background = pct >= 90 ? 'var(--danger)' : pct >= 70 ? 'var(--warn)' : 'var(--accent)';
@@ -2252,7 +2257,14 @@
       if (!date) return txError('Selecciona la fecha.');
       if (!state.editingId && !planAllows('unlimited')) {
         const used = state.transactions.filter((t) => ymOf(t.date) === ymOf(date)).length;
-        if (used >= FREE_TX_LIMIT) { closeModal('modal-tx'); openPlans('Llegaste a los ' + FREE_TX_LIMIT + ' movimientos del plan Gratis en este mes. Pásate a Pro para registrar sin límites.'); return; }
+        const p = currentPlan(), lim = PLAN_TX_LIMIT[p];
+        if (used >= lim) {
+          closeModal('modal-tx');
+          openPlans(p === 'free'
+            ? 'Llegaste a los ' + lim + ' movimientos del plan Gratis en este mes. Pásate a Pro (50 al mes) o a Premium (ilimitados).'
+            : 'Llegaste a los ' + lim + ' movimientos del plan Pro en este mes. Pásate a Premium para registrar sin límites.');
+          return;
+        }
       }
       const data = normalizeTx({
         id: state.editingId || uid(), flow: state.flow, frequency: state.freq,
