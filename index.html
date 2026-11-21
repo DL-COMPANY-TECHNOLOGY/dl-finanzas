@@ -836,7 +836,7 @@
           <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a>
           <a href="legal.html#privacidad" target="_blank" rel="noopener">Privacidad</a>
         </div>
-        <p class="dev-copy">DL FINANZAS v2.1 · © 2026</p>
+        <p class="dev-copy">DL FINANZAS v2.2 · © 2026</p>
       </footer>
     </main>
 
@@ -1036,12 +1036,12 @@
       </div>
       <p class="card-sub" style="margin-bottom:10px">Busca al usuario que te pagó y actívale el plan. Si ya tiene el mismo plan vigente, el tiempo se suma.</p>
       <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:12px">
-        <input type="search" id="admin-search" class="input" placeholder="Buscar por nombre o correo">
+        <input type="search" id="admin-search" class="input" placeholder="Buscar por correo o nombre">
         <select id="admin-months" class="input" style="width:auto">
           <option value="1">1 mes</option><option value="3">3 meses</option><option value="6">6 meses</option><option value="12">12 meses</option><option value="14">Anual · 14 meses (paga 12)</option>
         </select>
       </div>
-      <p class="card-sub" id="admin-stats" style="margin-bottom:10px"></p>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px"><p class="card-sub" id="admin-stats" style="margin:0"></p><button type="button" class="btn btn-sm btn-ghost" id="btn-users-xls">📊 Excel</button></div>
       <div class="admin-list" id="admin-list"></div>
     </div>
   </div>
@@ -1539,6 +1539,7 @@
         };
         userDoc().set(profile, { merge: true }).catch(cloudErr);
       }
+      if (profile.email) userDoc().set({ updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => {});
       state.session = { name: profile.name, email: profile.email || user.email, idNumber: profile.idNumber || '', uid: user.uid };
       state.limits = profile.limits || { ...DEFAULT_LIMITS };
       state.currency = CURRENCIES[profile.currency] ? profile.currency : 'COP';
@@ -1844,17 +1845,38 @@
         $('#admin-list').innerHTML = '<p class="card-sub" style="color:var(--danger)">No se pudieron cargar los usuarios. Revisa que publicaste las reglas nuevas de Firestore.</p>';
       }
     }
+    const tsMsF = (t) => !t ? 0 : (typeof t.toDate === 'function' ? t.toDate().getTime() : new Date(t).getTime()) || 0;
+    const fechaHoraF = (t) => { const ms = tsMsF(t); return ms ? new Date(ms).toLocaleString('es-CO', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '—'; };
+    async function exportUsersExcel() {
+      if (!isAdmin() || !admin.users.length) return toast('No hay usuarios para exportar');
+      const off = new Date().getTimezoneOffset() * 60000, d = (t) => { const ms = tsMsF(t); return ms ? new Date(ms - off) : null; };
+      const us = admin.users.slice().sort((a, b) => tsMsF(b.createdAt) - tsMsF(a.createdAt));
+      try {
+        const name = await excelPro({
+          app: 'DL FINANZAS', titulo: 'DL FINANZAS · Registro de usuarios', acento: 'FF10B981',
+          sub: us.length + ' usuarios · ' + new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' }),
+          tablas: [{ hoja: 'Usuarios', cols: [{ h: 'Correo', w: 30 }, { h: 'Nombre', w: 22 }, { h: 'Cuenta creada', w: 17, f: 'date' }, { h: 'Última actividad', w: 17, f: 'date' }, { h: 'Plan actual', w: 12 }, { h: 'Plan adquirido el', w: 17, f: 'date' }, { h: 'Vence', w: 12, f: 'day' }, { h: 'Estado', w: 12 }],
+            filas: us.map((u) => { const p = effPlan(u), pag = u.plan && u.plan !== 'free'; return [u.email || '', u.name || '', d(u.createdAt), d(u.updatedAt), PLAN_INFO[p].name, pag ? d(u.planUpdatedAt) : null, pag && u.planUntil ? d(u.planUntil) : null, pag && p === 'free' ? 'Vencido' : p === 'free' ? 'Gratis' : 'Activo']; }) }],
+          archivo: 'DL Finanzas Usuarios ' + todayISO()
+        });
+        toast('📊 Registro descargado: ' + name);
+      } catch (e) { toast(e.message || 'No se pudo crear el Excel'); }
+    }
     function effPlan(u) { return (u.plan === 'pro' || u.plan === 'premium') && (!u.planUntil || new Date(u.planUntil) >= new Date()) ? u.plan : 'free'; }
     function renderAdmin() {
       const q = $('#admin-search').value.trim().toLowerCase();
       const list = admin.users.filter((u) => !q || String(u.name || '').toLowerCase().includes(q) || String(u.email || '').toLowerCase().includes(q))
-        .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+        .sort((a, b) => tsMsF(b.createdAt) - tsMsF(a.createdAt));
       const c = { free: 0, pro: 0, premium: 0 };
       admin.users.forEach((u) => c[effPlan(u)]++);
       $('#admin-stats').textContent = admin.users.length + ' usuarios · ' + c.free + ' Gratis · ' + c.pro + ' Pro · ' + c.premium + ' Premium';
       $('#admin-list').innerHTML = list.length ? list.map((u) => {
         const p = effPlan(u);
-        return '<div class="admin-row"><div class="a-top"><div><div class="a-name">' + esc(u.name || 'Sin nombre') + '</div><div class="a-mail">' + esc(u.email || '') + '</div>' +
+        const pagado = u.plan && u.plan !== 'free';
+        return '<div class="admin-row"><div class="a-top"><div><div class="a-name">' + esc(u.email || 'Sin correo') + '</div><div class="a-mail">' + esc(u.name || 'Sin nombre') + '</div>' +
+          '<div class="a-mail">📅 Cuenta creada: <b>' + esc(fechaHoraF(u.createdAt)) + '</b></div>' +
+          '<div class="a-mail">🕑 Última actividad: ' + esc(fechaHoraF(u.updatedAt)) + '</div>' +
+          (pagado ? '<div class="a-mail">Plan adquirido el <b>' + esc(fechaHoraF(u.planUpdatedAt)) + '</b></div>' : '') +
           (p !== 'free' && u.planUntil ? '<div class="a-until">Vence ' + esc(fmtDate(u.planUntil)) + '</div>' : (u.plan && u.plan !== 'free' && p === 'free' ? '<div class="a-until" style="color:var(--danger)">Plan vencido</div>' : '')) +
           '</div><span class="plan-badge ' + p + '">' + PLAN_INFO[p].name + '</span></div>' +
           '<div class="a-btns"><button type="button" class="btn btn-sm btn-ghost" data-set="free" data-uid="' + esc(u.uid) + '">Gratis</button>' +
@@ -2370,7 +2392,7 @@ function cargarExcelJS(){if(window.ExcelJS)return Promise.resolve(window.ExcelJS
 async function excelPro(o){
   const XL=await cargarExcelJS();
   const NAVY="FF0B1426",ACC=o.acento||"FFD4AF37",ACCL="FFFBF5E1",ZEBRA="FFF6F8FC",LINE="FFDDE3EE",MONEY='"$"#,##0';
-  const FMT={money:o.moneyFmt||MONEY,pct:"0.0%",int:"#,##0"};
+  const FMT={money:o.moneyFmt||MONEY,pct:"0.0%",int:"#,##0",date:"dd/mm/yyyy hh:mm",day:"dd/mm/yyyy"};
   const wb=new XL.Workbook();wb.creator=o.app||"DL COMPANY";wb.created=new Date();
   const borde={top:{style:"thin",color:{argb:LINE}},bottom:{style:"thin",color:{argb:LINE}},left:{style:"thin",color:{argb:LINE}},right:{style:"thin",color:{argb:LINE}}};
   const fill=c=>({type:"pattern",pattern:"solid",fgColor:{argb:c}});
@@ -2732,6 +2754,7 @@ async function excelPro(o){
       document.addEventListener('click', () => menu.classList.add('hidden'));
 
       $('#btn-export').onclick = () => { menu.classList.add('hidden'); exportJSON(); };
+      $('#btn-users-xls').onclick = () => exportUsersExcel();
       $('#btn-export-csv').onclick = () => { menu.classList.add('hidden'); exportCSV(); };
       $('#input-import').addEventListener('change', (e) => { menu.classList.add('hidden'); const f = e.target.files[0]; if (f) importJSON(f); e.target.value = ''; });
       document.addEventListener('click', (e) => {
