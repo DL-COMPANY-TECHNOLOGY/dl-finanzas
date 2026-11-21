@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Términos y Privacidad | DL FINANZAS</title>
-  <meta name="theme-color" content="#070a10" id="meta-theme-color">
+  <meta name="theme-color" content="#f3f5f9" id="meta-theme-color">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <script>
     (function () {
       var t = null;
       try { t = localStorage.getItem('dl_finanzas_theme'); } catch (e) {}
-      if (t !== 'light' && t !== 'dark') t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t !== 'light' && t !== 'dark') t = 'light';
       document.documentElement.setAttribute('data-theme', t);
       document.getElementById('meta-theme-color').setAttribute('content', t === 'light' ? '#f3f5f9' : '#070a10');
     })();

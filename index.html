@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="DL Finanzas">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#070a10" id="meta-theme-color">
+  <meta name="theme-color" content="#f3f5f9" id="meta-theme-color">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="logo.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -21,7 +21,7 @@
       var t = null;
       try { t = localStorage.getItem('dl_finanzas_theme'); } catch (e) {}
       if (t !== 'light' && t !== 'dark') {
-        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        t = 'light'; // la app inicia en modo día; el usuario puede cambiarlo y se recuerda
       }
       document.documentElement.setAttribute('data-theme', t);
     })();
@@ -2813,12 +2813,6 @@ async function excelPro(o){
         else menu.classList.add('hidden');
       });
 
-      // Seguir el tema del sistema si el usuario no ha elegido uno
-      if (window.matchMedia) {
-        const mq = window.matchMedia('(prefers-color-scheme: light)');
-        const onChange = () => { let saved = null; try { saved = localStorage.getItem(KEY_THEME); } catch (e) {} if (!saved) applyTheme(mq.matches ? 'light' : 'dark'); };
-        if (mq.addEventListener) mq.addEventListener('change', onChange);
-      }
     }
 
     async function init() {
