@@ -510,6 +510,13 @@
     @keyframes tvz { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
     .ttip .tbar { height: 3px; border-radius: 9px; background: var(--border); margin-top: 10px; overflow: hidden; }
     .ttip .tbar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), #22d3ee); }
+    .ttip { max-height: calc(100vh - 24px); overflow: auto; }
+    .ttip ul { margin: 8px 0 0; padding: 0 0 0 2px; list-style: none; text-align: left; color: var(--text-2); font-size: 13.5px; line-height: 1.45; font-weight: 600; }
+    .ttip ul li { margin: 3px 0; }
+    .ttip ul b { color: var(--text); }
+    .ttip .tprice { display: inline-block; margin: 2px 0 6px; font-size: 22px; font-weight: 900; color: var(--accent-text); }
+    .ttip .tlock { display: block; margin-top: 8px; color: var(--warn); font-size: 12.5px; font-weight: 800; }
+    .ttip .tdots { flex-wrap: wrap; }
     [data-theme="light"] .tspot { box-shadow: 0 0 0 9999px rgba(15,23,42,.62), 0 0 22px rgba(5,150,105,.45); }
   </style>
 </head>
@@ -2567,25 +2574,44 @@ async function excelPro(o){
 
     let TOUR = null;
     const tourKey = () => 'dl_finanzas_tour_' + ((state.session && (state.session.uid || state.session.email)) || 'local');
-    const isVisible = (el) => !!el && el.offsetParent !== null && el.getBoundingClientRect().width > 0;
+    const isVisible = (el) => { if (!el) return false; const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none'; };
+
+    const FEAT_PLAN = { cloud: 'pro', excel: 'pro', backup: 'pro', trend: 'premium', recurring: 'premium', unlimited: 'premium', support: 'premium' };
+    const lockTxt = (f) => planAllows(f) ? '' : '<span class="tlock">🔒 Disponible desde el plan ' + PLAN_INFO[FEAT_PLAN[f]].name + '</span>';
+    const tachado = (v) => '<s style="font-size:15px;color:var(--text-3);margin-right:6px;font-weight:700">' + v + '</s>';
+
+    function planesSteps() {
+      const p = currentPlan();
+      const used = state.transactions.filter((t) => ymOf(t.date) === ymOf(todayISO())).length;
+      const uso = p === 'premium' ? 'movimientos <b>ilimitados</b>' : 'llevas <b>' + Math.min(used, PLAN_TX_LIMIT[p]) + ' de ' + PLAN_TX_LIMIT[p] + '</b> movimientos este mes';
+      return [
+        { el: p === 'premium' ? '#card-greet' : '#greet-usage', t: '⭐ Tu plan', p: 'Lo último y muy importante: tienes el <b>plan ' + PLAN_INFO[p].name + '</b> y ' + uso + '. Aquí ves cuánto has usado del mes.' },
+        { t: 'Plan Gratis', big: '🆓', price: '$0', p: 'Para empezar a organizar tu dinero:', lista: ['✅ Hasta <b>15 movimientos</b> al mes', '✅ Resumen, balance y tasa de ahorro', '✅ Gráfica por categorías y topes de presupuesto', '✅ Datos guardados en este celular', '🔒 Sin nube, Excel, respaldos ni tendencia'] },
+        { t: 'Plan Pro', big: '🚀', price: tachado('$20.000') + '$10.000 /mes', p: 'Más capacidad y tus datos seguros en la nube:', lista: ['✅ Hasta <b>50 movimientos</b> al mes', '✅ ☁️ <b>Sincronización en la nube</b>: tus datos en todos tus equipos', '✅ 📊 Exportar a Excel', '✅ 💾 Descargar y restaurar respaldos', '✅ Todo lo del plan Gratis', '📅 Anual: <b>$120.000 por 14 meses</b>'] },
+        { t: 'Plan Premium', big: '👑', price: tachado('$40.000') + '$20.000 /mes', p: '<b>Toda la app al 100%</b>:', lista: ['✅ Movimientos <b>ilimitados</b>', '✅ 📈 Tendencia de 6 meses', '✅ 🔁 Copiar ingresos y gastos fijos al mes nuevo en un toque', '✅ 💬 Soporte prioritario por WhatsApp', '✅ Acceso anticipado a nuevas funciones', '✅ Todo lo del plan Pro', '📅 Anual: <b>$240.000 por 14 meses</b>'] },
+        { t: '¿Cómo activo un plan?', big: '🎁', p: '🚀 Por el <b>lanzamiento</b>, los planes están con <b>50% de descuento</b>.<br><br>Toca <b>Ver planes</b>, elige mensual o anual y te escribimos por WhatsApp con los datos de pago. Activamos tu plan <b>el mismo día</b>, <b>sin renovación automática</b> y sin perder tu información. Pago anual: <b>14 meses por el precio de 12</b>.', fin: 'Ver planes', finAct: () => openPlans() }
+      ];
+    }
 
     function appSteps() {
       const first = state.session && state.session.name ? state.session.name.split(' ')[0] : '';
       const desktop = window.matchMedia('(min-width: 720px)').matches;
       return [
-        { t: '¡Bienvenido' + (first ? ', ' + esc(first) : '') + ' a DL FINANZAS!', big: '👋', p: 'Te muestro en 1 minuto cómo se usa la app. La guía habla y avanza sola, o usa los botones. Toca el parlante 🔊 para silenciarla.' },
-        { el: desktop ? '#btn-add-desktop' : '#btn-add-fab', t: '➕ Registra tus movimientos', p: 'Toca aquí para agregar un <b>ingreso</b>, un <b>gasto fijo</b> (arriendo, servicios) o un <b>gasto variable</b> (mercado, gustos). Si cobras o pagas cada quince días, elige <b>Quincenal</b> y se cuenta doble en el mes.' },
-        { el: '#card-month', t: '📅 Mes a mes', p: 'Todo se calcula por mes. Usa las flechas para ver meses anteriores o planear el siguiente.' },
-        { el: '#card-greet', t: '👋 Tu asistente personal', p: 'Cada vez que entres te saludo según la hora del día y te ayudo a registrar en un toque tus <b>ingresos</b>, <b>gastos fijos</b> o <b>gastos variables</b>.' },
-        { el: '#card-hero', t: '💰 Tu resumen', p: 'Aquí ves tu <b>balance disponible</b>, cuánto estás ahorrando y cómo vas frente al mes anterior.' },
+        { t: '👋 ¡Bienvenido' + (first ? ', ' + esc(first) : '') + ' a DL FINANZAS!', big: '💰', p: 'Te muestro en 2 minutos cómo funciona: registras lo que ganas y lo que gastas, y la app te dice cuánto te queda y en qué se va tu dinero. La guía habla y avanza sola; toca el parlante 🔊 para silenciarla.' },
+        { el: '#card-greet', t: 'Tu asistente', p: 'Cada vez que entres te saludo según la hora del día y te doy un consejo del mes.' },
+        { el: '.greet-actions', t: '1. Registra en un toque', p: 'Toca <b>💵 Ingreso</b> cuando recibas dinero, <b>🏠 Gasto fijo</b> para lo que pagas todos los meses (arriendo, servicios) o <b>🛒 Gasto variable</b> para el resto (mercado, gustos, transporte).' },
+        { el: desktop ? '#btn-add-desktop' : '#btn-add-fab', t: '➕ Nuevo movimiento', p: 'También puedes registrar desde aquí. Escribe el valor, el concepto y la categoría. Si te pagan o pagas <b>cada quince días</b>, elige <b>Quincenal</b> y se cuenta doble en el mes.' },
+        { el: '#card-month', t: '2. Mes a mes', p: 'Todo se calcula por mes. Usa las flechas para ver meses anteriores o planear el siguiente.' },
+        { el: '#card-hero', t: '3. Tu resumen', p: 'Aquí ves tu <b>balance disponible</b>, cuánto estás <b>ahorrando</b> y si gastaste más o menos que el mes anterior.' },
         { el: '#card-donut', t: '🍩 ¿En qué se va el dinero?', p: 'El gráfico te muestra qué categorías se llevan la mayor parte de tus gastos.' },
-        { el: '#card-budget', t: '🚦 Semáforo de presupuesto', p: 'Ponle un <b>tope mensual</b> a cada categoría. Verde vas bien, amarillo te estás acercando y rojo ya te pasaste.' },
-        { el: '#card-trend', t: '📈 Tendencia', p: 'Compara tus ingresos y egresos de los últimos 6 meses. Toca un mes para abrirlo.' },
-        { el: '#card-tx', t: '🧾 Tus movimientos', p: 'Busca, filtra y <b>toca cualquier movimiento</b> para editarlo o eliminarlo.' },
-        { el: '#btn-currency', t: '💱 Moneda', p: 'Cambia la moneda en la que se muestran los valores: pesos, dólares, euros y más.' },
-        { el: '#btn-theme-app', t: '🌗 Modo día o noche', p: 'Cambia entre el tema claro y el oscuro cuando quieras.' },
-        { el: '#btn-menu', t: '☰ Tu menú', p: 'Desde aquí ajustas los topes, exportas a Excel, descargas tu respaldo, instalas la app, vuelves a ver esta guía o pides <b>soporte por WhatsApp</b>.' },
-        { t: '¡Listo para empezar! 🚀', big: '✅', p: 'Empieza registrando tu primer ingreso del mes. Si necesitas ayuda, escríbenos por WhatsApp con el botón verde.', fin: 'Registrar mi primer movimiento', finAct: () => openTxModal() }
+        { el: '#card-budget', t: '🚦 Semáforo de presupuesto', p: 'Ponle un <b>tope mensual</b> a cada categoría con <b>Ajustar topes</b>. <b>Verde</b> vas bien, <b>amarillo</b> te estás acercando y <b>rojo</b> ya te pasaste.' },
+        { el: '#card-trend', t: '📈 Tendencia de 6 meses', p: 'Compara tus ingresos y egresos de los últimos 6 meses. Toca un mes para abrirlo.' + lockTxt('trend') },
+        { el: '#card-tx', t: '4. Tus movimientos', p: 'Busca, filtra y <b>toca cualquier movimiento</b> para editarlo o eliminarlo.' },
+        { el: '#btn-currency', t: '💱 Moneda', p: 'Elige la moneda en la que se muestran los valores: pesos, dólares, euros y más.' },
+        { el: '#btn-theme-app', t: '🌗 Modo día y noche', p: 'Cambia entre el tema claro y el oscuro cuando quieras.' },
+        { el: '#btn-menu', t: '☰ Tu cuenta y ajustes', p: 'Cambia tu nombre, ajusta los topes, <b>exporta a Excel</b>, descarga tu <b>respaldo</b>, <b>instala la app</b> o <b>vuelve a ver esta guía</b>.' + lockTxt('excel') },
+        { el: '#app-screen .wafab', t: '💬 Soporte por WhatsApp', p: '¿Tienes dudas? Toca el botón verde y te ayudamos por WhatsApp.' },
+        ...planesSteps()
       ];
     }
     function loginSteps() {
@@ -2595,7 +2621,7 @@ async function excelPro(o){
         { el: '#reg-legal', t: '✅ Acepta los términos', p: 'Para crear la cuenta marca la casilla de aceptación. Puedes leer los términos y la política de privacidad cuando quieras.', tab: 'register' }
       ];
       if (cloud.enabled) st.push({ el: '#btn-google', t: 'Entra con Google', p: 'También puedes ingresar con un solo toque usando tu cuenta de <b>Google</b>.', tab: 'login' });
-      st.push({ el: '.wafab', t: '💬 ¿Necesitas ayuda?', p: 'Escríbenos por WhatsApp y te ayudamos a ingresar.', fin: 'Entendido', tab: 'login' });
+      st.push({ el: '#auth-screen .wafab', t: '💬 ¿Necesitas ayuda?', p: 'Escríbenos por WhatsApp y te ayudamos a ingresar.', fin: 'Entendido', tab: 'login' });
       return st;
     }
 
@@ -2634,7 +2660,7 @@ async function excelPro(o){
       tip.className = 'ttip' + (el ? '' : ' center'); tip.style.transform = '';
       tip.innerHTML = (VOZ.ok ? '<button class="tvoz" type="button" data-tv aria-label="' + (VOZ.on ? 'Silenciar la guía' : 'Activar la voz') + '">' + (VOZ.on ? '🔊' : '🔇') + '</button>' : '') +
         '<div class="tstep">Guía · ' + (i + 1) + ' de ' + n + '</div>' + (st.big ? '<div class="tbig">' + st.big + '</div>' : '') +
-        '<h4>' + st.t + '</h4><p>' + st.p + '</p>' +
+        '<h4>' + st.t + '</h4>' + (st.price ? '<div class="tprice">' + st.price + '</div>' : '') + '<p>' + st.p + '</p>' + (st.lista ? '<ul>' + st.lista.map((x) => '<li>' + x + '</li>').join('') + '</ul>' : '') +
         '<div class="tacts">' + (last ? '' : '<button class="tskip" type="button" data-ts>Saltar guía</button>') +
         (i > 0 ? '<button class="tb" type="button" data-tp>‹</button>' : '') +
         '<button class="tb tn" type="button" data-tn>' + (last ? (st.fin || 'Terminar') : (i === 0 ? 'Empezar ›' : 'Siguiente ›')) + '</button></div>' +
@@ -2750,8 +2776,7 @@ async function excelPro(o){
 
       const menu = $('#menu');
       $('#btn-menu').addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('hidden'); });
-      menu.addEventListener('click', (e) => e.stopPropagation());
-      document.addEventListener('click', () => menu.classList.add('hidden'));
+      document.addEventListener('click', (e) => { if (!e.target.closest('.menu-wrap')) menu.classList.add('hidden'); });
 
       $('#btn-export').onclick = () => { menu.classList.add('hidden'); exportJSON(); };
       $('#btn-users-xls').onclick = () => exportUsersExcel();
