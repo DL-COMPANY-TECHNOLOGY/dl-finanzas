@@ -274,6 +274,10 @@
     .plan .p-old { font-size: 13px; color: var(--text-3); text-decoration: line-through; font-weight: 700; }
     .plan .p-price { font-size: 26px; font-weight: 900; letter-spacing: -.5px; line-height: 1.1; }
     .plan .p-price small { font-size: 12px; font-weight: 700; color: var(--text-2); }
+    .plan .p-annual { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin: 0 0 10px; padding: 9px 11px; border-radius: 12px; border: 1px dashed var(--border-strong); background: var(--surface-1, rgba(127,127,127,.06)); }
+    .plan .p-annual b { display: block; font-size: 13px; font-weight: 900; white-space: nowrap; } .plan .p-annual small { display: block; font-size: 11px; color: var(--text-3); font-weight: 700; }
+    .plan .p-annual s { display: block; font-size: 11px; color: var(--text-3); text-decoration-color: var(--danger); text-decoration-thickness: 2px; }
+    .plan .p-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .plan .p-btns .btn { padding-left: 6px; padding-right: 6px; }
     .plan .p-save { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 800; color: var(--accent-text); }
     .plan ul { list-style: none; padding: 0; margin: 12px 0 14px; display: grid; gap: 7px; font-size: 13px; }
     .plan li { display: flex; gap: 8px; align-items: flex-start; }
@@ -642,7 +646,7 @@
               </button>
               <button type="button" id="btn-export-csv">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6h6v6M4 4h16v16H4z"/></svg>
-                Exportar a Excel (.csv)
+                Exportar a Excel
               </button>
               <button type="button" id="btn-export">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
@@ -832,7 +836,7 @@
           <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a>
           <a href="legal.html#privacidad" target="_blank" rel="noopener">Privacidad</a>
         </div>
-        <p class="dev-copy">DL FINANZAS v2.0 · © 2026</p>
+        <p class="dev-copy">DL FINANZAS v2.1 · © 2026</p>
       </footer>
     </main>
 
@@ -990,13 +994,14 @@
             <li><b>Hasta 50 movimientos al mes</b></li>
             <li>Todo lo del plan Gratis</li>
             <li><b>Sincronización en la nube</b>: tus datos seguros y en todos tus equipos</li>
-            <li>Exportar a Excel (.csv)</li>
+            <li>Exportar a Excel</li>
             <li>Descargar y restaurar respaldos</li>
             <li class="no">Tendencia de 6 meses</li>
             <li class="no">Copiar fijos al mes nuevo</li>
             <li class="no">Soporte prioritario</li>
           </ul>
-          <button type="button" class="btn btn-primary btn-block" data-choose="pro">Quiero el Pro</button>
+          <div class="p-annual"><div><b>📅 Pago anual</b><small>14 meses: pagas 12 y te regalamos 2</small></div><div style="text-align:right"><s>$240.000</s><b>$120.000</b><small>$8.600 al mes</small></div></div>
+          <div class="p-btns"><button type="button" class="btn btn-primary" data-choose="pro">Quiero mensual</button><button type="button" class="btn btn-primary" data-choose="pro" data-anual="1">Quiero anual</button></div>
         </div>
         <div class="plan premium" data-plan="premium">
           <span class="ribbon">Todo incluido</span>
@@ -1014,10 +1019,11 @@
             <li><b>Soporte prioritario por WhatsApp</b></li>
             <li>Acceso anticipado a nuevas funciones</li>
           </ul>
-          <button type="button" class="btn btn-gold btn-block" data-choose="premium">Quiero el Premium</button>
+          <div class="p-annual"><div><b>📅 Pago anual</b><small>14 meses: pagas 12 y te regalamos 2</small></div><div style="text-align:right"><s>$480.000</s><b>$240.000</b><small>$17.100 al mes</small></div></div>
+          <div class="p-btns"><button type="button" class="btn btn-gold" data-choose="premium">Quiero mensual</button><button type="button" class="btn btn-gold" data-choose="premium" data-anual="1">Quiero anual</button></div>
         </div>
       </div>
-      <p class="plans-note">Pagas por WhatsApp (te enviamos los datos de pago) y activamos tu plan el mismo día. Sin renovación automática.</p>
+      <p class="plans-note">Pagas por WhatsApp (te enviamos los datos de pago) y activamos tu plan el mismo día. Sin renovación automática.<br><b>Pago anual:</b> 14 meses por el precio de 12.</p>
     </div>
   </div>
 
@@ -1032,7 +1038,7 @@
       <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:12px">
         <input type="search" id="admin-search" class="input" placeholder="Buscar por nombre o correo">
         <select id="admin-months" class="input" style="width:auto">
-          <option value="1">1 mes</option><option value="3">3 meses</option><option value="6">6 meses</option><option value="12">12 meses</option>
+          <option value="1">1 mes</option><option value="3">3 meses</option><option value="6">6 meses</option><option value="12">12 meses</option><option value="14">Anual · 14 meses (paga 12)</option>
         </select>
       </div>
       <p class="card-sub" id="admin-stats" style="margin-bottom:10px"></p>
@@ -1808,15 +1814,16 @@
         const k = b.dataset.choose;
         if (k === p) { b.textContent = 'Tu plan actual'; b.disabled = true; }
         else if (rank[k] < rank[p]) { b.textContent = 'Incluido en tu plan'; b.disabled = true; }
-        else { b.disabled = false; b.textContent = k === 'pro' ? 'Quiero el Pro' : k === 'premium' ? 'Quiero el Premium' : 'Plan Gratis'; }
+        else { b.disabled = false; b.textContent = k === 'free' ? 'Plan Gratis' : (b.dataset.anual ? 'Quiero anual' : 'Quiero mensual'); }
       });
       openModal('modal-plans');
     }
 
-    function choosePlan(k) {
+    const PLAN_ANUAL = { pro: '$120.000 por 14 meses (precio normal $240.000)', premium: '$240.000 por 14 meses (precio normal $480.000)' };
+    function choosePlan(k, anual) {
       if (k === 'free') return;
       const s = state.session || {};
-      const msg = 'Hola DL Company 👋, quiero activar el plan ' + PLAN_INFO[k].name.toUpperCase() + ' de DL FINANZAS con la oferta de lanzamiento: ' + PLAN_INFO[k].price + '.\n\nMi nombre: ' + (s.name || '') + '\nMi correo en la app: ' + (s.email || '');
+      const msg = 'Hola DL Company 👋, quiero activar el plan ' + PLAN_INFO[k].name.toUpperCase() + (anual ? ' ANUAL' : ' MENSUAL') + ' de DL FINANZAS con la oferta de lanzamiento: ' + (anual ? PLAN_ANUAL[k] : PLAN_INFO[k].price) + '.\n\nMi nombre: ' + (s.name || '') + '\nMi correo en la app: ' + (s.email || '');
       window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
     }
 
@@ -2354,16 +2361,83 @@
       toast('Respaldo descargado');
     }
 
-    function exportCSV() {
+/* Excel profesional (.xlsx con diseño) — DL COMPANY -TECHNOLOGY- */
+let _xlsLib=null;
+function cargarExcelJS(){if(window.ExcelJS)return Promise.resolve(window.ExcelJS);
+  return _xlsLib||(_xlsLib=new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js";sc.onload=()=>ok(window.ExcelJS);sc.onerror=()=>{_xlsLib=null;no(new Error("Sin conexión para generar el Excel"));};document.head.appendChild(sc);}));}
+/* o = {app, titulo, sub, acento:"FFD4AF37", resumen:[{t:"Sección", filas:[[etiqueta, valor, "money"|"pct"|"int"|"text", destacado]]}],
+        tablas:[{hoja, titulo, cols:[{h:"Encabezado", w:14, f:"money"|"int"|"pct"|"text"|"date", sum:true}], filas:[[...]], tachar:(fila)=>bool}], archivo} */
+async function excelPro(o){
+  const XL=await cargarExcelJS();
+  const NAVY="FF0B1426",ACC=o.acento||"FFD4AF37",ACCL="FFFBF5E1",ZEBRA="FFF6F8FC",LINE="FFDDE3EE",MONEY='"$"#,##0';
+  const FMT={money:o.moneyFmt||MONEY,pct:"0.0%",int:"#,##0"};
+  const wb=new XL.Workbook();wb.creator=o.app||"DL COMPANY";wb.created=new Date();
+  const borde={top:{style:"thin",color:{argb:LINE}},bottom:{style:"thin",color:{argb:LINE}},left:{style:"thin",color:{argb:LINE}},right:{style:"thin",color:{argb:LINE}}};
+  const fill=c=>({type:"pattern",pattern:"solid",fgColor:{argb:c}});
+  const cab=(ws,sub,n)=>{n=Math.max(n,2);
+    ws.mergeCells(1,1,1,n);const a=ws.getCell(1,1);a.value=(o.titulo||"").toUpperCase();a.font={bold:true,size:16,color:{argb:ACC}};a.fill=fill(NAVY);a.alignment={vertical:"middle",indent:1};ws.getRow(1).height=30;
+    ws.mergeCells(2,1,2,n);const b=ws.getCell(2,1);b.value=sub;b.font={size:10,color:{argb:"FFFFFFFF"}};b.fill=fill(NAVY);b.alignment={indent:1};ws.getRow(2).height=18;ws.getRow(3).height=8;};
+  const pie=(ws,f,n)=>{ws.mergeCells(f,1,f,Math.max(n,2));const c=ws.getCell(f,1);c.value=`Generado con ${o.app||"DL COMPANY"} · ${new Date().toLocaleString("es-CO",{timeZone:"America/Bogota"})} · DL COMPANY -TECHNOLOGY-`;c.font={size:9,italic:true,color:{argb:"FF8A94A6"}};};
+  if(o.resumen&&o.resumen.length){
+    const r=wb.addWorksheet("Resumen",{properties:{tabColor:{argb:ACC}},pageSetup:{paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0}});
+    r.columns=[{width:36},{width:20},{width:12}];cab(r,(o.sub||"")+" · Resumen",3);let f=4;
+    o.resumen.forEach(sec=>{r.mergeCells(f,1,f,3);const h=r.getCell(f,1);h.value=sec.t;h.font={bold:true,size:12,color:{argb:NAVY}};h.border={bottom:{style:"medium",color:{argb:ACC}}};r.getRow(f).height=22;f++;
+      (sec.filas||[]).forEach(([k,v,t,big,extra])=>{const a=r.getCell(f,1),b=r.getCell(f,2);a.value=k;b.value=v;a.border=b.border=borde;if(FMT[t])b.numFmt=FMT[t];b.alignment={horizontal:"right"};
+        if(extra!=null){const c=r.getCell(f,3);c.value=extra;c.numFmt=FMT.pct;c.border=borde;c.alignment={horizontal:"right"};}
+        if(big)[a,b].forEach(c=>{c.font={bold:true,size:13,color:{argb:NAVY}};c.fill=fill(ACCL);});f++;});f++;});
+    pie(r,f,3);}
+  (o.tablas||[]).forEach(T=>{
+    const n=T.cols.length,ws=wb.addWorksheet(T.hoja.slice(0,31),{pageSetup:{orientation:n>6?"landscape":"portrait",fitToPage:true,fitToWidth:1,fitToHeight:0}});
+    ws.columns=T.cols.map(c=>({width:c.w||14}));cab(ws,(o.sub||"")+" · "+(T.titulo||T.hoja),n);
+    const F=4,hr=ws.getRow(F);T.cols.forEach((c,i)=>{const x=hr.getCell(i+1);x.value=c.h;x.font={bold:true,color:{argb:NAVY}};x.fill=fill(ACC);x.alignment={vertical:"middle",horizontal:"center",wrapText:true};x.border=borde;});hr.height=22;
+    T.filas.forEach((fila,k)=>{const row=ws.getRow(F+1+k),tach=T.tachar&&T.tachar(fila);fila.forEach((v,i)=>{const c=row.getCell(i+1),fm=T.cols[i].f;c.value=v;c.border=borde;
+      c.alignment={vertical:"middle",wrapText:typeof v==="string"&&v.length>30,horizontal:fm==="money"||fm==="int"||fm==="pct"?"right":undefined};if(FMT[fm])c.numFmt=FMT[fm];if(k%2)c.fill=fill(ZEBRA);if(tach)c.font={strike:true,color:{argb:"FFB04050"}};});});
+    const L=T.filas.length;
+    if(L){ws.autoFilter={from:{row:F,column:1},to:{row:F+L,column:n}};
+      if(T.cols.some(c=>c.sum)){const tr=ws.getRow(F+L+1);for(let i=0;i<n;i++){const c=tr.getCell(i+1),col=T.cols[i];c.font={bold:true,color:{argb:NAVY}};c.fill=fill(ACCL);c.border={...borde,top:{style:"medium",color:{argb:ACC}}};
+        if(i===0&&!col.sum)c.value="TOTAL";
+        if(col.sum){const Lt=ws.getColumn(i+1).letter;c.value={formula:`SUBTOTAL(9,${Lt}${F+1}:${Lt}${F+L})`,result:T.filas.reduce((a,r)=>a+(+r[i]||0),0)};if(FMT[col.f])c.numFmt=FMT[col.f];}}}
+      pie(ws,F+L+3,n);}
+    else{ws.mergeCells(F+1,1,F+1,n);const c=ws.getCell(F+1,1);c.value="Sin registros";c.font={italic:true,color:{argb:"FF8A94A6"}};c.alignment={horizontal:"center"};}
+    ws.views=[{state:"frozen",ySplit:F}];});
+  const buf=await wb.xlsx.writeBuffer();
+  const blob=new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+  const name=(o.archivo||"reporte").replace(/[\\/:*?"<>|]+/g,"")+".xlsx";
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+  return name;
+}
+    async function exportCSV() {
       if (!planAllows('excel')) return openPlans('Exportar a Excel está disponible desde el plan Pro.');
-      const q = (v) => '"' + String(v).replace(/"/g, '""') + '"';
-      const rows = [['Fecha', 'Tipo', 'Concepto', 'Categoría', 'Modalidad', 'Monto', 'Valor en el mes'].map(q).join(';')];
-      state.transactions.slice().sort((a, b) => (a.date < b.date ? 1 : -1)).forEach((t) => {
-        rows.push([t.date, FLOW_LABEL[t.flow], t.concept, t.category, FREQ_LABEL[t.frequency],
-          String(t.amount).replace('.', ','), String((t.flow === 'ingreso' ? 1 : -1) * monthlyValue(t)).replace('.', ',')].map(q).join(';'));
-      });
-      download('DL_Finanzas_Movimientos_' + todayISO() + '.csv', '﻿' + rows.join('\r\n'), 'text/csv;charset=utf-8');
-      toast('Archivo para Excel descargado');
+      const txs = state.transactions.slice().sort((a, b) => (a.date < b.date ? 1 : -1));
+      if (!txs.length) return toast('No hay movimientos para exportar');
+      const c = CURRENCIES[state.currency] || CURRENCIES.COP;
+      const moneyFmt = '"' + c.symbol + '"#,##0' + (c.decimals ? '.' + '0'.repeat(c.decimals) : '');
+      const val = (t) => (t.flow === 'ingreso' ? 1 : -1) * monthlyValue(t);
+      const sum = (f) => txs.filter((t) => t.flow === f).reduce((a, t) => a + monthlyValue(t), 0);
+      const ing = sum('ingreso'), fij = sum('fijo'), vari = sum('variable'), bal = ing - fij - vari;
+      const cats = {};
+      txs.forEach((t) => { const k = (t.category || 'Sin categoría') + '|' + t.flow; (cats[k] = cats[k] || { cat: t.category || 'Sin categoría', flow: t.flow, n: 0, v: 0 }); cats[k].n++; cats[k].v += monthlyValue(t); });
+      const catRows = Object.values(cats).sort((x, y) => y.v - x.v).map((x) => [x.cat, FLOW_LABEL[x.flow], x.n, x.v, x.flow === 'ingreso' ? (ing ? x.v / ing : 0) : ((fij + vari) ? x.v / (fij + vari) : 0)]);
+      const s0 = state.session || {};
+      const btn = $('#btn-export-csv'); if (btn) btn.disabled = true;
+      try {
+        const name = await excelPro({
+          app: 'DL FINANZAS', titulo: s0.name || 'Mis finanzas', acento: 'FF10B981', moneyFmt,
+          sub: (s0.email || '') + ' · ' + txs.length + ' movimientos · ' + c.label,
+          resumen: [
+            { t: 'Valor en el mes', filas: [['Ingresos', ing, 'money'], ['Gastos fijos', fij, 'money', 0, ing ? fij / ing : 0], ['Gastos variables', vari, 'money', 0, ing ? vari / ing : 0], ['Balance (ingresos − gastos)', bal, 'money', 1]] },
+            { t: 'Movimientos', filas: [['Total de movimientos', txs.length, 'int'], ['Ingresos', txs.filter((t) => t.flow === 'ingreso').length, 'int'], ['Gastos', txs.filter((t) => t.flow !== 'ingreso').length, 'int']] }
+          ],
+          tablas: [
+            { hoja: 'Movimientos', cols: [{ h: 'Fecha', w: 12 }, { h: 'Tipo', w: 13 }, { h: 'Concepto', w: 30 }, { h: 'Categoría', w: 18 }, { h: 'Modalidad', w: 14 }, { h: 'Monto', w: 14, f: 'money' }, { h: 'Valor en el mes', w: 16, f: 'money', sum: 1 }],
+              filas: txs.map((t) => [t.date, FLOW_LABEL[t.flow], t.concept || '', t.category || '', FREQ_LABEL[t.frequency] || '', Number(t.amount) || 0, val(t)]) },
+            { hoja: 'Por categoría', cols: [{ h: 'Categoría', w: 22 }, { h: 'Tipo', w: 13 }, { h: 'Movimientos', w: 12, f: 'int', sum: 1 }, { h: 'Valor en el mes', w: 16, f: 'money', sum: 1 }, { h: '% del tipo', w: 11, f: 'pct' }], filas: catRows }
+          ],
+          archivo: 'DL Finanzas ' + (s0.name ? s0.name + ' ' : '') + todayISO()
+        });
+        toast('📊 Excel descargado: ' + name);
+      } catch (e) { toast(e.message || 'No se pudo crear el Excel'); }
+      finally { if (btn) btn.disabled = false; }
     }
 
     function importJSON(file) {
@@ -2625,7 +2699,7 @@
       $('#btn-plans').onclick = () => openPlans();
       $('#greet-up').onclick = () => openPlans();
       $('#btn-admin').onclick = openAdmin;
-      $('#modal-plans').addEventListener('click', (e) => { const b = e.target.closest('[data-choose]'); if (b && !b.disabled) choosePlan(b.dataset.choose); });
+      $('#modal-plans').addEventListener('click', (e) => { const b = e.target.closest('[data-choose]'); if (b && !b.disabled) choosePlan(b.dataset.choose, !!b.dataset.anual); });
       document.addEventListener('click', (e) => { const b = e.target.closest('[data-upgrade]'); if (b) openPlans(); });
       $('#admin-search').addEventListener('input', renderAdmin);
       $('#admin-list').addEventListener('click', (e) => { const b = e.target.closest('[data-set]'); if (b) adminSetPlan(b.dataset.uid, b.dataset.set); });
