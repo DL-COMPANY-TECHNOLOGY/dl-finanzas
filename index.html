@@ -280,8 +280,13 @@
     .plan .p-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .plan .p-btns .btn { padding-left: 6px; padding-right: 6px; }
     .plan .p-save { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 800; color: var(--accent-text); }
     .plan ul { list-style: none; padding: 0; margin: 12px 0 14px; display: grid; gap: 7px; font-size: 13px; }
-    .plan li { display: flex; gap: 8px; align-items: flex-start; }
-    .plan li::before { content: '✓'; color: var(--accent); font-weight: 900; }
+    .plan li { position: relative; padding-left: 22px; }
+    .plan li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 900; }
+    .plan .cop { font-size: .55em; font-weight: 800; color: var(--text-2); letter-spacing: .5px; margin-left: 2px; }
+    .plan .usd { display: block; font-size: 12px; font-weight: 700; color: var(--text-3); margin-top: 2px; }
+    .plan .p-annual .usd { display: block; font-size: 11px; margin-top: 0; }
+    .plan .p-annual small { white-space: nowrap; }
+    .plan .p-old .usd { display: inline; font-size: 11px; margin-left: 4px; }
     .plan li.no { color: var(--text-3); }
     .plan li.no::before { content: '✕'; color: var(--text-3); }
     .plan .btn { margin-top: auto; }
@@ -976,7 +981,8 @@
         <div class="plan" data-plan="free">
           <h4>Gratis</h4>
           <p class="p-desc">Para empezar a organizar tu dinero.</p>
-          <p class="p-price">$0 <small>/ siempre</small></p>
+          <p class="p-price">$0 <span class="cop">COP</span> <small>/ siempre</small></p>
+          <span class="usd">US$ 0</span>
           <ul>
             <li>Hasta 15 movimientos al mes</li>
             <li>Resumen, balance y tasa de ahorro</li>
@@ -994,9 +1000,10 @@
           <span class="ribbon">Más popular</span>
           <h4>Pro</h4>
           <p class="p-desc">Más capacidad y tus datos en la nube.</p>
-          <p class="p-old">$20.000</p>
-          <p class="p-price">$10.000 <small>/ mes</small></p>
-          <span class="p-save">Ahorras $10.000 al mes</span>
+          <p class="p-old">$20.000 COP</p>
+          <p class="p-price">$10.000 <span class="cop">COP</span> <small>/ mes</small></p>
+          <span class="usd" data-cop="10000"></span>
+          <span class="p-save">Ahorras $10.000 COP al mes</span>
           <ul>
             <li><b>Hasta 50 movimientos al mes</b></li>
             <li>Todo lo del plan Gratis</li>
@@ -1007,16 +1014,17 @@
             <li class="no">Copiar fijos al mes nuevo</li>
             <li class="no">Soporte prioritario</li>
           </ul>
-          <div class="p-annual"><div><b>📅 Pago anual</b><small>14 meses: pagas 12 y te regalamos 2</small></div><div style="text-align:right"><s>$240.000</s><b>$120.000</b><small>$8.600 al mes</small></div></div>
+          <div class="p-annual"><div><b>📅 Pago anual</b><small>14 meses: pagas 12 y te regalamos 2</small></div><div style="text-align:right"><s>$240.000 COP</s><b>$120.000 COP</b><span class="usd" data-cop="120000"></span><small>$8.600 COP al mes</small></div></div>
           <div class="p-btns"><button type="button" class="btn btn-primary" data-choose="pro">Quiero mensual</button><button type="button" class="btn btn-primary" data-choose="pro" data-anual="1">Quiero anual</button></div>
         </div>
         <div class="plan premium" data-plan="premium">
           <span class="ribbon">Todo incluido</span>
           <h4>Premium 👑</h4>
           <p class="p-desc">Toda la app y tu asistente con soporte.</p>
-          <p class="p-old">$40.000</p>
-          <p class="p-price">$20.000 <small>/ mes</small></p>
-          <span class="p-save">Ahorras $20.000 al mes</span>
+          <p class="p-old">$40.000 COP</p>
+          <p class="p-price">$20.000 <span class="cop">COP</span> <small>/ mes</small></p>
+          <span class="usd" data-cop="20000"></span>
+          <span class="p-save">Ahorras $20.000 COP al mes</span>
           <ul>
             <li><b>Toda la app al 100%</b></li>
             <li><b>Movimientos ilimitados</b></li>
@@ -1026,11 +1034,11 @@
             <li><b>Soporte prioritario por WhatsApp</b></li>
             <li>Acceso anticipado a nuevas funciones</li>
           </ul>
-          <div class="p-annual"><div><b>📅 Pago anual</b><small>14 meses: pagas 12 y te regalamos 2</small></div><div style="text-align:right"><s>$480.000</s><b>$240.000</b><small>$17.100 al mes</small></div></div>
+          <div class="p-annual"><div><b>📅 Pago anual</b><small>14 meses: pagas 12 y te regalamos 2</small></div><div style="text-align:right"><s>$480.000 COP</s><b>$240.000 COP</b><span class="usd" data-cop="240000"></span><small>$17.100 COP al mes</small></div></div>
           <div class="p-btns"><button type="button" class="btn btn-gold" data-choose="premium">Quiero mensual</button><button type="button" class="btn btn-gold" data-choose="premium" data-anual="1">Quiero anual</button></div>
         </div>
       </div>
-      <p class="plans-note">Pagas por WhatsApp (te enviamos los datos de pago) y activamos tu plan el mismo día. Sin renovación automática.<br><b>Pago anual:</b> 14 meses por el precio de 12.</p>
+      <p class="plans-note">Precios en pesos colombianos (COP). El valor en dólares (USD) es aproximado y puede variar según la tasa de cambio.<br>Pagas por WhatsApp (te enviamos los datos de pago) y activamos tu plan el mismo día. Sin renovación automática.<br><b>Pago anual:</b> 14 meses por el precio de 12.</p>
     </div>
   </div>
 
@@ -1760,10 +1768,14 @@
     const PLAN_TX_LIMIT = { free: FREE_TX_LIMIT, pro: 50, premium: Infinity };
     const ADMIN_EMAILS = ['d.l.company.2026@gmail.com'];
     const WA_NUMBER = '573218641539';
+    // Tasa de referencia para mostrar el precio aproximado en dólares (TRM nov. 2026 ≈ 3.300 COP por 1 USD). Actualízala si cambia mucho.
+    const USD_RATE = 3300;
+    const usd = (cop) => 'US$ ' + (cop / USD_RATE).toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const copUsd = (cop) => '$' + cop.toLocaleString('es-CO') + ' COP (≈ ' + usd(cop) + ')';
     const PLAN_INFO = {
-      free: { name: 'Gratis', price: '$0' },
-      pro: { name: 'Pro', price: '$10.000/mes (precio normal $20.000)' },
-      premium: { name: 'Premium', price: '$20.000/mes (precio normal $40.000)' }
+      free: { name: 'Gratis', price: '$0 COP' },
+      pro: { name: 'Pro', price: copUsd(10000) + '/mes (precio normal $20.000 COP)' },
+      premium: { name: 'Premium', price: copUsd(20000) + '/mes (precio normal $40.000 COP)' }
     };
     const PLAN_FEATURES = {
       free: [],
@@ -1813,6 +1825,7 @@
 
     function openPlans(reason) {
       $('#menu').classList.add('hidden');
+      $$('#modal-plans .usd[data-cop]').forEach((el) => { el.textContent = '≈ ' + usd(Number(el.dataset.cop)) + (el.closest('.p-annual') ? '' : ' / mes'); });
       const r = $('#plans-reason');
       r.style.display = reason ? 'block' : 'none';
       r.textContent = reason ? '🔒 ' + reason : '';
@@ -1827,7 +1840,7 @@
       openModal('modal-plans');
     }
 
-    const PLAN_ANUAL = { pro: '$120.000 por 14 meses (precio normal $240.000)', premium: '$240.000 por 14 meses (precio normal $480.000)' };
+    const PLAN_ANUAL = { pro: copUsd(120000) + ' por 14 meses (precio normal $240.000 COP)', premium: copUsd(240000) + ' por 14 meses (precio normal $480.000 COP)' };
     function choosePlan(k, anual) {
       if (k === 'free') return;
       const s = state.session || {};
@@ -2586,9 +2599,9 @@ async function excelPro(o){
       const uso = p === 'premium' ? 'movimientos <b>ilimitados</b>' : 'llevas <b>' + Math.min(used, PLAN_TX_LIMIT[p]) + ' de ' + PLAN_TX_LIMIT[p] + '</b> movimientos este mes';
       return [
         { el: p === 'premium' ? '#card-greet' : '#greet-usage', t: '⭐ Tu plan', p: 'Lo último y muy importante: tienes el <b>plan ' + PLAN_INFO[p].name + '</b> y ' + uso + '. Aquí ves cuánto has usado del mes.' },
-        { t: 'Plan Gratis', big: '🆓', price: '$0', p: 'Para empezar a organizar tu dinero:', lista: ['✅ Hasta <b>15 movimientos</b> al mes', '✅ Resumen, balance y tasa de ahorro', '✅ Gráfica por categorías y topes de presupuesto', '✅ Datos guardados en este celular', '🔒 Sin nube, Excel, respaldos ni tendencia'] },
-        { t: 'Plan Pro', big: '🚀', price: tachado('$20.000') + '$10.000 /mes', p: 'Más capacidad y tus datos seguros en la nube:', lista: ['✅ Hasta <b>50 movimientos</b> al mes', '✅ ☁️ <b>Sincronización en la nube</b>: tus datos en todos tus equipos', '✅ 📊 Exportar a Excel', '✅ 💾 Descargar y restaurar respaldos', '✅ Todo lo del plan Gratis', '📅 Anual: <b>$120.000 por 14 meses</b>'] },
-        { t: 'Plan Premium', big: '👑', price: tachado('$40.000') + '$20.000 /mes', p: '<b>Toda la app al 100%</b>:', lista: ['✅ Movimientos <b>ilimitados</b>', '✅ 📈 Tendencia de 6 meses', '✅ 🔁 Copiar ingresos y gastos fijos al mes nuevo en un toque', '✅ 💬 Soporte prioritario por WhatsApp', '✅ Acceso anticipado a nuevas funciones', '✅ Todo lo del plan Pro', '📅 Anual: <b>$240.000 por 14 meses</b>'] },
+        { t: 'Plan Gratis', big: '🆓', price: '$0 COP', p: 'Para empezar a organizar tu dinero:', lista: ['✅ Hasta <b>15 movimientos</b> al mes', '✅ Resumen, balance y tasa de ahorro', '✅ Gráfica por categorías y topes de presupuesto', '✅ Datos guardados en este celular', '🔒 Sin nube, Excel, respaldos ni tendencia'] },
+        { t: 'Plan Pro', big: '🚀', price: tachado('$20.000') + '$10.000 COP<small style="display:block;font-size:12px;color:var(--text-3);font-weight:700">≈ ' + usd(10000) + ' /mes</small>', p: 'Más capacidad y tus datos seguros en la nube:', lista: ['✅ Hasta <b>50 movimientos</b> al mes', '✅ ☁️ <b>Sincronización en la nube</b>: tus datos en todos tus equipos', '✅ 📊 Exportar a Excel', '✅ 💾 Descargar y restaurar respaldos', '✅ Todo lo del plan Gratis', '📅 Anual: <b>$120.000 COP</b> (≈ ' + usd(120000) + ') por 14 meses'] },
+        { t: 'Plan Premium', big: '👑', price: tachado('$40.000') + '$20.000 COP<small style="display:block;font-size:12px;color:var(--text-3);font-weight:700">≈ ' + usd(20000) + ' /mes</small>', p: '<b>Toda la app al 100%</b>:', lista: ['✅ Movimientos <b>ilimitados</b>', '✅ 📈 Tendencia de 6 meses', '✅ 🔁 Copiar ingresos y gastos fijos al mes nuevo en un toque', '✅ 💬 Soporte prioritario por WhatsApp', '✅ Acceso anticipado a nuevas funciones', '✅ Todo lo del plan Pro', '📅 Anual: <b>$240.000 COP</b> (≈ ' + usd(240000) + ') por 14 meses'] },
         { t: '¿Cómo activo un plan?', big: '🎁', p: '🚀 Por el <b>lanzamiento</b>, los planes están con <b>50% de descuento</b>.<br><br>Toca <b>Ver planes</b>, elige mensual o anual y te escribimos por WhatsApp con los datos de pago. Activamos tu plan <b>el mismo día</b>, <b>sin renovación automática</b> y sin perder tu información. Pago anual: <b>14 meses por el precio de 12</b>.', fin: 'Ver planes', finAct: () => openPlans() }
       ];
     }
