@@ -1,5 +1,5 @@
 // DL FINANZAS - Service worker: funciona sin conexión y se actualiza solo
-const CACHE = 'dl-finanzas-v16-soporte-premium';
+const CACHE = 'dl-finanzas-v17-usd-enteros';
 const SHELL = ['./', './index.html', './legal.html', './firebase-config.js', './manifest.webmanifest', './logo.svg', './icon.svg', './dl-company.png', './apple-touch-icon.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', (e) => {
