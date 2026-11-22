@@ -169,6 +169,14 @@
     .lcredit b { display: block; color: var(--text); letter-spacing: 1.2px; font-size: 13px; }
     .wafab { position: fixed; left: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); width: 52px; height: 52px; border-radius: 50%; background: #25d366; display: grid; place-items: center; box-shadow: 0 8px 24px rgba(37,211,102,.45); z-index: 44; opacity: .95; }
     .wafab svg { width: 32px; height: 32px; }
+    .wafab .prem-tag { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap; background: linear-gradient(135deg,#fde68a,#d4a017); color: #3b2a00; font-size: 9.5px; font-weight: 900; padding: 2px 7px; border-radius: 999px; box-shadow: 0 2px 6px rgba(0,0,0,.25); letter-spacing: .3px; }
+    .prem-chip { display: inline-block; margin-left: 6px; background: linear-gradient(135deg,#fde68a,#d4a017); color: #3b2a00; font-size: 9.5px; font-weight: 900; padding: 2px 7px; border-radius: 999px; letter-spacing: .3px; text-transform: none; vertical-align: middle; }
+    body.has-support .prem-tag, body.has-support .prem-chip { display: none; }
+    .buyhelp { display: flex; align-items: center; gap: 12px; max-width: 420px; margin: 14px auto 0; padding: 13px 16px; border-radius: 18px; border: 1.5px solid #25d366; background: rgba(37,211,102,.08); color: var(--text); text-decoration: none; text-align: left; font-size: 12.5px; line-height: 1.35; color: var(--text-2); }
+    .buyhelp b { display: block; color: var(--text); font-size: 13.5px; margin-bottom: 2px; }
+    .buyhelp .bh-ic { flex: none; width: 40px; height: 40px; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; }
+    .buyhelp .bh-ic svg { width: 24px; height: 24px; }
+    .buyhelp:active { transform: scale(.98); }
     body.standalone .dl-only { display: none !important; }
     .menu a.menu-link { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--text-2); text-decoration: none; }
     .menu a.menu-link:hover { background: var(--surface-3); color: var(--text); }
@@ -603,8 +611,11 @@
       </p>
     </div>
     <div class="ldl dl-only"><button class="dlbtn" type="button" data-install><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Descargar app DL FINANZAS</button></div>
+    <a class="buyhelp" id="btn-buy-help" href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Tengo%20problemas%20para%20acceder%20a%20un%20plan%20o%20para%20comprarlo." target="_blank" rel="noopener">
+      <span class="bh-ic"><svg viewBox="0 0 32 32" fill="currentColor" width="20" height="20"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg></span>
+      <span><b>¿No puedes acceder a un plan o tienes problemas para comprar?</b>Escribe directamente a soporte por WhatsApp</span>
+    </a>
     <div class="lcredit"><img src="dl-company.png" alt="DL COMPANY -TECHNOLOGY-"><div>Desarrollado por<b>DL COMPANY -TECHNOLOGY-</b>© 2026</div></div>
-    <a class="wafab" href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" aria-label="Soporte por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg></a>
   </section>
 
   <!-- ================= APLICACIÓN ================= -->
@@ -675,9 +686,9 @@
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
                 Ver guía de la app
               </button>
-              <a href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" class="menu-link">
+              <a href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" class="menu-link" data-support>
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a8.5 8.5 0 01-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1121 12z"/></svg>
-                Soporte por WhatsApp
+                Soporte por WhatsApp <span class="prem-chip">👑 Exclusivo Premium</span>
               </a>
               <button type="button" id="btn-install" class="dl-only" data-install>
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
@@ -842,7 +853,7 @@
         <p class="dev-by">Desarrollado por<strong>DL COMPANY -TECHNOLOGY-</strong></p>
         <p class="dev-desc">Creamos apps para que personas y negocios tengan el control de su dinero, sus ventas y su inventario. <b>Tecnología simple que da resultados.</b></p>
         <div class="dev-links">
-          <a href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener">💬 Soporte</a>
+          <a href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" data-support>💬 Soporte <span class="prem-chip">👑 Premium</span></a>
           <a href="#" data-guide>🧭 Guía de la app</a>
           <a href="#" class="dl-only" data-install>📲 Descargar app</a>
         </div>
@@ -854,7 +865,7 @@
       </footer>
     </main>
 
-    <a class="wafab" href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" aria-label="Soporte por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg></a>
+    <a class="wafab" data-support href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener" aria-label="Soporte por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg><span class="prem-tag">👑 Premium</span></a>
     <button class="fab" id="btn-add-fab" type="button" aria-label="Nuevo movimiento">
       <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
     </button>
@@ -1041,6 +1052,10 @@
         </div>
       </div>
       <p class="plans-note">Precios en pesos colombianos (COP). El valor en dólares (USD) es aproximado y puede variar según la tasa de cambio.<br>Pagas por WhatsApp (te enviamos los datos de pago) y activamos tu plan el mismo día. Sin renovación automática.<br><b>Pago anual:</b> 14 meses por el precio de 12.</p>
+      <a class="buyhelp" href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Tengo%20problemas%20para%20acceder%20a%20un%20plan%20o%20para%20comprarlo." target="_blank" rel="noopener" style="margin:12px auto 0">
+        <span class="bh-ic"><svg viewBox="0 0 32 32" fill="currentColor" width="20" height="20"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg></span>
+        <span><b>¿Problemas para comprar o activar tu plan?</b>Escribe directamente a soporte por WhatsApp</span>
+      </a>
     </div>
   </div>
 
@@ -1819,11 +1834,21 @@
         bar.style.width = pct + '%';
         bar.style.background = pct >= 90 ? 'var(--danger)' : pct >= 70 ? 'var(--warn)' : 'var(--accent)';
       }
-      $$('.wafab').forEach((a) => {
+      document.body.classList.toggle('has-support', planAllows('support'));
+      $$('[data-support]').forEach((a) => {
         const msg = p === 'premium' ? 'Hola DL Company 👋 Vengo de la app DL FINANZAS. Soy cliente PREMIUM de DL FINANZAS (' + (state.session.email || '') + ') y necesito soporte prioritario' : 'Hola DL Company 👋 Vengo de la app DL FINANZAS. Necesito ayuda con DL FINANZAS';
         a.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
       });
     }
+
+    // El soporte por WhatsApp es exclusivo del plan Premium
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-support]');
+      if (!a || !state.session || planAllows('support')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openPlans('El soporte directo por WhatsApp es exclusivo del plan Premium.');
+    }, true);
 
     function openPlans(reason) {
       $('#menu').classList.add('hidden');
@@ -2625,7 +2650,7 @@ async function excelPro(o){
         { el: '#btn-currency', t: '💱 Moneda', p: 'Elige la moneda en la que se muestran los valores: pesos, dólares, euros y más.' },
         { el: '#btn-theme-app', t: '🌗 Modo día y noche', p: 'Cambia entre el tema claro y el oscuro cuando quieras.' },
         { el: '#btn-menu', t: '☰ Tu cuenta y ajustes', p: 'Cambia tu nombre, ajusta los topes, <b>exporta a Excel</b>, descarga tu <b>respaldo</b>, <b>instala la app</b> o <b>vuelve a ver esta guía</b>.' + lockTxt('excel') },
-        { el: '#app-screen .wafab', t: '💬 Soporte por WhatsApp', p: '¿Tienes dudas? Toca el botón verde y te ayudamos por WhatsApp.' },
+        { el: '#app-screen .wafab', t: '💬 Soporte por WhatsApp', p: 'Soporte directo por WhatsApp. Es <b>exclusivo del plan Premium</b>: en los otros planes el botón te muestra cómo pasarte a Premium.' },
         ...planesSteps()
       ];
     }
@@ -2636,7 +2661,7 @@ async function excelPro(o){
         { el: '#reg-legal', t: '✅ Acepta los términos', p: 'Para crear la cuenta marca la casilla de aceptación. Puedes leer los términos y la política de privacidad cuando quieras.', tab: 'register' }
       ];
       if (cloud.enabled) st.push({ el: '#btn-google', t: 'Entra con Google', p: 'También puedes ingresar con un solo toque usando tu cuenta de <b>Google</b>.', tab: 'login' });
-      st.push({ el: '#auth-screen .wafab', t: '💬 ¿Necesitas ayuda?', p: 'Escríbenos por WhatsApp y te ayudamos a ingresar.', fin: 'Entendido', tab: 'login' });
+      st.push({ el: '#btn-buy-help', t: '💬 ¿Problemas con un plan?', p: 'Si no puedes acceder a un plan o tienes problemas para comprarlo, escríbenos directo a soporte por WhatsApp.', fin: 'Entendido', tab: 'login' });
       return st;
     }
 
