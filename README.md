@@ -30,7 +30,7 @@ Al pasar a modo nube, la app ofrece subir automáticamente los datos que el usua
 1. Crear el proyecto `dl-finanzas` en la consola de Firebase y registrar una app web.
 2. Pegar el bloque `firebaseConfig` en `firebase-config.js`.
 3. Authentication → Método de acceso: activar **Correo/contraseña** y **Google**.
-4. Authentication → Configuración → Dominios autorizados: agregar `dimelolenin7-ui.github.io`.
+4. Authentication → Configuración → Dominios autorizados: agregar `dl-company-technology.github.io`.
 5. Firestore Database → crear base de datos → pestaña Reglas: pegar `firestore.rules` y publicar.
 
 ## Archivos
