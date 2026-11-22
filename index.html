@@ -482,6 +482,8 @@
     .dev-footer .dev-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; margin-top: 16px; }
     .dev-footer .dev-links a { color: var(--accent-text); font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
     .dev-footer .dev-links.legal-links a { color: var(--text-2); }
+.dev-footer .dev-links:not(.legal-links):not(.ll) a{display:inline-flex;align-items:center;gap:6px;padding:10px 16px!important;border-radius:999px;border:1.5px solid currentColor;background:color-mix(in srgb,currentColor 10%,transparent);text-decoration:none!important;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .15s}
+.dev-footer .dev-links:not(.legal-links):not(.ll) a:active{transform:scale(.95)}
     .dev-footer .dev-copy { margin: 20px 0 0; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); }
 
     /* Guía interactiva */
@@ -840,9 +842,9 @@
         <p class="dev-by">Desarrollado por<strong>DL COMPANY -TECHNOLOGY-</strong></p>
         <p class="dev-desc">Creamos apps para que personas y negocios tengan el control de su dinero, sus ventas y su inventario. <b>Tecnología simple que da resultados.</b></p>
         <div class="dev-links">
-          <a href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener">Soporte</a>
-          <a href="#" data-guide>Guía de la app</a>
-          <a href="#" class="dl-only" data-install>Descargar app</a>
+          <a href="https://wa.me/573218641539?text=Hola%20DL%20Company%20%F0%9F%91%8B%20Vengo%20de%20la%20app%20DL%20FINANZAS.%20Necesito%20ayuda%20con%20DL%20FINANZAS" target="_blank" rel="noopener">💬 Soporte</a>
+          <a href="#" data-guide>🧭 Guía de la app</a>
+          <a href="#" class="dl-only" data-install>📲 Descargar app</a>
         </div>
         <div class="dev-links legal-links">
           <a href="legal.html#terminos" target="_blank" rel="noopener">Términos</a>
