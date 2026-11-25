@@ -1,5 +1,5 @@
 // DL FINANZAS - Service worker: funciona sin conexión y se actualiza solo
-const CACHE = 'dl-finanzas-v20-iphone';
+const CACHE = 'dl-finanzas-v21-redes';
 const SHELL = ['./', './index.html', './legal.html', './firebase-config.js', './manifest.webmanifest', './logo.svg', './icon.svg', './dl-company.png', './apple-touch-icon.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', (e) => {
