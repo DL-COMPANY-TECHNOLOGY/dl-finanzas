@@ -1405,6 +1405,9 @@ footer.dlf .dlf-copy{font-size:10.5px;letter-spacing:1.2px;text-transform:upperc
       el.classList.remove('hidden');
     }
 
+    // Enlace de anuncios: ?registro (o ?signup) abre directo la pestaña "Crear cuenta"
+    const REG_LINK = /[?&](registro|signup)(=|&|$)/i.test(location.search);
+
     function switchTab(mode) {
       $('#tab-login').classList.toggle('active', mode === 'login');
       $('#tab-register').classList.toggle('active', mode === 'register');
@@ -1806,6 +1809,7 @@ footer.dlf .dlf-copy{font-size:10.5px;letter-spacing:1.2px;text-transform:upperc
         ? 'Con los planes Pro y Premium tus datos se guardan cifrados en la nube y se sincronizan entre tus dispositivos.'
         : 'Tus datos se guardan de forma privada en este dispositivo.<br>Descarga un respaldo desde el menú para no perderlos si cambias de equipo.';
       if (cloud.loadError) showAuthError('No se pudo conectar con el servidor. Revisa tu conexión a internet y recarga la página.');
+      if (REG_LINK && !TOUR) switchTab('register');
       maybeLoginTour();
     }
 
@@ -2719,6 +2723,7 @@ async function excelPro(o){
       ];
       if (cloud.enabled) st.push({ el: '#btn-google', t: 'Entra con Google', p: 'También puedes ingresar con un solo toque usando tu cuenta de <b>Google</b>.', tab: 'login' });
       st.push({ el: '#btn-buy-help', t: '💬 ¿Problemas con un plan?', p: 'Si no puedes acceder a un plan o tienes problemas para comprarlo, escríbenos directo a soporte por WhatsApp.', fin: 'Entendido', tab: 'login' });
+      if (REG_LINK) st.shift(); // quien llega del anuncio es nuevo: la guía empieza en "Crear cuenta"
       return st;
     }
 
@@ -2737,7 +2742,7 @@ async function excelPro(o){
       if (!TOUR) return;
       const st = TOUR.steps[TOUR.i], t = TOUR; TOUR = null;
       $('#tour').classList.remove('on');
-      if (t.kind === 'login') switchTab('login');
+      if (t.kind === 'login') switchTab(REG_LINK ? 'register' : 'login');
       if (!skip && st && st.finAct) st.finAct();
     }
     async function showStep(i, dir) {
