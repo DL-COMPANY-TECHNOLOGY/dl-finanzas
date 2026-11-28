@@ -139,6 +139,10 @@
     }
     .icon-btn:hover { color: var(--text); border-color: var(--text-3); }
     .icon-btn.sm { width: 34px; height: 34px; border-radius: 10px; }
+    .guia-pill { height: 40px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; gap: 5px; flex: none; white-space: nowrap;
+      background: var(--surface); border: 1px solid var(--border-strong); color: var(--text); font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+    .guia-pill:active { transform: scale(.95); }
+    @media (max-width: 374px) { .guia-pill { width: 40px; padding: 0; justify-content: center; font-size: 17px; } .guia-pill .gp-t { display: none; } }
 
     /* ================= AUTH ================= */
     #auth-screen {
@@ -671,6 +675,7 @@ footer.dlf .dlf-copy{font-size:10.5px;letter-spacing:1.2px;text-transform:upperc
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
             Nuevo movimiento
           </button>
+          <button class="guia-pill" id="btn-guia" type="button" aria-label="Ver la guía de la app" title="Guía de la app">🧭<span class="gp-t"> Guía</span></button>
           <button class="icon-btn js-theme-toggle" id="btn-theme-app" type="button" aria-label="Cambiar tema"></button>
           <div class="menu-wrap">
             <button id="btn-menu" class="icon-btn" type="button" aria-label="Menú" aria-haspopup="true">
@@ -2692,6 +2697,7 @@ async function excelPro(o){
         { el: '#btn-currency', t: '💱 Moneda', p: 'Elige la moneda en la que se muestran los valores: pesos, dólares, euros y más.' },
         { el: '#btn-theme-app', t: '🌗 Modo día y noche', p: 'Cambia entre el tema claro y el oscuro cuando quieras.' },
         { el: '#btn-menu', t: '☰ Tu cuenta y ajustes', p: 'Cambia tu nombre, ajusta los topes, <b>exporta a Excel</b>, descarga tu <b>respaldo</b>, <b>instala la app</b> o <b>vuelve a ver esta guía</b>.' + lockTxt('excel') },
+        { el: '#btn-guia', t: '🧭 Vuelve a ver la guía', p: 'Toca <b>🧭 Guía</b> aquí arriba cuando quieras repasar cómo funciona la app.' },
         { el: '#app-screen .wafab', t: '💬 Soporte por WhatsApp', p: 'Soporte directo por WhatsApp. Es <b>exclusivo del plan Premium</b>: en los otros planes el botón te muestra cómo pasarte a Premium.' },
         ...planesSteps()
       ];
@@ -2872,6 +2878,7 @@ async function excelPro(o){
       });
       $('#btn-copy-link').onclick = copyAppLink;
       $('#btn-auth-help').onclick = () => startTour('login');
+      $('#btn-guia').onclick = () => { if (!TOUR) startTour('app'); };
       $('#btn-logout').onclick = async () => {
         menu.classList.add('hidden');
         if (!(await confirmDialog('¿Cerrar sesión?', cloud.enabled ? 'Tus datos quedan guardados en la nube.' : 'Tus datos quedan guardados en este dispositivo.', 'Cerrar sesión'))) return;
